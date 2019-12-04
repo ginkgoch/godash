@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"gotest.tools/assert"
+	"math"
 	"testing"
 )
 
@@ -73,4 +74,15 @@ func TestDifferenceWithOrder(t *testing.T) {
 
 	result := Difference(items1, items2...)
 	assert.DeepEqual(t, result, DashSlice{"z", "q"})
+}
+
+func TestDifferenceBy(t *testing.T) {
+	items1 := DashSlice{1.2, 2.4, 5.9}
+	items2 := DashSlice{1.3, 3.4, 5.1}
+
+	result := DifferenceBy(items1, items2, func(el interface{}) interface{} {
+		return math.Floor(el.(float64))
+	})
+
+	assert.DeepEqual(t, result, DashSlice{2.4})
 }

@@ -2,6 +2,7 @@ package pkg
 
 import "reflect"
 
+// Creates an array of elements split into groups the length of size. If array can't be split evenly, the final chunk will be the remaining elements.
 func Chunk(items DashSlice, size int) []DashSlice {
 	dashSlices := []DashSlice{}
 
@@ -56,6 +57,21 @@ func Difference(items DashSlice, itemsToCompare ...interface{}) DashSlice {
 	for _, item := range items {
 		if _, ok := FindIndex(itemsToCompare, item); !ok {
 			result = append(result, item)
+		}
+	}
+
+	return result
+}
+
+func DifferenceBy(items DashSlice, itemsToCompare DashSlice, iteratee func(interface{}) interface{}) DashSlice {
+	itemsNew := items.Map(iteratee)
+	itemsToCompareNew := itemsToCompare.Map(iteratee)
+
+	var result = DashSlice{}
+
+	for i, item := range itemsNew {
+		if _, ok := FindIndex(itemsToCompareNew, item); !ok {
+			result = append(result, items[i])
 		}
 	}
 

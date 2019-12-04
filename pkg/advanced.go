@@ -2,13 +2,12 @@ package pkg
 
 type DashSlice []interface{}
 
-func (ds DashSlice) AsSliceString() []string {
-	 sliceString := []string{}
-	 for _, str := range ds {
-	 	sliceString = append(sliceString, str.(string))
-	 }
+func (ds DashSlice) Map(iteratee func(interface{}) interface{}) DashSlice {
+	result := DashSlice{}
 
-	 return sliceString
+	for _, item := range ds {
+		result = append(result, iteratee(item))
+	}
+
+	return result
 }
-
-
