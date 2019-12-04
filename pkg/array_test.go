@@ -60,7 +60,32 @@ func TestFindIndex(t *testing.T) {
 	findTest("e", -1, false)
 }
 
-func TestDifference(t *testing.T) {
+func TestFindIndexWith(t *testing.T) {
+	comparison := func(el1 interface{}, el2 interface{})bool {
+		if el1 == "e" && el2 == "c" {
+			return true
+		} else if el1 == el2 {
+			return true
+		} else {
+			return false
+		}
+	}
+
+	items := DashSlice{"a", "b", "c", "d"}
+	findTest := func(el interface{}, expected int, found bool) {
+		result, ok := FindIndexWith(items, el, comparison)
+
+		assert.Equal(t, ok, found)
+		assert.Equal(t, result, expected)
+	}
+
+	findTest("e", 2, true)
+	findTest("a", 0, true)
+	findTest("b", 1, true)
+	findTest("f", -1, false)
+}
+
+func TestDifference1(t *testing.T) {
 	items1 := DashSlice{"a", "b", "c", "d"}
 	items2 := DashSlice{"a", "c", "e", "f"}
 
@@ -68,7 +93,7 @@ func TestDifference(t *testing.T) {
 	assert.DeepEqual(t, result, DashSlice{"b", "d"})
 }
 
-func TestDifferenceWithOrder(t *testing.T) {
+func TestDifference2(t *testing.T) {
 	items1 := DashSlice{"z", "b", "q", "h"}
 	items2 := DashSlice{"b", "h", "e", "f"}
 
@@ -85,4 +110,21 @@ func TestDifferenceBy(t *testing.T) {
 	})
 
 	assert.DeepEqual(t, result, DashSlice{2.4})
+}
+
+func TestDifferenceWith(t *testing.T) {
+	items1 := DashSlice{1.2, 2.4, 5.9}
+	items2 := DashSlice{1.3, 3.4, 5.1}
+
+	result := DifferenceWith(items1, items2, func(el1 interface{}, el2 interface{}) bool {
+		if el1 == 1.2 && el2 == 1.3 {
+			return true
+		} else if el1 == 2.4 && el2 == 3.4 {
+			return true
+		} else {
+			return false
+		}
+	})
+
+	assert.DeepEqual(t, result, DashSlice{5.9})
 }
