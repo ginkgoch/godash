@@ -15,3 +15,16 @@ func Chunk(items DashSlice, size int) []DashSlice {
 
 	return dashSlices
 }
+
+// Creates an array with all falsey values removed. The values false, 0, "", nil are falsey.
+func Compact(items DashSlice) DashSlice {
+	dashSlice := DashSlice{}
+
+	for _, item := range items {
+		if item != nil && item != false && item != 0 && item != "" {
+			dashSlice = append(dashSlice, item)
+		}
+	}
+
+	return dashSlice
+}

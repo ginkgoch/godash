@@ -22,3 +22,10 @@ func TestChunk2(t *testing.T) {
 	assert.DeepEqual(t, chunked[0], DashSlice{"a", "b", "c"})
 	assert.DeepEqual(t, chunked[1], DashSlice{"d"})
 }
+
+func TestCompact(t *testing.T) {
+	items := DashSlice{"a", "b", false, 0, 1, nil, ""}
+	compacted := Compact(items)
+
+	assert.DeepEqual(t, compacted, DashSlice{"a", "b", 1})
+}
