@@ -1,4 +1,4 @@
-package godash
+package pkg
 
 func Chunk(items DashSlice, size int) []DashSlice {
 	dashSlices := []DashSlice{}

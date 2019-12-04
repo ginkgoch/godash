@@ -1,4 +1,4 @@
-package godash
+package pkg
 
 import (
 	"gotest.tools/assert"
