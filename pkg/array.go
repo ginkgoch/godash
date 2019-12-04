@@ -1,16 +1,18 @@
 package pkg
 
+import "reflect"
+
 func Chunk(items DashSlice, size int) []DashSlice {
 	dashSlices := []DashSlice{}
 
 	for _, item := range items {
 		sliceLength := len(dashSlices)
-		if sliceLength == 0 || len(dashSlices[sliceLength - 1]) == size {
+		if sliceLength == 0 || len(dashSlices[sliceLength-1]) == size {
 			dashSlices = append(dashSlices, DashSlice{})
 			sliceLength++
 		}
 
-		dashSlices[sliceLength - 1] = append(dashSlices[sliceLength - 1], item)
+		dashSlices[sliceLength-1] = append(dashSlices[sliceLength-1], item)
 	}
 
 	return dashSlices
@@ -27,4 +29,23 @@ func Compact(items DashSlice) DashSlice {
 	}
 
 	return dashSlice
+}
+
+// Creates a new array concatenating array with any additional arrays and/or values.
+func Concat(items DashSlice, newItems ...interface{}) DashSlice {
+	result := append(DashSlice{}, items...)
+
+	for _, newItem := range newItems {
+		if reflect.TypeOf(newItem).Kind() == reflect.Slice {
+			values := reflect.ValueOf(newItem)
+			valuesLength := values.Len()
+			for i := 0; i < valuesLength; i++ {
+				result = append(result, values.Index(i).Interface())
+			}
+		} else {
+			result = append(result, newItem)
+		}
+	}
+
+	return result
 }

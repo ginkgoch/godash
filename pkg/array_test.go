@@ -29,3 +29,17 @@ func TestCompact(t *testing.T) {
 
 	assert.DeepEqual(t, compacted, DashSlice{"a", "b", 1})
 }
+
+func TestConcat1(t *testing.T) {
+	items := DashSlice{"a", "b", "c", "d"}
+	result := Concat(items, "e", "f")
+
+	assert.DeepEqual(t, result, DashSlice{"a", "b", "c", "d", "e", "f"})
+}
+
+func TestConcat2(t *testing.T) {
+	items := DashSlice{"a", "b", "c", "d"}
+	result := Concat(items, []string{"e", "f"})
+
+	assert.DeepEqual(t, result, DashSlice{"a", "b", "c", "d", "e", "f"})
+}

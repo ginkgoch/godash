@@ -1,4 +1,4 @@
-module godash
+module github.com/ginkgoch/godash
 
 go 1.13
 
