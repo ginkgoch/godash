@@ -43,3 +43,34 @@ func TestConcat2(t *testing.T) {
 
 	assert.DeepEqual(t, result, DashSlice{"a", "b", "c", "d", "e", "f"})
 }
+
+func TestFindIndex(t *testing.T) {
+	items := DashSlice{"a", "b", "c", "d"}
+
+	findTest := func(el interface{}, expected int, found bool) {
+		result, ok := FindIndex(items, el)
+
+		assert.Equal(t, ok, found)
+		assert.Equal(t, result, expected)
+	}
+
+	findTest("a", 0, true)
+	findTest("d", 3, true)
+	findTest("e", -1, false)
+}
+
+func TestDifference(t *testing.T) {
+	items1 := DashSlice{"a", "b", "c", "d"}
+	items2 := DashSlice{"a", "c", "e", "f"}
+
+	result := Difference(items1, items2...)
+	assert.DeepEqual(t, result, DashSlice{"b", "d"})
+}
+
+func TestDifferenceWithOrder(t *testing.T) {
+	items1 := DashSlice{"z", "b", "q", "h"}
+	items2 := DashSlice{"b", "h", "e", "f"}
+
+	result := Difference(items1, items2...)
+	assert.DeepEqual(t, result, DashSlice{"z", "q"})
+}

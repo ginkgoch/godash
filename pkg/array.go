@@ -49,3 +49,30 @@ func Concat(items DashSlice, newItems ...interface{}) DashSlice {
 
 	return result
 }
+
+func Difference(items DashSlice, itemsToCompare ...interface{}) DashSlice {
+	var result = DashSlice{}
+
+	for _, item := range items {
+		if _, ok := FindIndex(itemsToCompare, item); !ok {
+			result = append(result, item)
+		}
+	}
+
+	return result
+}
+
+func FindIndex(items DashSlice, element interface{}) (int, bool) {
+	var index = -1
+	var ok bool
+
+	for i, el := range items {
+		if el == element {
+			index = i
+			ok = true
+			break
+		}
+	}
+
+	return index, ok
+}
