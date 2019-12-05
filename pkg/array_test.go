@@ -324,3 +324,32 @@ func TestInitial(t *testing.T) {
 	assert.Equal(t, len(result), 2)
 	assert.DeepEqual(t, result, DashSlice{1, 2})
 }
+
+func TestIntersection(t *testing.T) {
+	items1 := DashSlice{1, 2, 3, 4}
+	items2 := DashSlice{3, 4, 5, 6}
+
+	result := Intersection(items1, items2)
+	assert.DeepEqual(t, result, DashSlice{3, 4})
+}
+
+func TestIntersectionBy(t *testing.T) {
+	items1 := DashSlice{1.0, 2.0, 3.2, 4.0}
+	items2 := DashSlice{3.4, 4.3, 5.0, 6.0}
+
+	result := IntersectionBy(items1, items2, func(i interface{}) interface{} {
+		return math.Floor(i.(float64))
+	})
+
+	assert.DeepEqual(t, result, DashSlice{3.2, 4.0})
+}
+
+func TestIntersectionWith(t *testing.T) {
+	items1 := DashSlice{1.0, 2.0, 3.2, 4.0}
+	items2 := DashSlice{3.4, 4.6, 5.0, 6.0}
+
+	result := IntersectionWith(items1, items2, func(i1 interface{}, i2 interface{}) bool {
+		return math.Round(i1.(float64)) == math.Round(i2.(float64))
+	})
+	assert.DeepEqual(t, result, DashSlice{3.2})
+}

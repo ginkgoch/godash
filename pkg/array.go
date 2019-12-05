@@ -362,3 +362,41 @@ func Initial(items DashSlice) DashSlice {
 
 	return result
 }
+
+func Intersection(items1 DashSlice, items2 DashSlice) DashSlice {
+	result := DashSlice{}
+
+	for _, item := range items1 {
+		if _, ok := IndexOf(items2, item); ok {
+			result = append(result, item)
+		}
+	}
+
+	return result
+}
+
+func IntersectionBy(items1 DashSlice, items2 DashSlice, iteratee Iteratee) DashSlice {
+	result := DashSlice{}
+	newItems1 := items1.Map(iteratee)
+	newItems2 := items2.Map(iteratee)
+
+	for i, item := range newItems1 {
+		if _, ok := IndexOf(newItems2, item); ok {
+			result = append(result, items1[i])
+		}
+	}
+
+	return result
+}
+
+func IntersectionWith(items1 DashSlice, items2 DashSlice, comparison Comparison) DashSlice {
+	result := DashSlice{}
+
+	for _, item := range items1 {
+		if _, ok := FindIndexWith(items2, item, comparison); ok {
+			result = append(result, item)
+		}
+	}
+
+	return result
+}
