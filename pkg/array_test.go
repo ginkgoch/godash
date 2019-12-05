@@ -388,3 +388,11 @@ func TestNth(t *testing.T) {
 	testNth(-3, 1)
 	testNth(-4, nil)
 }
+
+func TestPull(t *testing.T) {
+	items := DashSlice{"a", "b", "c", "a", "b", "c"}
+
+	result := Pull(items, "a", "c")
+
+	assert.DeepEqual(t, result, DashSlice{"b", "b"})
+}

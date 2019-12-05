@@ -434,3 +434,15 @@ func Nth(items DashSlice, n int) interface{} {
 		return items[length + n]
 	}
 }
+
+func Pull(items DashSlice, values ...interface{}) DashSlice {
+	result := DashSlice{}
+
+	for _, item := range items {
+		if _, ok := IndexOf(values, item); !ok {
+			result = append(result, item)
+		}
+	}
+
+	return result
+}
