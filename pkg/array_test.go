@@ -309,3 +309,18 @@ func TestFromPairs(t *testing.T) {
 	assert.Equal(t, result["key1"], "value1")
 	assert.Equal(t, result["key2"], nil)
 }
+
+func TestInitial(t *testing.T) {
+	items := DashSlice{}
+	result := Initial(items)
+	assert.Equal(t, len(result), 0)
+
+	items = DashSlice{1}
+	result = Initial(items)
+	assert.Equal(t, len(result), 0)
+
+	items = DashSlice{1, 2, 3}
+	result = Initial(items)
+	assert.Equal(t, len(result), 2)
+	assert.DeepEqual(t, result, DashSlice{1, 2})
+}

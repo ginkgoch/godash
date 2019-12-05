@@ -351,3 +351,14 @@ func FromPairs(pairs []DashSlice) map[interface{}]interface{} {
 
 	return result
 }
+
+func Initial(items DashSlice) DashSlice {
+	length := len(items)
+	result := DashSlice{}
+
+	if length > 1 {
+		result = append(result, items[0:length-1]...)
+	}
+
+	return result
+}
