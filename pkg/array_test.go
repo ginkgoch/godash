@@ -360,3 +360,13 @@ func TestJoin(t *testing.T) {
 	result := Join(items, "~")
 	assert.Equal(t, result, "1~2~3")
 }
+
+func TestLast(t *testing.T) {
+	items := DashSlice{1, 2, 3}
+	result := Last(items)
+	assert.Equal(t, result, 3)
+
+	items = DashSlice{}
+	result = Last(items)
+	assert.Equal(t, result, nil)
+}

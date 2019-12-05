@@ -412,3 +412,14 @@ func Join(items DashSlice, separator string) string {
 
 	return strings.Join(strs, separator)
 }
+
+func Last(items DashSlice) interface{} {
+	var result interface{}
+
+	length := len(items)
+	if length > 0 {
+		result = items[length - 1]
+	}
+
+	return result
+}
