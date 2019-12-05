@@ -15,3 +15,5 @@ func (ds DashSlice) Map(iteratee func(interface{}) interface{}) DashSlice {
 type Comparison func(interface{}, interface{}) bool
 
 type Prediction func(interface{}) bool
+
+type Iteratee func(interface{}) interface{}

@@ -72,7 +72,7 @@ func Difference(items DashSlice, itemsToCompare ...interface{}) DashSlice {
 // and values to generate the criterion by which they're compared.
 // The order and references of result values are determined by the first array.
 // The iteratee is invoked with one argument: (value).
-func DifferenceBy(items DashSlice, itemsToCompare DashSlice, iteratee func(interface{}) interface{}) DashSlice {
+func DifferenceBy(items DashSlice, itemsToCompare DashSlice, iteratee Iteratee) DashSlice {
 	itemsNew := items.Map(iteratee)
 	itemsToCompareNew := itemsToCompare.Map(iteratee)
 
