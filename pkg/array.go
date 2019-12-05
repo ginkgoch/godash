@@ -282,29 +282,16 @@ func First(items DashSlice) interface{} {
 	return Head(items)
 }
 
-func Flatten(items DashSlice) DashSlice {
-	result := DashSlice{}
-
-	var currentDepth = 0
-	for _, item := range items {
-		els := flattenRecursive(item, &currentDepth, 1)
-		result = append(result, els...)
-	}
-
-	return result
-}
-
-func flattenRecursive(item interface{}, currentDepth *int, depth int) DashSlice {
-	*currentDepth++
+func flattenRecursive(item interface{}, currentDepth int, depth int) DashSlice {
+	currentDepth++
 	result := DashSlice{}
 	if reflect.TypeOf(item).Kind() == reflect.Slice {
 		sv := reflect.ValueOf(item)
 		for i := 0; i < sv.Len(); i++ {
 			el := sv.Index(i).Interface()
 
-			var childDepth = *currentDepth
-			if depth == -1 || *currentDepth < depth {
-				els := flattenRecursive(el, &childDepth, depth)
+			if depth == -1 || currentDepth < depth {
+				els := flattenRecursive(el, currentDepth, depth)
 				result = append(result, els...)
 			} else {
 				result = append(result, el)
@@ -317,12 +304,22 @@ func flattenRecursive(item interface{}, currentDepth *int, depth int) DashSlice 
 	return result
 }
 
+func Flatten(items DashSlice) DashSlice {
+	result := DashSlice{}
+
+	for _, item := range items {
+		els := flattenRecursive(item, 0, 1)
+		result = append(result, els...)
+	}
+
+	return result
+}
+
 func FlattenDeep(items DashSlice) DashSlice {
 	result := DashSlice{}
 
 	for _, item := range items {
-		var currentDepth = 0
-		els := flattenRecursive(item, &currentDepth, -1)
+		els := flattenRecursive(item, 0, -1)
 		result = append(result, els...)
 	}
 
@@ -333,8 +330,7 @@ func FlattenDepth(items DashSlice, depth int) DashSlice {
 	result := DashSlice{}
 
 	for _, item := range items {
-		var currentDepth = 0
-		els := flattenRecursive(item, &currentDepth, depth)
+		els := flattenRecursive(item, 0, depth)
 		result = append(result, els...)
 	}
 
