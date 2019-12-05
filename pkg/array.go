@@ -143,6 +143,25 @@ func DropWhile(items DashSlice, predict Prediction) DashSlice {
 	return result
 }
 
+func FillBy(items DashSlice, fillValue interface{}, from int, to int) {
+	if from < 0 {
+		from = 0
+	}
+
+	length := len(items)
+	if to >= length {
+		to = length
+	}
+
+	for i := from; i < to; i++ {
+		items[i] = fillValue
+	}
+}
+
+func Fill(items DashSlice, fillValue interface{}) {
+	FillBy(items, fillValue, 0, len(items))
+}
+
 // This method is like _.find except that it returns the index of the first element predicate returns truthy
 // for instead of the element itself.
 func FindIndex(items DashSlice, element interface{}) (int, bool) {

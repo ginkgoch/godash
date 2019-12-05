@@ -86,6 +86,26 @@ func TestDropWhile(t *testing.T) {
 	assert.DeepEqual(t, result, DashSlice{"c", "d"})
 }
 
+func TestFillBy(t *testing.T) {
+	items := DashSlice{"a", "b", "c", "d"}
+
+	FillBy(items, "z", 0, 4)
+	assert.DeepEqual(t, items, DashSlice{"z", "z", "z", "z"})
+
+	FillBy(items, "y", 2, 4)
+	assert.DeepEqual(t, items, DashSlice{"z", "z", "y", "y"})
+}
+
+func TestFill(t *testing.T) {
+	items := DashSlice{"a", "b", "c", "d"}
+
+	Fill(items, "z")
+	assert.DeepEqual(t, items, DashSlice{"z", "z", "z", "z"})
+
+	Fill(items, "y")
+	assert.DeepEqual(t, items, DashSlice{"y", "y", "y", "y"})
+}
+
 func TestFindIndex(t *testing.T) {
 	items := DashSlice{"a", "b", "c", "d"}
 
