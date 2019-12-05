@@ -72,7 +72,7 @@ func Difference(items DashSlice, itemsToCompare ...interface{}) DashSlice {
 // and values to generate the criterion by which they're compared.
 // The order and references of result values are determined by the first array.
 // The iteratee is invoked with one argument: (value).
-func DifferenceBy(items DashSlice, itemsToCompare DashSlice, iteratee func(interface{}) interface{}) DashSlice {
+func DifferenceBy(items DashSlice, itemsToCompare DashSlice, iteratee Iteratee) DashSlice {
 	itemsNew := items.Map(iteratee)
 	itemsToCompareNew := itemsToCompare.Map(iteratee)
 
@@ -87,6 +87,9 @@ func DifferenceBy(items DashSlice, itemsToCompare DashSlice, iteratee func(inter
 	return result
 }
 
+// This method is like _.difference except that it accepts comparator which is invoked to compare elements of array to values.
+//The order and references of result values are determined by the first array.
+//The comparator is invoked with two arguments: (arrVal, othVal).
 func DifferenceWith(items DashSlice, itemsToCompare DashSlice,
 	comparison Comparison) DashSlice {
 	var result = DashSlice{}
@@ -94,6 +97,46 @@ func DifferenceWith(items DashSlice, itemsToCompare DashSlice,
 	for i, item := range items {
 		if _, ok := FindIndexWith(itemsToCompare, item, comparison); !ok {
 			result = append(result, items[i])
+		}
+	}
+
+	return result
+}
+
+// Creates a slice of array with n elements dropped from the beginning.
+func Drop(items DashSlice, count int) DashSlice {
+	result := DashSlice{}
+
+	for i := count; i < len(items); i++ {
+		result = append(result, items[i])
+	}
+
+	return result
+}
+
+// Creates a slice of array with n elements dropped from the end.
+func DropRight(items DashSlice, count int) DashSlice {
+	result := DashSlice{}
+	length := len(items) - count
+
+	for i := 0; i < length; i++ {
+		result = append(result, items[i])
+	}
+
+	return result
+}
+
+func DropWhile(items DashSlice, predict Prediction) DashSlice {
+	result := DashSlice{}
+
+	started := false
+	for _, item := range items {
+		if !started && !predict(item) {
+			started = true
+		}
+
+		if started {
+			result = append(result, item)
 		}
 	}
 
