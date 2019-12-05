@@ -60,7 +60,7 @@ func Difference(items DashSlice, itemsToCompare ...interface{}) DashSlice {
 	var result = DashSlice{}
 
 	for _, item := range items {
-		if _, ok := FindIndex(itemsToCompare, item); !ok {
+		if _, ok := IndexOf(itemsToCompare, item); !ok {
 			result = append(result, item)
 		}
 	}
@@ -79,7 +79,7 @@ func DifferenceBy(items DashSlice, itemsToCompare DashSlice, iteratee Iteratee) 
 	var result = DashSlice{}
 
 	for i, item := range itemsNew {
-		if _, ok := FindIndex(itemsToCompareNew, item); !ok {
+		if _, ok := IndexOf(itemsToCompareNew, item); !ok {
 			result = append(result, items[i])
 		}
 	}
@@ -164,7 +164,7 @@ func Fill(items DashSlice, fillValue interface{}) {
 
 // This method is like _.find except that it returns the index of the first element predicate returns truthy
 // for instead of the element itself.
-func FindIndex(items DashSlice, element interface{}) (int, bool) {
+func IndexOf(items DashSlice, element interface{}) (int, bool) {
 	var index = -1
 	var ok bool
 
@@ -179,7 +179,7 @@ func FindIndex(items DashSlice, element interface{}) (int, bool) {
 	return index, ok
 }
 
-// Same to FindIndex. The difference is that, this method provides a comparison function to compare programmatically.
+// Same to IndexOf. The difference is that, this method provides a comparison function to compare programmatically.
 func FindIndexWith(items DashSlice, element interface{}, comparison Comparison) (int, bool) {
 	var index = -1
 	var ok bool
@@ -195,7 +195,7 @@ func FindIndexWith(items DashSlice, element interface{}, comparison Comparison) 
 	return index, ok
 }
 
-func FindIndexBy(items DashSlice, predict Prediction) (int, bool) {
+func FindIndex(items DashSlice, predict Prediction) (int, bool) {
 	index := -1
 	ok := false
 
@@ -210,7 +210,7 @@ func FindIndexBy(items DashSlice, predict Prediction) (int, bool) {
 	return index, ok
 }
 
-func FindLastIndex(items DashSlice, element interface{}) (int, bool) {
+func LastIndexOf(items DashSlice, element interface{}) (int, bool) {
 	var index = -1
 	var ok bool
 	length := len(items)
@@ -245,7 +245,7 @@ func FindLastIndexWith(items DashSlice, element interface{}, comparison Comparis
 	return index, ok
 }
 
-func FindLastIndexBy(items DashSlice, predict Prediction) (int, bool) {
+func FindLastIndex(items DashSlice, predict Prediction) (int, bool) {
 	index := -1
 	ok := false
 
