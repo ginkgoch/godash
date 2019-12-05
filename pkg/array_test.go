@@ -294,3 +294,18 @@ func TestFlattenDepth(t *testing.T) {
 		[]int{9, 10},
 	})
 }
+
+func TestFromPairs(t *testing.T) {
+	pairs := []DashSlice{
+		{1, 2},
+		{"key1", "value1"},
+		{"key2"},
+		{},
+	}
+
+	result := FromPairs(pairs)
+	assert.Equal(t, len(result), 3)
+	assert.Equal(t, result[1], 2)
+	assert.Equal(t, result["key1"], "value1")
+	assert.Equal(t, result["key2"], nil)
+}

@@ -336,3 +336,18 @@ func FlattenDepth(items DashSlice, depth int) DashSlice {
 
 	return result
 }
+
+func FromPairs(pairs []DashSlice) map[interface{}]interface{} {
+	result := make(map[interface{}]interface{})
+	for _, pair := range pairs {
+		if len(pair) == 0 {
+			continue
+		} else if len(pair) == 1 {
+			result[pair[0]] = nil
+		} else {
+			result[pair[0]] = pair[1]
+		}
+	}
+
+	return result
+}
