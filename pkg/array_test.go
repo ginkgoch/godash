@@ -251,3 +251,46 @@ func TestFirst2(t *testing.T) {
 
 	assert.Equal(t, i, nil)
 }
+
+func TestFlatten(t *testing.T) {
+	items := DashSlice{1, 2, []int{4, 5}, 6, 7}
+	result := Flatten(items)
+
+	assert.DeepEqual(t, result, DashSlice{1, 2, 4, 5, 6, 7})
+}
+
+func TestFlattenDeep(t *testing.T) {
+	items := DashSlice{1, 2, []interface{}{
+		3, 4,
+		[]int{5, 6},
+		[]interface{}{
+			7,
+			[]interface{}{
+				8,
+				[]int{9, 10},
+			},
+		},
+	}}
+
+	result := FlattenDeep(items)
+	assert.DeepEqual(t, result, DashSlice{1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+}
+
+func TestFlattenDepth(t *testing.T) {
+	items := DashSlice{1, 2, []interface{}{
+		3, 4,
+		[]int{5, 6},
+		[]interface{}{
+			7,
+			[]interface{}{
+				8,
+				[]int{9, 10},
+			},
+		},
+	}}
+
+	result := FlattenDepth(items, 3)
+	assert.DeepEqual(t, result, DashSlice{1, 2, 3, 4, 5, 6, 7, 8,
+		[]int{9, 10},
+	})
+}
