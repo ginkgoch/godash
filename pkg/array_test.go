@@ -391,8 +391,29 @@ func TestNth(t *testing.T) {
 
 func TestPull(t *testing.T) {
 	items := DashSlice{"a", "b", "c", "a", "b", "c"}
+	Pull(&items, "a", "c")
+	assert.DeepEqual(t, items, DashSlice{"b", "b"})
 
-	result := Pull(items, "a", "c")
+	items = DashSlice{"a", "b", "c", "a", "b", "c"}
+	PullAll(&items, DashSlice{"a", "c"})
+	assert.DeepEqual(t, items, DashSlice{"b", "b"})
 
-	assert.DeepEqual(t, result, DashSlice{"b", "b"})
+	items = DashSlice{"a", "b", "c", "a", "b", "c"}
+	PullAllWith(&items, DashSlice{"a", "c"}, func(i1 interface{}, i2 interface{}) bool {
+		if i1 == "b" && i2 == "a" {
+			return true
+		} else {
+			return i1 == i2
+		}
+	})
+
+	assert.DeepEqual(t, items, DashSlice{})
+}
+
+func TestPullAt(t *testing.T) {
+	items := DashSlice{"a", "b", "c", "a", "b", "c"}
+	pulled := PullAt(&items, 1, 3, 5)
+
+	assert.DeepEqual(t, pulled, DashSlice{"b", "a", "c"})
+	assert.DeepEqual(t, items, DashSlice{"a", "c", "b"})
 }

@@ -435,14 +435,45 @@ func Nth(items DashSlice, n int) interface{} {
 	}
 }
 
-func Pull(items DashSlice, values ...interface{}) DashSlice {
+func Pull(items *DashSlice, values ...interface{}) DashSlice {
+	result := PullAllWith(items, values, func(i1 interface{}, i2 interface{}) bool {
+		return i1 == i2
+	})
+
+	return result
+}
+
+func PullAll(items *DashSlice, values DashSlice) DashSlice {
+	result := Pull(items, values...)
+	return result
+}
+
+func PullAllWith(items *DashSlice, values DashSlice, comparison Comparison) DashSlice {
 	result := DashSlice{}
 
-	for _, item := range items {
-		if _, ok := IndexOf(values, item); !ok {
+	for _, item := range *items {
+		if _, ok := FindIndexWith(values, item, comparison); !ok {
 			result = append(result, item)
 		}
 	}
 
+	*items = result
 	return result
+}
+
+func PullAt(items *DashSlice, indices ...int) DashSlice {
+	pulled := DashSlice{}
+	result := DashSlice{}
+	indicesSlice := NewDashSliceFromIntArray(indices...)
+
+	for i, item := range *items {
+		if _, ok := IndexOf(indicesSlice, i); ok {
+			pulled = append(pulled, item)
+		} else {
+			result = append(result, item)
+		}
+	}
+
+	*items = result
+	return pulled
 }

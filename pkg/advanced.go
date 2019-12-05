@@ -2,6 +2,20 @@ package pkg
 
 type DashSlice []interface{}
 
+func NewDashSlice(items ...interface{}) DashSlice {
+	dashSlice := append(DashSlice{}, items...)
+	return dashSlice
+}
+
+func NewDashSliceFromIntArray(items ...int) DashSlice {
+	dashSlice := DashSlice{}
+	for _, i := range items {
+		dashSlice = append(dashSlice, i)
+	}
+
+	return dashSlice
+}
+
 func (ds DashSlice) Map(iteratee func(interface{}) interface{}) DashSlice {
 	result := DashSlice{}
 
