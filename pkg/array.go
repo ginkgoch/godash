@@ -423,3 +423,14 @@ func Last(items DashSlice) interface{} {
 
 	return result
 }
+
+func Nth(items DashSlice, n int) interface{} {
+	length := len(items)
+	if n >= length || n < -length {
+		return nil
+	} else if n >= 0 {
+		return items[n]
+	} else  {
+		return items[length + n]
+	}
+}

@@ -370,3 +370,21 @@ func TestLast(t *testing.T) {
 	result = Last(items)
 	assert.Equal(t, result, nil)
 }
+
+func TestNth(t *testing.T) {
+	items := DashSlice{1, 2, 3}
+
+	testNth := func(i int, r interface{}) {
+		result := Nth(items, i)
+		assert.Equal(t, result, r)
+	}
+
+	testNth(0, 1)
+	testNth(1, 2)
+	testNth(2, 3)
+	testNth(3, nil)
+	testNth(-1, 3)
+	testNth(-2, 2)
+	testNth(-3, 1)
+	testNth(-4, nil)
+}
