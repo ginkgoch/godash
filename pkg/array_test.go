@@ -45,6 +45,47 @@ func TestConcat2(t *testing.T) {
 	assert.DeepEqual(t, result, DashSlice{"a", "b", "c", "d", "e", "f"})
 }
 
+func TestDrop(t *testing.T) {
+	items := DashSlice{"a", "b", "c", "d"}
+
+	result := Drop(items, 0)
+	assert.DeepEqual(t, result, DashSlice{"a", "b", "c", "d"})
+
+	result = Drop(items, 1)
+	assert.DeepEqual(t, result, DashSlice{"b", "c", "d"})
+
+	result = Drop(items, 2)
+	assert.DeepEqual(t, result, DashSlice{"c", "d"})
+
+	result = Drop(items, 4)
+	assert.DeepEqual(t, result, DashSlice{})
+}
+
+func TestDropRight(t *testing.T) {
+	items := DashSlice{"a", "b", "c", "d"}
+
+	result := DropRight(items, 0)
+	assert.DeepEqual(t, result, DashSlice{"a", "b", "c", "d"})
+
+	result = DropRight(items, 1)
+	assert.DeepEqual(t, result, DashSlice{"a", "b", "c"})
+
+	result = DropRight(items, 4)
+	assert.DeepEqual(t, result, DashSlice{})
+
+	result = DropRight(items, 5)
+	assert.DeepEqual(t, result, DashSlice{})
+}
+
+func TestDropWhile(t *testing.T) {
+	items := DashSlice{"a", "b", "c", "d"}
+	result := DropWhile(items, func(el interface{}) bool {
+		return el == "a" || el == "b"
+	})
+
+	assert.DeepEqual(t, result, DashSlice{"c", "d"})
+}
+
 func TestFindIndex(t *testing.T) {
 	items := DashSlice{"a", "b", "c", "d"}
 
@@ -61,7 +102,7 @@ func TestFindIndex(t *testing.T) {
 }
 
 func TestFindIndexWith(t *testing.T) {
-	comparison := func(el1 interface{}, el2 interface{})bool {
+	comparison := func(el1 interface{}, el2 interface{}) bool {
 		if el1 == "e" && el2 == "c" {
 			return true
 		} else if el1 == el2 {
