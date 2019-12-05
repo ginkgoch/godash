@@ -353,3 +353,10 @@ func TestIntersectionWith(t *testing.T) {
 	})
 	assert.DeepEqual(t, result, DashSlice{3.2})
 }
+
+func TestJoin(t *testing.T) {
+	items := DashSlice{1, 2, 3}
+
+	result := Join(items, "~")
+	assert.Equal(t, result, "1~2~3")
+}

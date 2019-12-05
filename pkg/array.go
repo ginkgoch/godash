@@ -1,7 +1,9 @@
 package pkg
 
 import (
+	"fmt"
 	"reflect"
+	"strings"
 )
 
 // Creates an array of elements split into groups the length of size. If array can't be split evenly,
@@ -399,4 +401,14 @@ func IntersectionWith(items1 DashSlice, items2 DashSlice, comparison Comparison)
 	}
 
 	return result
+}
+
+func Join(items DashSlice, separator string) string {
+	var strs []string
+
+	for _, item := range items {
+		strs = append(strs, fmt.Sprintf("%v", item))
+	}
+
+	return strings.Join(strs, separator)
 }
