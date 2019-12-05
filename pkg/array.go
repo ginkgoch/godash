@@ -143,7 +143,7 @@ func DropWhile(items DashSlice, predict Prediction) DashSlice {
 	return result
 }
 
-func FillBy(items DashSlice, fillValue interface{}, from int, to int) {
+func FillInRange(items DashSlice, fillValue interface{}, from int, to int) {
 	if from < 0 {
 		from = 0
 	}
@@ -159,7 +159,7 @@ func FillBy(items DashSlice, fillValue interface{}, from int, to int) {
 }
 
 func Fill(items DashSlice, fillValue interface{}) {
-	FillBy(items, fillValue, 0, len(items))
+	FillInRange(items, fillValue, 0, len(items))
 }
 
 // This method is like _.find except that it returns the index of the first element predicate returns truthy
@@ -193,4 +193,91 @@ func FindIndexWith(items DashSlice, element interface{}, comparison Comparison) 
 	}
 
 	return index, ok
+}
+
+func FindIndexBy(items DashSlice, predict Prediction) (int, bool) {
+	index := -1
+	ok := false
+
+	for i, el := range items {
+		if predict(el) {
+			index = i
+			ok = true
+			break
+		}
+	}
+
+	return index, ok
+}
+
+func FindLastIndex(items DashSlice, element interface{}) (int, bool) {
+	var index = -1
+	var ok bool
+	len := len(items)
+
+	reversed := make(DashSlice, len)
+	copy(reversed, items)
+	Reverse(reversed)
+
+	for i, el := range reversed {
+		if el == element {
+			index = len - i - 1
+			ok = true
+			break
+		}
+	}
+
+	return index, ok
+}
+
+func FindLastIndexWith(items DashSlice, element interface{}, comparison Comparison) (int, bool) {
+	var index = -1
+	var ok bool
+
+	for i, el := range items {
+		if comparison(element, el) {
+			index = i
+			ok = true
+			break
+		}
+	}
+
+	return index, ok
+}
+
+func FindLastIndexBy(items DashSlice, predict Prediction) (int, bool) {
+	index := -1
+	ok := false
+
+	for i, el := range items {
+		if predict(el) {
+			index = i
+			ok = true
+			break
+		}
+	}
+
+	return index, ok
+}
+
+func Reverse(items DashSlice) {
+	len := len(items)
+
+	halfLen := len / 2
+
+	for i := 0; i < halfLen; i++ {
+		items[i], items[len-1-i] = items[len-1-i], items[i]
+	}
+}
+
+func Head(items DashSlice) interface{} {
+	if len(items) == 0 {
+		return nil
+	} else {
+		return items[0]
+	}
+}
+
+func First(items DashSlice) interface{} {
+	return Head(items)
 }

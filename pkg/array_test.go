@@ -89,10 +89,10 @@ func TestDropWhile(t *testing.T) {
 func TestFillBy(t *testing.T) {
 	items := DashSlice{"a", "b", "c", "d"}
 
-	FillBy(items, "z", 0, 4)
+	FillInRange(items, "z", 0, 4)
 	assert.DeepEqual(t, items, DashSlice{"z", "z", "z", "z"})
 
-	FillBy(items, "y", 2, 4)
+	FillInRange(items, "y", 2, 4)
 	assert.DeepEqual(t, items, DashSlice{"z", "z", "y", "y"})
 }
 
@@ -106,11 +106,11 @@ func TestFill(t *testing.T) {
 	assert.DeepEqual(t, items, DashSlice{"y", "y", "y", "y"})
 }
 
-func TestFindIndex(t *testing.T) {
+func findIndexTemp(t *testing.T, find func(DashSlice, interface{}) (int, bool)) {
 	items := DashSlice{"a", "b", "c", "d"}
 
 	findTest := func(el interface{}, expected int, found bool) {
-		result, ok := FindIndex(items, el)
+		result, ok := find(items, el)
 
 		assert.Equal(t, ok, found)
 		assert.Equal(t, result, expected)
@@ -121,7 +121,15 @@ func TestFindIndex(t *testing.T) {
 	findTest("e", -1, false)
 }
 
-func TestFindIndexWith(t *testing.T) {
+func TestFindIndex(t *testing.T) {
+	findIndexTemp(t, FindIndex)
+}
+
+func TestFindLastIndex(t *testing.T) {
+	findIndexTemp(t, FindLastIndex)
+}
+
+func findIndexWithTemp(t *testing.T, find func(DashSlice, interface{}, Comparison) (int, bool)) {
 	comparison := func(el1 interface{}, el2 interface{}) bool {
 		if el1 == "e" && el2 == "c" {
 			return true
@@ -134,7 +142,7 @@ func TestFindIndexWith(t *testing.T) {
 
 	items := DashSlice{"a", "b", "c", "d"}
 	findTest := func(el interface{}, expected int, found bool) {
-		result, ok := FindIndexWith(items, el, comparison)
+		result, ok := find(items, el, comparison)
 
 		assert.Equal(t, ok, found)
 		assert.Equal(t, result, expected)
@@ -144,6 +152,39 @@ func TestFindIndexWith(t *testing.T) {
 	findTest("a", 0, true)
 	findTest("b", 1, true)
 	findTest("f", -1, false)
+}
+
+func TestFindIndexWith(t *testing.T) {
+	findIndexWithTemp(t, FindIndexWith)
+}
+
+func TestFindLastIndexWith(t *testing.T) {
+	findIndexWithTemp(t, FindLastIndexWith)
+}
+
+func findIndexByTemp(t *testing.T, find func(DashSlice, Prediction) (int, bool)) {
+	items := DashSlice{"a", "b", "c", "d"}
+	i, ok := find(items, func(el interface{}) bool {
+		return el == "c"
+	})
+
+	assert.Equal(t, i, 2)
+	assert.Equal(t, ok, true)
+
+	j, ok := find(items, func(el interface{}) bool {
+		return el == "z"
+	})
+
+	assert.Equal(t, j, -1)
+	assert.Equal(t, ok, false)
+}
+
+func TestFindIndexBy(t *testing.T) {
+	findIndexByTemp(t, FindIndexBy)
+}
+
+func TestFindLastIndexBy(t *testing.T) {
+	findIndexByTemp(t, FindLastIndexBy)
 }
 
 func TestDifference1(t *testing.T) {
@@ -188,4 +229,25 @@ func TestDifferenceWith(t *testing.T) {
 	})
 
 	assert.DeepEqual(t, result, DashSlice{5.9})
+}
+
+func TestReverse(t *testing.T) {
+	items := DashSlice{"a", "b", "c", "d", "e"}
+	Reverse(items)
+
+	assert.DeepEqual(t, items, DashSlice{"e", "d", "c", "b", "a"})
+}
+
+func TestFirst1(t *testing.T) {
+	items := DashSlice{1, 2, 4}
+	i := First(items)
+
+	assert.Equal(t, i, 1)
+}
+
+func TestFirst2(t *testing.T) {
+	items := DashSlice{}
+	i := First(items)
+
+	assert.Equal(t, i, nil)
 }
