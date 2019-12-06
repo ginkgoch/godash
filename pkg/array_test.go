@@ -448,3 +448,41 @@ func TestTail(t *testing.T) {
 	result = Tail(items)
 	assert.DeepEqual(t, result, DashSlice{})
 }
+
+func TestTake(t *testing.T) {
+	items := DashSlice{1, 2, 3, 4}
+	result := Take(items, 2)
+	assert.DeepEqual(t, result, DashSlice{1, 2})
+
+	items = DashSlice{1, 2, 3, 4}
+	result = Take(items, 9)
+	assert.DeepEqual(t, result, DashSlice{1, 2, 3, 4})
+}
+
+func TestTakeWhile(t *testing.T) {
+	items := DashSlice{1, 3, 4, 6, 8}
+	result := TakeWhile(items, func(i interface{}) bool {
+		return i.(int)%2 != 0
+	})
+
+	assert.DeepEqual(t, result, DashSlice{1, 3})
+}
+
+func TestTakeRight(t *testing.T) {
+	items := DashSlice{1, 2, 3, 4}
+	result := TakeRight(items, 2)
+	assert.DeepEqual(t, result, DashSlice{3, 4})
+
+	items = DashSlice{1, 2, 3, 4}
+	result = Take(items, 9)
+	assert.DeepEqual(t, result, DashSlice{1, 2, 3, 4})
+}
+
+func TestTakeRightWhile(t *testing.T) {
+	items := DashSlice{1, 3, 4, 6, 8}
+	result := TakeRightWhile(items, func(i interface{}) bool {
+		return i.(int)%2 == 0
+	})
+
+	assert.DeepEqual(t, result, DashSlice{4, 6, 8})
+}

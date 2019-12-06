@@ -508,6 +508,52 @@ func Tail(items DashSlice) DashSlice {
 	return DashSlice{}
 }
 
+func Take(items DashSlice, n int) DashSlice {
+	length := len(items)
+	if n >= length {
+		n = length
+	}
+
+	return items[0:n]
+}
+
+func TakeWhile(items DashSlice, predicate Predicate) DashSlice {
+	var to int
+
+	for i, item := range items {
+		if !predicate(item) {
+			break
+		} else {
+			to = i + 1
+		}
+	}
+
+	return Take(items, to)
+}
+
+func TakeRight(items DashSlice, n int) DashSlice {
+	length := len(items)
+	if n >= length {
+		n = length
+	}
+
+	from := length - n
+	return items[from:]
+}
+
+func TakeRightWhile(items DashSlice, predicate Predicate) DashSlice {
+	from := len(items)
+
+	for i := from - 1; i >= 0; i-- {
+		if !predicate(items[i]) {
+			from = i + 1
+			break
+		}
+	}
+
+	return items[from:]
+}
+
 //TODO: sortedIndex
 //TODO: sortedIndexBy
 //TODO: sortedIndexOf
