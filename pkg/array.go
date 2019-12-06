@@ -128,12 +128,12 @@ func DropRight(items DashSlice, count int) DashSlice {
 	return result
 }
 
-func DropWhile(items DashSlice, predict Prediction) DashSlice {
+func DropWhile(items DashSlice, predicate Predicate) DashSlice {
 	result := DashSlice{}
 
 	started := false
 	for _, item := range items {
-		if !started && !predict(item) {
+		if !started && !predicate(item) {
 			started = true
 		}
 
@@ -197,12 +197,12 @@ func FindIndexWith(items DashSlice, element interface{}, comparison Comparison) 
 	return index, ok
 }
 
-func FindIndex(items DashSlice, predict Prediction) (int, bool) {
+func FindIndex(items DashSlice, predicate Predicate) (int, bool) {
 	index := -1
 	ok := false
 
 	for i, el := range items {
-		if predict(el) {
+		if predicate(el) {
 			index = i
 			ok = true
 			break
@@ -247,12 +247,12 @@ func FindLastIndexWith(items DashSlice, element interface{}, comparison Comparis
 	return index, ok
 }
 
-func FindLastIndex(items DashSlice, predict Prediction) (int, bool) {
+func FindLastIndex(items DashSlice, predicate Predicate) (int, bool) {
 	index := -1
 	ok := false
 
 	for i, el := range items {
-		if predict(el) {
+		if predicate(el) {
 			index = i
 			ok = true
 			break
@@ -418,7 +418,7 @@ func Last(items DashSlice) interface{} {
 
 	length := len(items)
 	if length > 0 {
-		result = items[length - 1]
+		result = items[length-1]
 	}
 
 	return result
@@ -430,8 +430,8 @@ func Nth(items DashSlice, n int) interface{} {
 		return nil
 	} else if n >= 0 {
 		return items[n]
-	} else  {
-		return items[length + n]
+	} else {
+		return items[length+n]
 	}
 }
 
@@ -476,4 +476,20 @@ func PullAt(items *DashSlice, indices ...int) DashSlice {
 
 	*items = result
 	return pulled
+}
+
+func Remove(items *DashSlice, predicate Predicate) DashSlice {
+	removed := DashSlice{}
+	newItems := DashSlice{}
+
+	for _, item := range *items {
+		if predicate(item) {
+			removed = append(removed, item)
+		} else {
+			newItems = append(newItems, item)
+		}
+	}
+
+	*items = newItems
+	return removed
 }

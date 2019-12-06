@@ -162,7 +162,7 @@ func TestFindLastIndexWith(t *testing.T) {
 	findIndexWithTemp(t, FindLastIndexWith)
 }
 
-func findIndexTemp(t *testing.T, find func(DashSlice, Prediction) (int, bool)) {
+func findIndexTemp(t *testing.T, find func(DashSlice, Predicate) (int, bool)) {
 	items := DashSlice{"a", "b", "c", "d"}
 	i, ok := find(items, func(el interface{}) bool {
 		return el == "c"
@@ -416,4 +416,14 @@ func TestPullAt(t *testing.T) {
 
 	assert.DeepEqual(t, pulled, DashSlice{"b", "a", "c"})
 	assert.DeepEqual(t, items, DashSlice{"a", "c", "b"})
+}
+
+func TestRemove(t *testing.T) {
+	items := DashSlice{1, 2, 3, 4, 5, 6, 7}
+	removed := Remove(&items, func(i interface{}) bool {
+		return i.(int)%2 == 0
+	})
+
+	assert.DeepEqual(t, items, DashSlice{1, 3, 5, 7})
+	assert.DeepEqual(t, removed, DashSlice{2, 4, 6})
 }
