@@ -31,3 +31,5 @@ type Comparison func(interface{}, interface{}) bool
 type Predicate func(interface{}) bool
 
 type Iteratee func(interface{}) interface{}
+
+type Action func(interface{}, int)
