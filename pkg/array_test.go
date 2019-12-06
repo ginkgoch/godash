@@ -434,3 +434,17 @@ func TestSlice(t *testing.T) {
 
 	assert.DeepEqual(t, result, DashSlice{3, 4, 5})
 }
+
+func TestTail(t *testing.T) {
+	items := DashSlice{1, 2, 3, 4}
+	result := Tail(items)
+	assert.DeepEqual(t, result, DashSlice{2, 3, 4})
+
+	items = DashSlice{1}
+	result = Tail(items)
+	assert.DeepEqual(t, result, DashSlice{})
+
+	items = DashSlice{}
+	result = Tail(items)
+	assert.DeepEqual(t, result, DashSlice{})
+}

@@ -499,3 +499,20 @@ func Remove(items *DashSlice, predicate Predicate) DashSlice {
 func Slice(items DashSlice, from int, to int) DashSlice {
 	return items[from:to]
 }
+
+func Tail(items DashSlice) DashSlice {
+	if len(items) > 0 {
+		return items[1:]
+	}
+
+	return DashSlice{}
+}
+
+//TODO: sortedIndex
+//TODO: sortedIndexBy
+//TODO: sortedIndexOf
+//TODO: sortedLastIndex
+//TODO: sortedLastIndexBy
+//TODO: sortedLastIndexOf
+//TODO: sortedUniq
+//TODO: sortedUniqBy
