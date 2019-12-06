@@ -427,3 +427,10 @@ func TestRemove(t *testing.T) {
 	assert.DeepEqual(t, items, DashSlice{1, 3, 5, 7})
 	assert.DeepEqual(t, removed, DashSlice{2, 4, 6})
 }
+
+func TestSlice(t *testing.T) {
+	items := DashSlice{1, 2, 3, 4, 5, 6, 7}
+	result := Slice(items, 2, 5)
+
+	assert.DeepEqual(t, result, DashSlice{3, 4, 5})
+}

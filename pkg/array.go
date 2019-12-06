@@ -262,7 +262,7 @@ func FindLastIndex(items DashSlice, predicate Predicate) (int, bool) {
 	return index, ok
 }
 
-func Reverse(items DashSlice) {
+func Reverse(items DashSlice) DashSlice {
 	length := len(items)
 
 	halfLen := length / 2
@@ -270,6 +270,8 @@ func Reverse(items DashSlice) {
 	for i := 0; i < halfLen; i++ {
 		items[i], items[length-1-i] = items[length-1-i], items[i]
 	}
+
+	return items
 }
 
 func Head(items DashSlice) interface{} {
@@ -492,4 +494,8 @@ func Remove(items *DashSlice, predicate Predicate) DashSlice {
 
 	*items = newItems
 	return removed
+}
+
+func Slice(items DashSlice, from int, to int) DashSlice {
+	return items[from:to]
 }
