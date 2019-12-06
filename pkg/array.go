@@ -622,6 +622,84 @@ func UniqWith(items DashSlice, comparison Comparison) DashSlice {
 	return result
 }
 
+func Without(items DashSlice, values ...interface{}) DashSlice {
+	newItems := make(DashSlice, len(items))
+	copy(newItems, items)
+	Pull(&newItems, values...)
+
+	return newItems
+}
+
+func xor2(i1 DashSlice, i2 DashSlice) DashSlice {
+	ni1 := Uniq(i1)
+	ni2 := Uniq(i2)
+	result := DashSlice{}
+
+	for _, item := range ni1 {
+		if _, found := IndexOf(ni2, item); found {
+			ni2 = Without(ni2, item)
+		} else {
+			result = append(result, item)
+		}
+	}
+
+	return append(result, ni2...)
+}
+
+func Xor(items ...DashSlice) DashSlice {
+	length := len(items)
+	if length == 0 {
+		return DashSlice{}
+	} else if length == 1 {
+		result := append(DashSlice{}, items[0]...)
+		return result
+	} else {
+		result := append(DashSlice{}, items[0]...)
+		for i := 1; i < length; i++ {
+			result = xor2(result, items[i])
+		}
+
+		return result
+	}
+}
+
+func Zip(slices ...DashSlice) []DashSlice {
+	maxLength := 0
+	for _, slice := range slices {
+		if maxLength < len(slice) {
+			maxLength = len(slice)
+		}
+	}
+
+	result := make([]DashSlice, 0)
+	for i := 0; i < maxLength; i++ {
+		item := DashSlice{}
+		for _, slice := range slices {
+			if i < len(slice) {
+				item = append(item, slice[i])
+			} else {
+				item = append(item, nil)
+			}
+		}
+
+		result = append(result, item)
+	}
+
+	return result
+}
+
+func ZipWith(iteratee func([]interface{}) interface{}, slices ...DashSlice) DashSlice {
+	zipped := Zip(slices...)
+
+	result := DashSlice{}
+	for _, item := range zipped {
+		itemResult := iteratee(item)
+		result = append(result, itemResult)
+	}
+
+	return result
+}
+
 //TODO: sortedIndex
 //TODO: sortedIndexBy
 //TODO: sortedIndexOf
@@ -630,3 +708,5 @@ func UniqWith(items DashSlice, comparison Comparison) DashSlice {
 //TODO: sortedLastIndexOf
 //TODO: sortedUniq
 //TODO: sortedUniqBy
+//TODO: xorBy
+//TODO: xorWith

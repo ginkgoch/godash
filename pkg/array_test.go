@@ -531,3 +531,33 @@ func TestUniqWith(t *testing.T) {
 
 	assert.DeepEqual(t, result, DashSlice{1, 2, 3})
 }
+
+func TestWithout(t *testing.T) {
+	items := DashSlice{1, 2, 3, 5, 8, 2, 6}
+	result := Without(items, 2, 5, 8)
+	assert.DeepEqual(t, result, DashSlice{1, 3, 6})
+}
+
+func TestXor(t *testing.T) {
+	result := Xor(DashSlice{2, 1}, DashSlice{2, 3})
+	assert.DeepEqual(t, result, DashSlice{1, 3})
+}
+
+func TestZip(t *testing.T) {
+	result := Zip(DashSlice{"a", "b"}, DashSlice{1, 2}, DashSlice{true, false})
+	assert.Equal(t, len(result), 2)
+}
+
+func TestZipWith(t *testing.T) {
+	iteratee := func(items []interface{}) interface{} {
+		sum := 0
+		for _, item := range items {
+			sum += item.(int)
+		}
+
+		return sum
+	}
+
+	result := ZipWith(iteratee, DashSlice{1, 2}, DashSlice{10, 20}, DashSlice{100, 200})
+	assert.DeepEqual(t, result, DashSlice{111, 222})
+}
