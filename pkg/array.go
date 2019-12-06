@@ -56,6 +56,15 @@ func Concat(items DashSlice, newItems ...interface{}) DashSlice {
 	return result
 }
 
+func ConcatSlices(slices ...DashSlice) DashSlice {
+	result := DashSlice{}
+	for _, slice := range slices {
+		result = Concat(result, slice...)
+	}
+
+	return result
+}
+
 // Creates an array of array values not included in the other given arrays using SameValueZero for equality comparisons.
 // The order and references of result values are determined by the first array.
 func Difference(items DashSlice, itemsToCompare ...interface{}) DashSlice {
@@ -552,6 +561,65 @@ func TakeRightWhile(items DashSlice, predicate Predicate) DashSlice {
 	}
 
 	return items[from:]
+}
+
+func Union(slices ...DashSlice) DashSlice {
+	result := ConcatSlices(slices...)
+	result = Uniq(result)
+	return result
+}
+
+func UnionBy(iteratee Iteratee, slices ...DashSlice) DashSlice {
+	result := ConcatSlices(slices...)
+	result = UniqBy(result, iteratee)
+	return result
+}
+
+func UnionWith(comparison Comparison, slices ...DashSlice) DashSlice {
+	result := ConcatSlices(slices...)
+	result = UniqWith(result, comparison)
+	return result
+}
+
+func Uniq(items DashSlice) DashSlice {
+	uniqMarks := make(map[interface{}]bool)
+	result := DashSlice{}
+
+	for _, item := range items {
+		if !uniqMarks[item] {
+			uniqMarks[item] = true
+			result = append(result, item)
+		}
+	}
+
+	return result
+}
+
+func UniqBy(items DashSlice, iteratee Iteratee) DashSlice {
+	uniqMarks := make(map[interface{}]interface{})
+	result := DashSlice{}
+
+	for _, item := range items {
+		newItem := iteratee(item)
+		if _, found := uniqMarks[newItem]; !found {
+			uniqMarks[newItem] = item
+			result = append(result, item)
+		}
+	}
+
+	return result
+}
+
+func UniqWith(items DashSlice, comparison Comparison) DashSlice {
+	result := DashSlice{}
+
+	for _, item := range items {
+		if _, found := FindIndexWith(result, item, comparison); !found {
+			result = append(result, item)
+		}
+	}
+
+	return result
 }
 
 //TODO: sortedIndex

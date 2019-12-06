@@ -486,3 +486,48 @@ func TestTakeRightWhile(t *testing.T) {
 
 	assert.DeepEqual(t, result, DashSlice{4, 6, 8})
 }
+
+func TestUnion(t *testing.T) {
+	result := Union(DashSlice{2}, DashSlice{1, 2})
+	assert.DeepEqual(t, result, DashSlice{2, 1})
+}
+
+func TestUnionBy(t *testing.T) {
+	result := UnionBy(func(i interface{}) interface{} {
+		return math.Floor(i.(float64))
+	}, DashSlice{2.1}, DashSlice{1.2, 2.3})
+
+	assert.DeepEqual(t, result, DashSlice{2.1, 1.2})
+}
+
+func TestUnionWith(t *testing.T) {
+	result := UnionWith(func(i1 interface{}, i2 interface{}) bool {
+		return i1.(int)%3 == i2.(int)%3
+	}, DashSlice{1, 2, 3}, DashSlice{5, 8}, DashSlice{2, 6})
+
+	assert.DeepEqual(t, result, DashSlice{1, 2, 3})
+}
+
+func TestUniq(t *testing.T) {
+	items := DashSlice{1, 3, 8, 6, 8, 2, 3, 2, 3, 2}
+	result := Uniq(items)
+	assert.DeepEqual(t, result, DashSlice{1, 3, 8, 6, 2})
+}
+
+func TestUniqBy(t *testing.T) {
+	items := DashSlice{2.1, 1.2, 2.4}
+	result := UniqBy(items, func(i interface{}) interface{} {
+		return math.Floor(i.(float64))
+	})
+
+	assert.DeepEqual(t, result, DashSlice{2.1, 1.2})
+}
+
+func TestUniqWith(t *testing.T) {
+	items := DashSlice{1, 2, 3, 5, 8, 2, 6}
+	result := UniqWith(items, func(i1 interface{}, i2 interface{}) bool {
+		return i1.(int)%3 == i2.(int)%3
+	})
+
+	assert.DeepEqual(t, result, DashSlice{1, 2, 3})
+}
