@@ -99,7 +99,7 @@ func FindLastFrom(items DashSlice, predicate Predicate, from int) (interface{}, 
 }
 
 func FindLast(items DashSlice, predicate Predicate) (interface{}, bool) {
-	return FindLastFrom(items, predicate, len(items) - 1)
+	return FindLastFrom(items, predicate, len(items)-1)
 }
 
 func FlatMap(items DashSlice, iteratee Iteratee) DashSlice {
@@ -169,5 +169,26 @@ func Reduce(items DashSlice, reducer Reducer) interface{} {
 		return items[0]
 	} else {
 		return ReduceWithInitial(items[1:], reducer, items[0])
+	}
+}
+
+func ReduceRightWithInitial(items DashSlice, reducer Reducer, initial interface{}) interface{} {
+	result := initial
+	for i := len(items) - 1; i >= 0; i-- {
+		item := items[i]
+		result = reducer(result, item)
+	}
+
+	return result
+}
+
+func ReduceRight(items DashSlice, reducer Reducer) interface{} {
+	length := len(items)
+	if length == 0 {
+		return nil
+	} else if length == 1 {
+		return items[0]
+	} else {
+		return ReduceRightWithInitial(items[0:length-1], reducer, items[length-1])
 	}
 }

@@ -227,3 +227,11 @@ func TestReduce(t *testing.T) {
 
 	assert.Equal(t, result, 20)
 }
+
+func TestReduceRight(t *testing.T) {
+	items := DashSlice{1, 2, 3, 4}
+	result1 := ReduceRight(items, func(i1 interface{}, i2 interface{}) interface{} {
+		return i1.(int) + i2.(int)
+	})
+	assert.Equal(t, result1, 10)
+}
