@@ -171,3 +171,59 @@ func TestFlatMapDepth(t *testing.T) {
 
 	assert.DeepEqual(t, result, DashSlice{1, 1, 2, 2, 3, 3})
 }
+
+func TestGroupBy(t *testing.T) {
+	items := DashSlice{6.1, 4.2, 6.3}
+	result := GroupBy(items, func(i interface{}) interface{} {
+		return math.Floor(i.(float64))
+	})
+
+	assert.Equal(t, len(result), 2)
+
+	value1, found := result[6.0]
+	assert.Equal(t, found, true)
+	assert.Equal(t, len(value1), 2)
+	assert.DeepEqual(t, value1, DashSlice{6.1, 6.3})
+
+	value2, found := result[4.0]
+	assert.Equal(t, found, true)
+	assert.Equal(t, len(value2), 1)
+	assert.DeepEqual(t, value2, DashSlice{4.2})
+
+	_, found = result[5.0]
+	assert.Equal(t, found, false)
+}
+
+func TestIncludes(t *testing.T) {
+	items := DashSlice{"a", 1, 0, "c"}
+
+	found := Includes(items, "a")
+	assert.Equal(t, found, true)
+
+	found = Includes(items, "c")
+	assert.Equal(t, found, true)
+
+	found = Includes(items, 1)
+	assert.Equal(t, found, true)
+
+	found = Includes(items, 0)
+	assert.Equal(t, found, true)
+
+	found = Includes(items, -1)
+	assert.Equal(t, found, false)
+}
+
+func TestReduce(t *testing.T) {
+	items := DashSlice{1, 2, 3, 4}
+	result := Reduce(items, func(i1 interface{}, i2 interface{}) interface{} {
+		return i1.(int) + i2.(int)
+	})
+
+	assert.Equal(t, result, 10)
+
+	result = ReduceWithInitial(items, func(i1 interface{}, i2 interface{}) interface{} {
+		return i1.(int) + i2.(int)
+	}, 10)
+
+	assert.Equal(t, result, 20)
+}

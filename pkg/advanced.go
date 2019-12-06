@@ -33,3 +33,5 @@ type Predicate func(interface{}) bool
 type Iteratee func(interface{}) interface{}
 
 type Action func(interface{}, int)
+
+type Reducer func(interface{}, interface{}) interface{}

@@ -17,18 +17,30 @@ func CountBy(items DashSlice, iteratee Iteratee) map[interface{}]int {
 	return counts
 }
 
-func ForEach(items DashSlice, action Action) {
+func ForEach(items DashSlice, action Action) DashSlice {
 	for key, item := range items {
 		action(item, key)
 	}
+
+	return items
 }
 
-func ForEachRight(items DashSlice, action Action) {
+func Each(items DashSlice, action Action) DashSlice {
+	return ForEach(items, action)
+}
+
+func ForEachRight(items DashSlice, action Action) DashSlice {
 	length := len(items)
 
 	for i := length - 1; i >= 0; i-- {
 		action(items[i], i)
 	}
+
+	return items
+}
+
+func EachRight(items DashSlice, action Action) DashSlice {
+	return ForEachRight(items, action)
 }
 
 func Every(items DashSlice, predicate Predicate) bool {
@@ -116,4 +128,46 @@ func Map(items DashSlice, iteratee Iteratee) DashSlice {
 	}
 
 	return mappedItems
+}
+
+func GroupBy(items DashSlice, iteratee Iteratee) map[interface{}]DashSlice {
+	result := map[interface{}]DashSlice{}
+
+	for _, item := range items {
+		key := iteratee(item)
+
+		el, found := result[key]
+		if found {
+			result[key] = append(el, item)
+		} else {
+			result[key] = append(DashSlice{}, item)
+		}
+	}
+
+	return result
+}
+
+func Includes(items DashSlice, value interface{}) bool {
+	_, found := IndexOf(items, value)
+	return found
+}
+
+func ReduceWithInitial(items DashSlice, reducer Reducer, initial interface{}) interface{} {
+	result := initial
+	for _, item := range items {
+		result = reducer(result, item)
+	}
+
+	return result
+}
+
+func Reduce(items DashSlice, reducer Reducer) interface{} {
+	length := len(items)
+	if length == 0 {
+		return nil
+	} else if length == 1 {
+		return items[0]
+	} else {
+		return ReduceWithInitial(items[1:], reducer, items[0])
+	}
 }
