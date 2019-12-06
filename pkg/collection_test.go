@@ -235,3 +235,49 @@ func TestReduceRight(t *testing.T) {
 	})
 	assert.Equal(t, result1, 10)
 }
+
+func TestReject(t *testing.T) {
+	result := Reject(DashSlice{1, 2, 3, 4}, func(i interface{}) bool {
+		return i.(int) % 2 == 0
+	})
+
+	assert.DeepEqual(t, result, DashSlice{1, 3})
+}
+
+func TestSample(t *testing.T) {
+	items := DashSlice{1, 2, 3, 4, 5}
+	r1 := Sample(items)
+	r2 := Sample(items)
+	r3 := Sample(items)
+
+	assert.Equal(t, r1 != r2 || r2 != r3 || r1 != r3, true)
+}
+
+func TestSampleSize1(t *testing.T) {
+	items := DashSlice{1, 2, 3, 4, 5}
+	r := SampleSize(items, 5)
+	assert.Equal(t, len(r), 5)
+	assert.Equal(t, Includes(r, 1), true)
+	assert.Equal(t, Includes(r, 2), true)
+	assert.Equal(t, Includes(r, 3), true)
+	assert.Equal(t, Includes(r, 4), true)
+	assert.Equal(t, Includes(r, 5), true)
+}
+
+func TestSampleSize2(t *testing.T) {
+	items := DashSlice{1, 2, 3, 4, 5}
+	r := SampleSize(items, 2)
+	assert.Equal(t, len(r), 2)
+	assert.Equal(t, r[0] != r[1], true)
+}
+
+func TestSampleSize3(t *testing.T) {
+	items := DashSlice{1, 2, 3, 4, 5}
+	r := SampleSize(items, 10)
+	assert.Equal(t, len(r), 5)
+	assert.Equal(t, Includes(r, 1), true)
+	assert.Equal(t, Includes(r, 2), true)
+	assert.Equal(t, Includes(r, 3), true)
+	assert.Equal(t, Includes(r, 4), true)
+	assert.Equal(t, Includes(r, 5), true)
+}

@@ -1,5 +1,7 @@
 package pkg
 
+import "math/rand"
+
 func CountBy(items DashSlice, iteratee Iteratee) map[interface{}]int {
 	counts := map[interface{}]int{}
 	for _, item := range items {
@@ -191,4 +193,36 @@ func ReduceRight(items DashSlice, reducer Reducer) interface{} {
 	} else {
 		return ReduceRightWithInitial(items[0:length-1], reducer, items[length-1])
 	}
+}
+
+func Reject(items DashSlice, predicate Predicate) DashSlice {
+	result := DashSlice{}
+	for _, item := range items {
+		if ok := predicate(item); !ok {
+			result = append(result, item)
+		}
+	}
+
+	return result
+}
+
+func Sample(items DashSlice) interface{} {
+	n := rand.Intn(len(items))
+	return items[n]
+}
+
+func SampleSize(items DashSlice, n int) DashSlice {
+	result := DashSlice{}
+
+	for i := 0; i < n; i++ {
+		length := len(items)
+		if length == 0 {
+			break
+		}
+		r := rand.Intn(len(items))
+		result = append(result, items[r])
+		items = append(items[:r], items[r+1:]...)
+	}
+
+	return result
 }
