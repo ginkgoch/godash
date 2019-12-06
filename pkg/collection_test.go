@@ -137,3 +137,37 @@ func TestFindLast(t *testing.T) {
 	assert.Equal(t, result, nil)
 	assert.Equal(t, ok, false)
 }
+
+func TestMap(t *testing.T) {
+	result := Map(DashSlice{1, 2, 3}, func(i interface{}) interface{} {
+		return i.(int) * 2
+	})
+
+	assert.DeepEqual(t, result, DashSlice{2, 4, 6})
+}
+
+func TestFlatMap(t *testing.T) {
+	result := FlatMap(DashSlice{1, 2, 3}, func(i interface{}) interface{} {
+		return []int{i.(int), i.(int)}
+	})
+
+	assert.DeepEqual(t, result, DashSlice{1, 1, 2, 2, 3, 3})
+}
+
+func TestFlatMapDeep(t *testing.T) {
+	result := FlatMapDeep(DashSlice{1, 2, 3}, func(i interface{}) interface{} {
+		ii := i.(int)
+		return [][]int{{ii, ii}}
+	})
+
+	assert.DeepEqual(t, result, DashSlice{1, 1, 2, 2, 3, 3})
+}
+
+func TestFlatMapDepth(t *testing.T) {
+	result := FlatMapDepth(DashSlice{1, 2, 3}, func(i interface{}) interface{} {
+		ii := i.(int)
+		return [][]int{{ii, ii}}
+	}, 2)
+
+	assert.DeepEqual(t, result, DashSlice{1, 1, 2, 2, 3, 3})
+}

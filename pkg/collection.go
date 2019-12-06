@@ -89,3 +89,31 @@ func FindLastFrom(items DashSlice, predicate Predicate, from int) (interface{}, 
 func FindLast(items DashSlice, predicate Predicate) (interface{}, bool) {
 	return FindLastFrom(items, predicate, len(items) - 1)
 }
+
+func FlatMap(items DashSlice, iteratee Iteratee) DashSlice {
+	mappedItems := Map(items, iteratee)
+	mappedItems = Flatten(mappedItems)
+	return mappedItems
+}
+
+func FlatMapDeep(items DashSlice, iteratee Iteratee) DashSlice {
+	mappedItems := Map(items, iteratee)
+	mappedItems = FlattenDeep(mappedItems)
+	return mappedItems
+}
+
+func FlatMapDepth(items DashSlice, iteratee Iteratee, depth int) DashSlice {
+	mappedItems := Map(items, iteratee)
+	mappedItems = FlattenDepth(mappedItems, depth)
+	return mappedItems
+}
+
+func Map(items DashSlice, iteratee Iteratee) DashSlice {
+	mappedItems := DashSlice{}
+	for _, item := range items {
+		mappedItem := iteratee(item)
+		mappedItems = append(mappedItems, mappedItem)
+	}
+
+	return mappedItems
+}
