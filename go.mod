@@ -5,6 +5,7 @@ go 1.13
 require (
 	github.com/google/go-cmp v0.3.1 // indirect
 	github.com/pkg/errors v0.8.1 // indirect
+	github.com/robertkrimen/godocdown v0.0.0-20130622164427-0bfa04905481 // indirect
 	golang.org/x/net v0.0.0-20191204025024-5ee1b9f4859a // indirect
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e // indirect
 	golang.org/x/tools v0.0.0-20191204011308-9611592c72f6 // indirect

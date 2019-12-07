@@ -56,6 +56,7 @@ func Concat(items DashSlice, newItems ...interface{}) DashSlice {
 	return result
 }
 
+// Creates a new array concatenating array with any additional DashSlices.
 func ConcatSlices(slices ...DashSlice) DashSlice {
 	result := DashSlice{}
 	for _, slice := range slices {
@@ -137,6 +138,9 @@ func DropRight(items DashSlice, count int) DashSlice {
 	return result
 }
 
+// Creates a slice of array excluding elements dropped from the beginning.
+// Elements are dropped until predicate returns falsy.
+// The predicate is invoked with two arguments: (value, index).
 func DropWhile(items DashSlice, predicate Predicate) DashSlice {
 	result := DashSlice{}
 
@@ -154,21 +158,23 @@ func DropWhile(items DashSlice, predicate Predicate) DashSlice {
 	return result
 }
 
-func FillInRange(items DashSlice, fillValue interface{}, from int, to int) {
-	if from < 0 {
-		from = 0
+// Fills elements of array with value from start up to, but not including end.
+func FillInRange(items DashSlice, value interface{}, start int, end int) {
+	if start < 0 {
+		start = 0
 	}
 
 	length := len(items)
-	if to >= length {
-		to = length
+	if end >= length {
+		end = length
 	}
 
-	for i := from; i < to; i++ {
-		items[i] = fillValue
+	for i := start; i < end; i++ {
+		items[i] = value
 	}
 }
 
+// Fills elements of array with value.
 func Fill(items DashSlice, fillValue interface{}) {
 	FillInRange(items, fillValue, 0, len(items))
 }
@@ -206,6 +212,8 @@ func FindIndexWith(items DashSlice, element interface{}, comparison Comparison) 
 	return index, ok
 }
 
+// This method is like Find except that it returns the index of the first element predicate
+// returns truthy for instead of the element itself.
 func FindIndex(items DashSlice, predicate Predicate) (int, bool) {
 	index := -1
 	ok := false
@@ -221,6 +229,7 @@ func FindIndex(items DashSlice, predicate Predicate) (int, bool) {
 	return index, ok
 }
 
+// This method is like IndexOf except that it iterates over elements of array from right to left.
 func LastIndexOf(items DashSlice, element interface{}) (int, bool) {
 	var index = -1
 	var ok bool
@@ -241,6 +250,7 @@ func LastIndexOf(items DashSlice, element interface{}) (int, bool) {
 	return index, ok
 }
 
+// This method is like FindIndex except that it iterates over elements of collection from right to left.
 func FindLastIndexWith(items DashSlice, element interface{}, comparison Comparison) (int, bool) {
 	var index = -1
 	var ok bool
@@ -256,6 +266,8 @@ func FindLastIndexWith(items DashSlice, element interface{}, comparison Comparis
 	return index, ok
 }
 
+// This method is like Find except that it returns the index of the first element
+// predicate returns truthy for instead of the element itself.
 func FindLastIndex(items DashSlice, predicate Predicate) (int, bool) {
 	index := -1
 	ok := false
@@ -271,6 +283,7 @@ func FindLastIndex(items DashSlice, predicate Predicate) (int, bool) {
 	return index, ok
 }
 
+// Reverses array so that the first element becomes the last, the second element becomes the second to last, and so on.
 func Reverse(items DashSlice) DashSlice {
 	length := len(items)
 
@@ -283,6 +296,7 @@ func Reverse(items DashSlice) DashSlice {
 	return items
 }
 
+// Gets the first element of slice.
 func Head(items DashSlice) interface{} {
 	if len(items) == 0 {
 		return nil
@@ -291,6 +305,7 @@ func Head(items DashSlice) interface{} {
 	}
 }
 
+// Gets the first element of array.
 func First(items DashSlice) interface{} {
 	return Head(items)
 }
@@ -317,6 +332,7 @@ func flattenRecursive(item interface{}, currentDepth int, depth int) DashSlice {
 	return result
 }
 
+// Flattens array a single level deep.
 func Flatten(items DashSlice) DashSlice {
 	result := DashSlice{}
 
@@ -328,6 +344,7 @@ func Flatten(items DashSlice) DashSlice {
 	return result
 }
 
+// Recursively flattens array.
 func FlattenDeep(items DashSlice) DashSlice {
 	result := DashSlice{}
 
@@ -339,6 +356,7 @@ func FlattenDeep(items DashSlice) DashSlice {
 	return result
 }
 
+// Recursively flatten array up to depth times.
 func FlattenDepth(items DashSlice, depth int) DashSlice {
 	result := DashSlice{}
 
@@ -350,6 +368,7 @@ func FlattenDepth(items DashSlice, depth int) DashSlice {
 	return result
 }
 
+// This method returns an object composed from key-value pairs.
 func FromPairs(pairs []DashSlice) map[interface{}]interface{} {
 	result := make(map[interface{}]interface{})
 	for _, pair := range pairs {
@@ -365,6 +384,7 @@ func FromPairs(pairs []DashSlice) map[interface{}]interface{} {
 	return result
 }
 
+// Gets all but the last element of array.
 func Initial(items DashSlice) DashSlice {
 	length := len(items)
 	result := DashSlice{}
@@ -376,6 +396,8 @@ func Initial(items DashSlice) DashSlice {
 	return result
 }
 
+// Creates an array of unique values that are included in all given arrays using SameValueZero for equality comparisons.
+// The order and references of result values are determined by the first array.
 func Intersection(items1 DashSlice, items2 DashSlice) DashSlice {
 	result := DashSlice{}
 
@@ -388,6 +410,9 @@ func Intersection(items1 DashSlice, items2 DashSlice) DashSlice {
 	return result
 }
 
+// This method is like Intersection except that it accepts iteratee which is invoked for each element of each arrays
+// to generate the criterion by which they're compared. The order and references of result values are determined by the
+// first array. The iteratee is invoked with one argument: (value).
 func IntersectionBy(items1 DashSlice, items2 DashSlice, iteratee Iteratee) DashSlice {
 	result := DashSlice{}
 	newItems1 := items1.Map(iteratee)
@@ -402,6 +427,9 @@ func IntersectionBy(items1 DashSlice, items2 DashSlice, iteratee Iteratee) DashS
 	return result
 }
 
+// This method is like _.intersection except that it accepts comparator which is invoked to compare elements of arrays.
+// The order and references of result values are determined by the first array.
+// The comparator is invoked with two arguments: (arrVal, othVal).
 func IntersectionWith(items1 DashSlice, items2 DashSlice, comparison Comparison) DashSlice {
 	result := DashSlice{}
 
@@ -414,16 +442,18 @@ func IntersectionWith(items1 DashSlice, items2 DashSlice, comparison Comparison)
 	return result
 }
 
+// Converts all elements in array into a string separated by separator.
 func Join(items DashSlice, separator string) string {
-	var strs []string
+	var stringItems []string
 
 	for _, item := range items {
-		strs = append(strs, fmt.Sprintf("%v", item))
+		stringItems = append(stringItems, fmt.Sprintf("%v", item))
 	}
 
-	return strings.Join(strs, separator)
+	return strings.Join(stringItems, separator)
 }
 
+// Gets the last element of array.
 func Last(items DashSlice) interface{} {
 	var result interface{}
 
@@ -435,6 +465,7 @@ func Last(items DashSlice) interface{} {
 	return result
 }
 
+// Gets the element at index n of array. If n is negative, the nth element from the end is returned.
 func Nth(items DashSlice, n int) interface{} {
 	length := len(items)
 	if n >= length || n < -length {
@@ -446,6 +477,7 @@ func Nth(items DashSlice, n int) interface{} {
 	}
 }
 
+// Removes all given values from array using SameValueZero for equality comparisons.
 func Pull(items *DashSlice, values ...interface{}) DashSlice {
 	result := PullAllWith(items, values, func(i1 interface{}, i2 interface{}) bool {
 		return i1 == i2
@@ -454,11 +486,14 @@ func Pull(items *DashSlice, values ...interface{}) DashSlice {
 	return result
 }
 
+// This method is like Pull except that it accepts an array of values to remove.
 func PullAll(items *DashSlice, values DashSlice) DashSlice {
 	result := Pull(items, values...)
 	return result
 }
 
+// This method is like PullAll except that it accepts comparator which is invoked to compare elements of array to values.
+// The comparator is invoked with two arguments: (arrVal, othVal).
 func PullAllWith(items *DashSlice, values DashSlice, comparison Comparison) DashSlice {
 	result := DashSlice{}
 
@@ -472,6 +507,7 @@ func PullAllWith(items *DashSlice, values DashSlice, comparison Comparison) Dash
 	return result
 }
 
+//Removes elements from array corresponding to indexes and returns an array of removed elements.
 func PullAt(items *DashSlice, indices ...int) DashSlice {
 	pulled := DashSlice{}
 	result := DashSlice{}
@@ -489,6 +525,8 @@ func PullAt(items *DashSlice, indices ...int) DashSlice {
 	return pulled
 }
 
+// Removes all elements from array that predicate returns truthy for and returns an array of the removed elements.
+// The predicate is invoked with two arguments: (value, index).
 func Remove(items *DashSlice, predicate Predicate) DashSlice {
 	removed := DashSlice{}
 	newItems := DashSlice{}
@@ -505,10 +543,12 @@ func Remove(items *DashSlice, predicate Predicate) DashSlice {
 	return removed
 }
 
-func Slice(items DashSlice, from int, to int) DashSlice {
-	return items[from:to]
+// Creates a slice of array from start up to, but not including, end.
+func Slice(items DashSlice, start int, end int) DashSlice {
+	return items[start:end]
 }
 
+// Gets all but the first element of array.
 func Tail(items DashSlice) DashSlice {
 	if len(items) > 0 {
 		return items[1:]
@@ -517,6 +557,7 @@ func Tail(items DashSlice) DashSlice {
 	return DashSlice{}
 }
 
+// Creates a slice of array with n elements taken from the beginning.
 func Take(items DashSlice, n int) DashSlice {
 	length := len(items)
 	if n >= length {
@@ -526,6 +567,8 @@ func Take(items DashSlice, n int) DashSlice {
 	return items[0:n]
 }
 
+// Creates a slice of array with elements taken from the beginning. Elements are taken until predicate returns falsy.
+// The predicate is invoked with one argument: (value).
 func TakeWhile(items DashSlice, predicate Predicate) DashSlice {
 	var to int
 
@@ -540,6 +583,7 @@ func TakeWhile(items DashSlice, predicate Predicate) DashSlice {
 	return Take(items, to)
 }
 
+// Creates a slice of array with n elements taken from the end.
 func TakeRight(items DashSlice, n int) DashSlice {
 	length := len(items)
 	if n >= length {
@@ -550,6 +594,8 @@ func TakeRight(items DashSlice, n int) DashSlice {
 	return items[from:]
 }
 
+// Creates a slice of array with elements taken from the end. Elements are taken until predicate returns falsy.
+// The predicate is invoked with one argument: (value).
 func TakeRightWhile(items DashSlice, predicate Predicate) DashSlice {
 	from := len(items)
 
@@ -563,24 +609,34 @@ func TakeRightWhile(items DashSlice, predicate Predicate) DashSlice {
 	return items[from:]
 }
 
+// Creates an array of unique values, in order, from all given arrays using SameValueZero for equality comparisons.
 func Union(slices ...DashSlice) DashSlice {
 	result := ConcatSlices(slices...)
 	result = Uniq(result)
 	return result
 }
 
+// This method is like Uniq except that it accepts iteratee which is invoked for each element in array
+// to generate the criterion by which uniqueness is computed. The order of result values is determined
+// by the order they occur in the array. The iteratee is invoked with one argument: (value).
 func UnionBy(iteratee Iteratee, slices ...DashSlice) DashSlice {
 	result := ConcatSlices(slices...)
 	result = UniqBy(result, iteratee)
 	return result
 }
 
+// This method is like Uniq except that it accepts comparator which is invoked to compare elements of array.
+// The order of result values is determined by the order they occur in the array.
+// The comparator is invoked with two arguments: (arrVal, othVal).
 func UnionWith(comparison Comparison, slices ...DashSlice) DashSlice {
 	result := ConcatSlices(slices...)
 	result = UniqWith(result, comparison)
 	return result
 }
 
+// Creates a duplicate-free version of an array, using SameValueZero for equality comparisons,
+// in which only the first occurrence of each element is kept.
+// The order of result values is determined by the order they occur in the array.
 func Uniq(items DashSlice) DashSlice {
 	uniqMarks := make(map[interface{}]bool)
 	result := DashSlice{}
@@ -595,6 +651,9 @@ func Uniq(items DashSlice) DashSlice {
 	return result
 }
 
+// This method is like Union except that it accepts iteratee which is invoked for each element of each arrays
+// to generate the criterion by which uniqueness is computed. Result values are chosen from the first array
+// in which the value occurs. The iteratee is invoked with one argument: (value).
 func UniqBy(items DashSlice, iteratee Iteratee) DashSlice {
 	uniqMarks := make(map[interface{}]interface{})
 	result := DashSlice{}
@@ -610,6 +669,9 @@ func UniqBy(items DashSlice, iteratee Iteratee) DashSlice {
 	return result
 }
 
+// This method is like Uniq except that it accepts comparator which is invoked to compare elements of array.
+// The order of result values is determined by the order they occur in the array.
+// The comparator is invoked with two arguments: (arrVal, othVal).
 func UniqWith(items DashSlice, comparison Comparison) DashSlice {
 	result := DashSlice{}
 
@@ -622,6 +684,7 @@ func UniqWith(items DashSlice, comparison Comparison) DashSlice {
 	return result
 }
 
+// Creates an array excluding all given values using SameValueZero for equality comparisons.
 func Without(items DashSlice, values ...interface{}) DashSlice {
 	newItems := make(DashSlice, len(items))
 	copy(newItems, items)
@@ -646,6 +709,8 @@ func xor2(i1 DashSlice, i2 DashSlice) DashSlice {
 	return append(result, ni2...)
 }
 
+// Creates an array of unique values that is the symmetric difference of the given arrays.
+// The order of result values is determined by the order they occur in the arrays.
 func Xor(items ...DashSlice) DashSlice {
 	length := len(items)
 	if length == 0 {
@@ -663,6 +728,8 @@ func Xor(items ...DashSlice) DashSlice {
 	}
 }
 
+// Creates an array of grouped elements, the first of which contains the first elements of the given arrays,
+// the second of which contains the second elements of the given arrays, and so on.
 func Zip(slices ...DashSlice) []DashSlice {
 	maxLength := 0
 	for _, slice := range slices {
@@ -688,6 +755,8 @@ func Zip(slices ...DashSlice) []DashSlice {
 	return result
 }
 
+// This method is like Zip except that it accepts iteratee to specify how grouped values should be combined.
+// The iteratee is invoked with the elements of each group: (...group).
 func ZipWith(iteratee func([]interface{}) interface{}, slices ...DashSlice) DashSlice {
 	zipped := Zip(slices...)
 

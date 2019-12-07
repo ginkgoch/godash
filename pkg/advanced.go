@@ -1,3 +1,4 @@
+// This is lodash golang version. A modern Golang utility library delivering modularity, performance & extras.
 package pkg
 
 type DashSlice []interface{}
