@@ -1,6 +1,9 @@
 package pkg
 
-import "math/rand"
+import (
+	"math/rand"
+	"sort"
+)
 
 func CountBy(items DashSlice, iteratee Iteratee) map[interface{}]int {
 	counts := map[interface{}]int{}
@@ -223,6 +226,57 @@ func SampleSize(items DashSlice, n int) DashSlice {
 		result = append(result, items[r])
 		items = append(items[:r], items[r+1:]...)
 	}
+
+	return result
+}
+
+func Shuffle(items DashSlice) DashSlice {
+	return SampleSize(items, len(items))
+}
+
+func Size(items DashSlice) int {
+	return len(items)
+}
+
+func Some(items DashSlice, predicate Predicate) bool {
+	found := false
+
+	for _, item := range items {
+		if ok := predicate(item); ok {
+			found = true
+			break
+		}
+	}
+
+	return found
+}
+
+func SortByInt(items DashSlice, iteratee IterateeToInt) DashSlice {
+	result := append(DashSlice{}, items...)
+	sort.SliceStable(result, func(i, j int) bool {
+		el1, el2 := iteratee(result[i]), iteratee(result[j])
+		return el1 < el2
+	})
+
+	return result
+}
+
+func SortByFloat64(items DashSlice, iteratee IterateeToFloat) DashSlice {
+	result := append(DashSlice{}, items...)
+	sort.SliceStable(result, func(i, j int) bool {
+		el1, el2 := iteratee(result[i]), iteratee(result[j])
+		return el1 < el2
+	})
+
+	return result
+}
+
+func SortByString(items DashSlice, iteratee IterateeToString) DashSlice {
+	result := append(DashSlice{}, items...)
+	sort.SliceStable(result, func(i, j int) bool {
+		el1, el2 := iteratee(result[i]), iteratee(result[j])
+		return el1 < el2
+	})
 
 	return result
 }

@@ -32,6 +32,30 @@ type Predicate func(interface{}) bool
 
 type Iteratee func(interface{}) interface{}
 
+type IterateeToInt func(interface{}) int
+
+type IterateeToFloat func(interface{}) float64
+
+type IterateeToString func(interface{}) string
+
 type Action func(interface{}, int)
 
 type Reducer func(interface{}, interface{}) interface{}
+
+func Identity(i interface{}) interface{} {
+	return i
+}
+
+func IdentityInt(i interface{}) int {
+	return i.(int)
+}
+
+func IdentityFloat64(i interface{}) float64 {
+	return i.(float64)
+}
+
+func IdentityString(i interface{}) string {
+	return i.(string)
+}
+
+

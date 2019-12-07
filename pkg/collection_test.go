@@ -28,10 +28,14 @@ func TestForEach(t *testing.T) {
 		times++
 
 		switch key {
-		case 0: assert.Equal(t, slice[key], 1)
-		case 1: assert.Equal(t, slice[key], 2)
-		case 2: assert.Equal(t, slice[key], 3)
-		case 3: assert.Equal(t, slice[key], 4)
+		case 0:
+			assert.Equal(t, slice[key], 1)
+		case 1:
+			assert.Equal(t, slice[key], 2)
+		case 2:
+			assert.Equal(t, slice[key], 3)
+		case 3:
+			assert.Equal(t, slice[key], 4)
 		}
 	})
 
@@ -46,10 +50,14 @@ func TestForEachRight(t *testing.T) {
 		times++
 
 		switch times {
-		case 1: assert.Equal(t, slice[key], 4)
-		case 2: assert.Equal(t, slice[key], 3)
-		case 3: assert.Equal(t, slice[key], 2)
-		case 4: assert.Equal(t, slice[key], 1)
+		case 1:
+			assert.Equal(t, slice[key], 4)
+		case 2:
+			assert.Equal(t, slice[key], 3)
+		case 3:
+			assert.Equal(t, slice[key], 2)
+		case 4:
+			assert.Equal(t, slice[key], 1)
 		}
 	})
 
@@ -58,7 +66,7 @@ func TestForEachRight(t *testing.T) {
 
 func TestEvery(t *testing.T) {
 	result := Every(DashSlice{2, 4, 6, 8}, func(i interface{}) bool {
-		return i.(int) % 2 == 0
+		return i.(int)%2 == 0
 	})
 
 	assert.Equal(t, result, true)
@@ -66,13 +74,13 @@ func TestEvery(t *testing.T) {
 
 func TestFilter(t *testing.T) {
 	result := Filter(DashSlice{1, 2, 3, 4, 5, 6, 7, 8}, func(i interface{}) bool {
-		return i.(int) % 2 == 0
+		return i.(int)%2 == 0
 	})
 
 	assert.DeepEqual(t, result, DashSlice{2, 4, 6, 8})
 
 	result = Filter(DashSlice{1, 2, 3, 4, 5, 6, 7, 8}, func(i interface{}) bool {
-		return i.(int) % 2 != 0
+		return i.(int)%2 != 0
 	})
 
 	assert.DeepEqual(t, result, DashSlice{1, 3, 5, 7})
@@ -80,7 +88,7 @@ func TestFilter(t *testing.T) {
 
 func TestFind(t *testing.T) {
 	result, ok := Find(DashSlice{1, 3, 5, 6, 8, 3}, func(i interface{}) bool {
-		return i.(int) % 2 == 0
+		return i.(int)%2 == 0
 	})
 
 	assert.Equal(t, ok, true)
@@ -116,7 +124,7 @@ func TestFindFrom(t *testing.T) {
 
 func TestFindLast(t *testing.T) {
 	predicate := func(i interface{}) bool {
-		return i.(int) % 3 == 0
+		return i.(int)%3 == 0
 	}
 
 	testSrc := DashSlice{1, 2, 3, 4, 5, 6, 7, 8}
@@ -238,7 +246,7 @@ func TestReduceRight(t *testing.T) {
 
 func TestReject(t *testing.T) {
 	result := Reject(DashSlice{1, 2, 3, 4}, func(i interface{}) bool {
-		return i.(int) % 2 == 0
+		return i.(int)%2 == 0
 	})
 
 	assert.DeepEqual(t, result, DashSlice{1, 3})
@@ -280,4 +288,60 @@ func TestSampleSize3(t *testing.T) {
 	assert.Equal(t, Includes(r, 3), true)
 	assert.Equal(t, Includes(r, 4), true)
 	assert.Equal(t, Includes(r, 5), true)
+}
+
+func TestShuffle(t *testing.T) {
+	items := DashSlice{1, 2, 3, 4, 5}
+	result := Shuffle(items)
+
+	assert.Equal(t, len(items), len(result))
+
+	same := true
+	for i := 0; i < len(items); i++ {
+		if items[i] != result[i] {
+			same = false
+			break
+		}
+	}
+
+	assert.Equal(t, same, false)
+}
+
+func TestSome(t *testing.T) {
+	items := DashSlice{1, 2, 3, 4, 5}
+	assert.Equal(t, true, Some(items, func(i interface{}) bool {
+		return i == 3
+	}))
+
+	assert.Equal(t, true, Some(items, func(i interface{}) bool {
+		return i == 5
+	}))
+
+	assert.Equal(t, false, Some(items, func(i interface{}) bool {
+		return i == 6
+	}))
+}
+
+func TestSortByInt(t *testing.T) {
+	items := DashSlice{2, 1, 3, 5, 4}
+	result := SortByInt(items, IdentityInt)
+
+	assert.DeepEqual(t, items, DashSlice{2, 1, 3, 5, 4})
+	assert.DeepEqual(t, result, DashSlice{1, 2, 3, 4, 5})
+}
+
+func TestSortByFloat64(t *testing.T) {
+	items := DashSlice{2.2, 2.1, 2.6, 2.5, 2.4}
+	result := SortByFloat64(items, IdentityFloat64)
+
+	assert.DeepEqual(t, items, DashSlice{2.2, 2.1, 2.6, 2.5, 2.4})
+	assert.DeepEqual(t, result, DashSlice{2.1, 2.2, 2.4, 2.5, 2.6})
+}
+
+func TestSortByString(t *testing.T) {
+	items := DashSlice{"cc", "cb", "ca", "bb", "ba", "aa", "ab"}
+	result := SortByString(items, IdentityString)
+
+	assert.DeepEqual(t, items, DashSlice{"cc", "cb", "ca", "bb", "ba", "aa", "ab"})
+	assert.DeepEqual(t, result, DashSlice{"aa", "ab", "ba", "bb", "ca", "cb", "cc"})
 }
