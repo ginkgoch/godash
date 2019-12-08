@@ -1,5 +1,5 @@
 // This is lodash golang version. A modern Golang utility library delivering modularity, performance & extras.
-package pkg
+package godash
 
 type DashSlice []interface{}
 
