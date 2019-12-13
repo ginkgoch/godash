@@ -60,3 +60,7 @@ func replaceWithRegexFunc(expression string, src string, repl func(string) strin
 	result = r.ReplaceAllStringFunc(result, repl)
 	return result, nil
 }
+
+func Capitalize(str string) string {
+	return strings.Title(str)
+}

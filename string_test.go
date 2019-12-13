@@ -42,3 +42,10 @@ func TestCamelCaseWithInit(t *testing.T) {
 	str, _ = CamelCaseWithInit("aa-bb-cc", true)
 	assert.Equal(t, str, "Aa-Bb-Cc")
 }
+
+func TestCapitalize(t *testing.T) {
+	str := "jerry"
+	str = Capitalize(str)
+
+	assert.Equal(t, str, "Jerry")
+}
