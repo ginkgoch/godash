@@ -170,3 +170,12 @@ func TestRepeat(t *testing.T) {
 	str = Repeat("ABC", 2)
 	assert.Equal(t, str, "ABCABC")
 }
+
+func TestReplace(t *testing.T) {
+	str := "ABC-DEF-G"
+	str = Replace(str, "-", "_")
+	assert.Equal(t, str, "ABC_DEF_G")
+
+	str, _ = ReplaceRegx(str, `[A-Z]`, "*")
+	assert.Equal(t, str, "***_***_*")
+}

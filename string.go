@@ -168,5 +168,20 @@ func Repeat(str string, count int) string {
 	return result.String()
 }
 
+func Replace(source string, target string, newStr string) string {
+	return strings.ReplaceAll(source, target, newStr)
+}
+
+func ReplaceRegx(source string, pattern string, newStr string) (string, error) {
+	regx, err := regexp.Compile(pattern)
+	if err != nil {
+		return "", err
+	}
+
+	result := regx.ReplaceAllString(source, newStr)
+	return result, nil
+}
+
 //TODO: kebabCase(str string) string
 //TODO: lowerCase(str string) string
+//TODO: snakeCase(str string) string
