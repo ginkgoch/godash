@@ -58,13 +58,13 @@ func TestEndsWith(t *testing.T) {
 	result = EndsWith(str, "l")
 	assert.Equal(t, result, false)
 
-	result = EndsWithByLength(str, "d", 1)
+	result = EndsWithFrom(str, "d", len(str))
 	assert.Equal(t, result, true)
 
-	result = EndsWithByLength(str, "l", 1)
+	result = EndsWithFrom(str, "l", len(str))
 	assert.Equal(t, result, false)
 
-	result = EndsWithByLength(str, "l", 2)
+	result = EndsWithFrom(str, "l", len(str)-1)
 	assert.Equal(t, result, true)
 }
 
@@ -178,4 +178,28 @@ func TestReplace(t *testing.T) {
 
 	str, _ = ReplaceRegx(str, `[A-Z]`, "*")
 	assert.Equal(t, str, "***_***_*")
+}
+
+func TestSplit(t *testing.T) {
+	str := "A-B-C-D-E-F"
+	r := Split(str, "-")
+	assert.DeepEqual(t, r, []string{"A", "B", "C", "D", "E", "F"})
+
+	r = SplitWithCountLimit(str, "-", 100)
+	assert.DeepEqual(t, r, []string{"A", "B", "C", "D", "E", "F"})
+
+	r = SplitWithCountLimit(str, "-", 3)
+	assert.DeepEqual(t, r, []string{"A", "B", "C"})
+}
+
+func TestStartsWith(t *testing.T) {
+	str := "Hello"
+	r := StartsWith(str, "He")
+	assert.Equal(t, r, true)
+
+	r = StartsWith(str, "el")
+	assert.Equal(t, r, false)
+
+	r = StartsWithFrom(str, "el", 1)
+	assert.Equal(t, r, true)
 }

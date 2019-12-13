@@ -70,14 +70,14 @@ func EndsWith(str string, target string) bool {
 }
 
 // Checks if string ends with the given target string with the position to search up to.
-func EndsWithByLength(str string, target string, length int) bool {
+func EndsWithFrom(str string, target string, position int) bool {
 	strLength := len(str)
-	if length > strLength {
-		length = strLength
+	if position > strLength {
+		position = strLength
 	}
 
-	str = str[strLength-length:]
-	return strings.Contains(str, target)
+	str = str[0:position]
+	return EndsWith(str, target)
 }
 
 // Converts the characters "&", "<", ">", '"', and "'" in string to their corresponding HTML entities.
@@ -180,6 +180,33 @@ func ReplaceRegx(source string, pattern string, newStr string) (string, error) {
 
 	result := regx.ReplaceAllString(source, newStr)
 	return result, nil
+}
+
+func Split(str string, separator string) []string {
+	return strings.Split(str, separator)
+}
+
+func SplitWithCountLimit(str string, separator string, n int) []string {
+	result := Split(str, separator)
+	if len(result) <= n {
+		return result
+	} else {
+		return result[0:n]
+	}
+}
+
+func StartsWith(str string, target string) bool {
+	return strings.HasPrefix(str, target)
+}
+
+func StartsWithFrom(str string, target string, position int) bool {
+	if position < 0 {
+		position = 0
+	} else if position > len(str) {
+		position = len(str)
+	}
+
+	return StartsWith(str[position:], target)
 }
 
 //TODO: kebabCase(str string) string
