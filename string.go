@@ -134,30 +134,37 @@ func padWithPosition(str string, length int, padChars string, position int) stri
 	return leftPad + str + rightPad
 }
 
+// Pads string on the left and right sides if it's shorter than length. Padding characters are truncated if they can't be evenly divided by length.
 func PadWith(str string, length int, padChars string) string {
 	return padWithPosition(str, length, padChars, 0)
 }
 
+// Pads string on the left sides if it's shorter than length.
 func PadLeftWith(str string, length int, padChars string) string {
 	return padWithPosition(str, length, padChars, 1)
 }
 
+// Pads string on the right sides if it's shorter than length.
 func PadRightWith(str string, length int, padChars string) string {
 	return padWithPosition(str, length, padChars, 2)
 }
 
+// Pads string on the left and right sides if it's shorter than length. Padding characters are truncated if they can't be evenly divided by length.
 func Pad(str string, length int) string {
 	return PadWith(str, length, " ")
 }
 
+// Pads string on the left sides if it's shorter than length.
 func PadLeft(str string, length int) string {
 	return PadLeftWith(str, length, " ")
 }
 
+// Pads string on the right sides if it's shorter than length.
 func PadRight(str string, length int) string {
 	return PadRightWith(str, length, " ")
 }
 
+// Repeats the given string n times.
 func Repeat(str string, count int) string {
 	result := strings.Builder{}
 
@@ -168,10 +175,12 @@ func Repeat(str string, count int) string {
 	return result.String()
 }
 
+// Replaces string with replacement.
 func Replace(source string, target string, newStr string) string {
 	return strings.ReplaceAll(source, target, newStr)
 }
 
+// Replaces matches for pattern in string with replacement.
 func ReplaceRegx(source string, pattern string, newStr string) (string, error) {
 	regx, err := regexp.Compile(pattern)
 	if err != nil {
@@ -182,10 +191,12 @@ func ReplaceRegx(source string, pattern string, newStr string) (string, error) {
 	return result, nil
 }
 
+// Splits string by separator.
 func Split(str string, separator string) []string {
 	return strings.Split(str, separator)
 }
 
+// Splits string by separator and return limit count items.
 func SplitWithCountLimit(str string, separator string, n int) []string {
 	result := Split(str, separator)
 	if len(result) <= n {
@@ -195,10 +206,12 @@ func SplitWithCountLimit(str string, separator string, n int) []string {
 	}
 }
 
+// Checks if string starts with the given target string.
 func StartsWith(str string, target string) bool {
 	return strings.HasPrefix(str, target)
 }
 
+// Checks if string starts with the given target string from a specific position.
 func StartsWithFrom(str string, target string, position int) bool {
 	if position < 0 {
 		position = 0
@@ -209,6 +222,62 @@ func StartsWithFrom(str string, target string, position int) bool {
 	return StartsWith(str[position:], target)
 }
 
+// Converts string, as a whole, to lower case.
+func ToLower(str string) string {
+	return strings.ToLower(str)
+}
+
+// Converts string, as a whole, to upper case
+func ToUpper(str string) string {
+	return strings.ToUpper(str)
+}
+
+// Removes leading and trailing whitespace from string.
+func Trim(str string) string {
+	return strings.Trim(str, " ")
+}
+
+// Removes leading and trailing whitespace or specified characters from string.
+func TrimWith(str string, trimChars string) string {
+	return strings.Trim(str, trimChars)
+}
+
+// Removes leading whitespace from string.
+func TrimStart(str string) string {
+	return strings.TrimLeft(str, " ")
+}
+
+// Removes leading whitespace or specified characters from string.
+func TrimStartWith(str string, trimChars string) string {
+	return strings.TrimLeft(str, trimChars)
+}
+
+// Removes tailing whitespace from string.
+func TrimEnd(str string) string {
+	return strings.TrimRight(str, " ")
+}
+
+// Removes tailing whitespace or specified characters from string.
+func TrimEndWith(str string, trimChars string) string {
+	return strings.TrimRight(str, trimChars)
+}
+
+// The inverse of Escape func; this method converts the HTML entities &amp;, &lt;, &gt;, &quot;, and &#39;
+// in string to their corresponding characters.
+func Unescape(str string) string {
+	return html.UnescapeString(str)
+}
+
+// Converts the first character of string to upper case.
+func UpperFirst(str string) string {
+	if len(str) <= 1 {
+		return ToUpper(str)
+	} else {
+		return ToUpper(string(str[0])) + str[1:]
+	}
+}
+
 //TODO: kebabCase(str string) string
 //TODO: lowerCase(str string) string
 //TODO: snakeCase(str string) string
+//TODO: words

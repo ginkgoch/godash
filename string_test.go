@@ -203,3 +203,18 @@ func TestStartsWith(t *testing.T) {
 	r = StartsWithFrom(str, "el", 1)
 	assert.Equal(t, r, true)
 }
+
+func TestUnescape(t *testing.T) {
+	str := "&lt;&gt;"
+	str = Unescape(str)
+	assert.Equal(t, str, "<>")
+}
+
+func TestUpperFirst(t *testing.T) {
+	str := "fred"
+	str = UpperFirst(str)
+	assert.Equal(t, str, "Fred")
+
+	str = UpperFirst("FRED")
+	assert.Equal(t, str, "FRED")
+}
