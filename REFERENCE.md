@@ -1,115 +1,144 @@
-# Godash API Reference
+# godash
 --
     import "github.com/ginkgoch/godash"
 
 This is lodash golang version. A modern Golang utility library delivering
 modularity, performance & extras.
 
+## Index
 <!-- vscode-markdown-toc -->
-* [Usage](#Usage)
-	* [func  CamelCase](#funcCamelCase)
-	* [func  CamelCaseWithInit](#funcCamelCaseWithInit)
-	* [func  CountBy](#funcCountBy)
-	* [func  Every](#funcEvery)
-	* [func  Fill](#funcFill)
-	* [func  FillInRange](#funcFillInRange)
-	* [func  Find](#funcFind)
-	* [func  FindFrom](#funcFindFrom)
-	* [func  FindIndex](#funcFindIndex)
-	* [func  FindIndexWith](#funcFindIndexWith)
-	* [func  FindLast](#funcFindLast)
-	* [func  FindLastFrom](#funcFindLastFrom)
-	* [func  FindLastIndex](#funcFindLastIndex)
-	* [func  FindLastIndexWith](#funcFindLastIndexWith)
-	* [func  First](#funcFirst)
-	* [func  FromPairs](#funcFromPairs)
-	* [func  GroupBy](#funcGroupBy)
-	* [func  Head](#funcHead)
-	* [func  Identity](#funcIdentity)
-	* [func  IdentityFloat64](#funcIdentityFloat64)
-	* [func  IdentityInt](#funcIdentityInt)
-	* [func  IdentityString](#funcIdentityString)
-	* [func  Includes](#funcIncludes)
-	* [func  IndexOf](#funcIndexOf)
-	* [func  Join](#funcJoin)
-	* [func  Last](#funcLast)
-	* [func  LastIndexOf](#funcLastIndexOf)
-	* [func  Nth](#funcNth)
-	* [func  Reduce](#funcReduce)
-	* [func  ReduceRight](#funcReduceRight)
-	* [func  ReduceRightWithInitial](#funcReduceRightWithInitial)
-	* [func  ReduceWithInitial](#funcReduceWithInitial)
-	* [func  Sample](#funcSample)
-	* [func  Size](#funcSize)
-	* [func  Some](#funcSome)
-	* [func  Ternary](#funcTernary)
-	* [type Action](#typeAction)
-	* [type Comparison](#typeComparison)
-	* [type DashSlice](#typeDashSlice)
-	* [func  Chunk](#funcChunk)
-	* [func  Compact](#funcCompact)
-	* [func  Concat](#funcConcat)
-	* [func  ConcatSlices](#funcConcatSlices)
-	* [func  Difference](#funcDifference)
-	* [func  DifferenceBy](#funcDifferenceBy)
-	* [func  DifferenceWith](#funcDifferenceWith)
-	* [func  Drop](#funcDrop)
-	* [func  DropRight](#funcDropRight)
-	* [func  DropWhile](#funcDropWhile)
-	* [func  Each](#funcEach)
-	* [func  EachRight](#funcEachRight)
-	* [func  Filter](#funcFilter)
-	* [func  FlatMap](#funcFlatMap)
-	* [func  FlatMapDeep](#funcFlatMapDeep)
-	* [func  FlatMapDepth](#funcFlatMapDepth)
-	* [func  Flatten](#funcFlatten)
-	* [func  FlattenDeep](#funcFlattenDeep)
-	* [func  FlattenDepth](#funcFlattenDepth)
-	* [func  ForEach](#funcForEach)
-	* [func  ForEachRight](#funcForEachRight)
-	* [func  Initial](#funcInitial)
-	* [func  Intersection](#funcIntersection)
-	* [func  IntersectionBy](#funcIntersectionBy)
-	* [func  IntersectionWith](#funcIntersectionWith)
-	* [func  Map](#funcMap)
-	* [func  NewDashSlice](#funcNewDashSlice)
-	* [func  NewDashSliceFromIntArray](#funcNewDashSliceFromIntArray)
-	* [func  Pull](#funcPull)
-	* [func  PullAll](#funcPullAll)
-	* [func  PullAllWith](#funcPullAllWith)
-	* [func  PullAt](#funcPullAt)
-	* [func  Reject](#funcReject)
-	* [func  Remove](#funcRemove)
-	* [func  Reverse](#funcReverse)
-	* [func  SampleSize](#funcSampleSize)
-	* [func  Shuffle](#funcShuffle)
-	* [func  Slice](#funcSlice)
-	* [func  SortByFloat64](#funcSortByFloat64)
-	* [func  SortByInt](#funcSortByInt)
-	* [func  SortByString](#funcSortByString)
-	* [func  Tail](#funcTail)
-	* [func  Take](#funcTake)
-	* [func  TakeRight](#funcTakeRight)
-	* [func  TakeRightWhile](#funcTakeRightWhile)
-	* [func  TakeWhile](#funcTakeWhile)
-	* [func  Union](#funcUnion)
-	* [func  UnionBy](#funcUnionBy)
-	* [func  UnionWith](#funcUnionWith)
-	* [func  Uniq](#funcUniq)
-	* [func  UniqBy](#funcUniqBy)
-	* [func  UniqWith](#funcUniqWith)
-	* [func  Without](#funcWithout)
-	* [func  Xor](#funcXor)
-	* [func  Zip](#funcZip)
-	* [func  ZipWith](#funcZipWith)
-	* [func (DashSlice) Map](#funcDashSliceMap)
-	* [type InitCamelCase](#typeInitCamelCase)
-	* [type Iteratee](#typeIteratee)
-	* [type IterateeToFloat](#typeIterateeToFloat)
-	* [type IterateeToInt](#typeIterateeToInt)
-	* [type IterateeToString](#typeIterateeToString)
-	* [type Predicate](#typePredicate)
-	* [type Reducer](#typeReducer)
+* [func  CamelCase](#funcCamelCase)
+* [func  CamelCaseWithInit](#funcCamelCaseWithInit)
+* [func  Capitalize](#funcCapitalize)
+* [func  CountBy](#funcCountBy)
+* [func  EndsWith](#funcEndsWith)
+* [func  EndsWithFrom](#funcEndsWithFrom)
+* [func  Escape](#funcEscape)
+* [func  EscapeRegExp](#funcEscapeRegExp)
+* [func  Every](#funcEvery)
+* [func  Fill](#funcFill)
+* [func  FillInRange](#funcFillInRange)
+* [func  Find](#funcFind)
+* [func  FindFrom](#funcFindFrom)
+* [func  FindIndex](#funcFindIndex)
+* [func  FindIndexWith](#funcFindIndexWith)
+* [func  FindLast](#funcFindLast)
+* [func  FindLastFrom](#funcFindLastFrom)
+* [func  FindLastIndex](#funcFindLastIndex)
+* [func  FindLastIndexWith](#funcFindLastIndexWith)
+* [func  First](#funcFirst)
+* [func  FromPairs](#funcFromPairs)
+* [func  GroupBy](#funcGroupBy)
+* [func  Head](#funcHead)
+* [func  Identity](#funcIdentity)
+* [func  IdentityFloat](#funcIdentityFloat)
+* [func  IdentityInt](#funcIdentityInt)
+* [func  IdentityString](#funcIdentityString)
+* [func  Includes](#funcIncludes)
+* [func  IndexOf](#funcIndexOf)
+* [func  Join](#funcJoin)
+* [func  Last](#funcLast)
+* [func  LastIndexOf](#funcLastIndexOf)
+* [func  LowerFirst](#funcLowerFirst)
+* [func  Nth](#funcNth)
+* [func  Pad](#funcPad)
+* [func  PadLeft](#funcPadLeft)
+* [func  PadLeftWith](#funcPadLeftWith)
+* [func  PadRight](#funcPadRight)
+* [func  PadRightWith](#funcPadRightWith)
+* [func  PadWith](#funcPadWith)
+* [func  Reduce](#funcReduce)
+* [func  ReduceRight](#funcReduceRight)
+* [func  ReduceRightWithInitial](#funcReduceRightWithInitial)
+* [func  ReduceWithInitial](#funcReduceWithInitial)
+* [func  Repeat](#funcRepeat)
+* [func  Replace](#funcReplace)
+* [func  ReplaceRegx](#funcReplaceRegx)
+* [func  Sample](#funcSample)
+* [func  Size](#funcSize)
+* [func  Some](#funcSome)
+* [func  Split](#funcSplit)
+* [func  SplitWithCountLimit](#funcSplitWithCountLimit)
+* [func  StartsWith](#funcStartsWith)
+* [func  StartsWithFrom](#funcStartsWithFrom)
+* [func  Ternary](#funcTernary)
+* [func  ToLower](#funcToLower)
+* [func  ToUpper](#funcToUpper)
+* [func  Trim](#funcTrim)
+* [func  TrimEnd](#funcTrimEnd)
+* [func  TrimEndWith](#funcTrimEndWith)
+* [func  TrimStart](#funcTrimStart)
+* [func  TrimStartWith](#funcTrimStartWith)
+* [func  TrimWith](#funcTrimWith)
+* [func  Unescape](#funcUnescape)
+* [func  UpperFirst](#funcUpperFirst)
+* [type Action](#typeAction)
+* [type Comparison](#typeComparison)
+* [type DashSlice](#typeDashSlice)
+* [func  Chunk](#funcChunk)
+* [func  Compact](#funcCompact)
+* [func  Concat](#funcConcat)
+* [func  ConcatSlices](#funcConcatSlices)
+* [func  Difference](#funcDifference)
+* [func  DifferenceBy](#funcDifferenceBy)
+* [func  DifferenceWith](#funcDifferenceWith)
+* [func  Drop](#funcDrop)
+* [func  DropRight](#funcDropRight)
+* [func  DropWhile](#funcDropWhile)
+* [func  Each](#funcEach)
+* [func  EachRight](#funcEachRight)
+* [func  Filter](#funcFilter)
+* [func  FlatMap](#funcFlatMap)
+* [func  FlatMapDeep](#funcFlatMapDeep)
+* [func  FlatMapDepth](#funcFlatMapDepth)
+* [func  Flatten](#funcFlatten)
+* [func  FlattenDeep](#funcFlattenDeep)
+* [func  FlattenDepth](#funcFlattenDepth)
+* [func  ForEach](#funcForEach)
+* [func  ForEachRight](#funcForEachRight)
+* [func  Initial](#funcInitial)
+* [func  Intersection](#funcIntersection)
+* [func  IntersectionBy](#funcIntersectionBy)
+* [func  IntersectionWith](#funcIntersectionWith)
+* [func  Map](#funcMap)
+* [func  NewDashSlice](#funcNewDashSlice)
+* [func  NewDashSliceFromIntArray](#funcNewDashSliceFromIntArray)
+* [func  Pull](#funcPull)
+* [func  PullAll](#funcPullAll)
+* [func  PullAllWith](#funcPullAllWith)
+* [func  PullAt](#funcPullAt)
+* [func  Reject](#funcReject)
+* [func  Remove](#funcRemove)
+* [func  Reverse](#funcReverse)
+* [func  SampleSize](#funcSampleSize)
+* [func  Shuffle](#funcShuffle)
+* [func  Slice](#funcSlice)
+* [func  SortByFloat](#funcSortByFloat)
+* [func  SortByInt](#funcSortByInt)
+* [func  SortByString](#funcSortByString)
+* [func  Tail](#funcTail)
+* [func  Take](#funcTake)
+* [func  TakeRight](#funcTakeRight)
+* [func  TakeRightWhile](#funcTakeRightWhile)
+* [func  TakeWhile](#funcTakeWhile)
+* [func  Union](#funcUnion)
+* [func  UnionBy](#funcUnionBy)
+* [func  UnionWith](#funcUnionWith)
+* [func  Uniq](#funcUniq)
+* [func  UniqBy](#funcUniqBy)
+* [func  UniqWith](#funcUniqWith)
+* [func  Without](#funcWithout)
+* [func  Xor](#funcXor)
+* [func  Zip](#funcZip)
+* [func  ZipWith](#funcZipWith)
+* [func (DashSlice) Map](#funcDashSliceMap)
+* [type InitCamelCase](#typeInitCamelCase)
+* [type Iteratee](#typeIteratee)
+* [type IterateeToFloat](#typeIterateeToFloat)
+* [type IterateeToInt](#typeIterateeToInt)
+* [type IterateeToString](#typeIterateeToString)
+* [type Predicate](#typePredicate)
+* [type Reducer](#typeReducer)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -124,12 +153,22 @@ modularity, performance & extras.
 ```go
 func CamelCase(str string) (string, error)
 ```
+Converts string to camel case. First char is lower case.
 
 ####  <a name='funcCamelCaseWithInit'></a>func  CamelCaseWithInit
 
 ```go
 func CamelCaseWithInit(str string, upperCase InitCamelCase) (string, error)
 ```
+Converts string to camel case. First char is lower case by default.
+
+####  <a name='funcCapitalize'></a>func  Capitalize
+
+```go
+func Capitalize(str string) string
+```
+Converts the first character of string to upper case and the remaining to lower
+case.
 
 ####  <a name='funcCountBy'></a>func  CountBy
 
@@ -140,6 +179,37 @@ Creates an object composed of keys generated from the results of running each
 element of collection thru iteratee. The corresponding value of each key is the
 number of times the key was returned by iteratee. The iteratee is invoked with
 one argument: (value).
+
+####  <a name='funcEndsWith'></a>func  EndsWith
+
+```go
+func EndsWith(str string, target string) bool
+```
+Checks if string ends with the given target string.
+
+####  <a name='funcEndsWithFrom'></a>func  EndsWithFrom
+
+```go
+func EndsWithFrom(str string, target string, position int) bool
+```
+Checks if string ends with the given target string with the position to search
+up to.
+
+####  <a name='funcEscape'></a>func  Escape
+
+```go
+func Escape(str string) string
+```
+Converts the characters "&", "<", ">", '"', and "'" in string to their
+corresponding HTML entities.
+
+####  <a name='funcEscapeRegExp'></a>func  EscapeRegExp
+
+```go
+func EscapeRegExp(str string) string
+```
+Escapes the RegExp special characters "^", "$", "", ".", "*", "+", "?", "(",
+")", "[", "]", "{", "}", and "|" in string.
 
 ####  <a name='funcEvery'></a>func  Every
 
@@ -267,10 +337,10 @@ Gets the first element of slice.
 func Identity(i interface{}) interface{}
 ```
 
-####  <a name='funcIdentityFloat64'></a>func  IdentityFloat64
+####  <a name='funcIdentityFloat></a>func  IdentityFloat
 
 ```go
-func IdentityFloat64(i interface{}) float64
+func IdentityFloati interface{}) float
 ```
 
 ####  <a name='funcIdentityInt'></a>func  IdentityInt
@@ -324,6 +394,12 @@ func LastIndexOf(items DashSlice, element interface{}) (int, bool)
 This method is like IndexOf except that it iterates over elements of array from
 right to left.
 
+####  <a name='funcLowerFirst'></a>func  LowerFirst
+
+```go
+func LowerFirst(str string) string
+```
+
 ####  <a name='funcNth'></a>func  Nth
 
 ```go
@@ -331,6 +407,50 @@ func Nth(items DashSlice, n int) interface{}
 ```
 Gets the element at index n of array. If n is negative, the nth element from the
 end is returned.
+
+####  <a name='funcPad'></a>func  Pad
+
+```go
+func Pad(str string, length int) string
+```
+Pads string on the left and right sides if it's shorter than length. Padding
+characters are truncated if they can't be evenly divided by length.
+
+####  <a name='funcPadLeft'></a>func  PadLeft
+
+```go
+func PadLeft(str string, length int) string
+```
+Pads string on the left sides if it's shorter than length.
+
+####  <a name='funcPadLeftWith'></a>func  PadLeftWith
+
+```go
+func PadLeftWith(str string, length int, padChars string) string
+```
+Pads string on the left sides if it's shorter than length.
+
+####  <a name='funcPadRight'></a>func  PadRight
+
+```go
+func PadRight(str string, length int) string
+```
+Pads string on the right sides if it's shorter than length.
+
+####  <a name='funcPadRightWith'></a>func  PadRightWith
+
+```go
+func PadRightWith(str string, length int, padChars string) string
+```
+Pads string on the right sides if it's shorter than length.
+
+####  <a name='funcPadWith'></a>func  PadWith
+
+```go
+func PadWith(str string, length int, padChars string) string
+```
+Pads string on the left and right sides if it's shorter than length. Padding
+characters are truncated if they can't be evenly divided by length.
 
 ####  <a name='funcReduce'></a>func  Reduce
 
@@ -370,6 +490,27 @@ supplied the return value of the previous. If accumulator is not given, the
 first element of collection is used as the initial value. The reducer is invoked
 with two arguments: (accumulator, value).
 
+####  <a name='funcRepeat'></a>func  Repeat
+
+```go
+func Repeat(str string, count int) string
+```
+Repeats the given string n times.
+
+####  <a name='funcReplace'></a>func  Replace
+
+```go
+func Replace(source string, target string, newStr string) string
+```
+Replaces string with replacement.
+
+####  <a name='funcReplaceRegx'></a>func  ReplaceRegx
+
+```go
+func ReplaceRegx(source string, pattern string, newStr string) (string, error)
+```
+Replaces matches for pattern in string with replacement.
+
 ####  <a name='funcSample'></a>func  Sample
 
 ```go
@@ -393,11 +534,110 @@ Checks if predicate returns truthy for any element of collection. Iteration is
 stopped once predicate returns truthy. The predicate is invoked with one
 argument: (value).
 
+####  <a name='funcSplit'></a>func  Split
+
+```go
+func Split(str string, separator string) []string
+```
+Splits string by separator.
+
+####  <a name='funcSplitWithCountLimit'></a>func  SplitWithCountLimit
+
+```go
+func SplitWithCountLimit(str string, separator string, n int) []string
+```
+Splits string by separator and return limit count items.
+
+####  <a name='funcStartsWith'></a>func  StartsWith
+
+```go
+func StartsWith(str string, target string) bool
+```
+Checks if string starts with the given target string.
+
+####  <a name='funcStartsWithFrom'></a>func  StartsWithFrom
+
+```go
+func StartsWithFrom(str string, target string, position int) bool
+```
+Checks if string starts with the given target string from a specific position.
+
 ####  <a name='funcTernary'></a>func  Ternary
 
 ```go
 func Ternary(satisfy bool, truthyValue interface{}, falsyValue interface{}) interface{}
 ```
+
+####  <a name='funcToLower'></a>func  ToLower
+
+```go
+func ToLower(str string) string
+```
+Converts string, as a whole, to lower case.
+
+####  <a name='funcToUpper'></a>func  ToUpper
+
+```go
+func ToUpper(str string) string
+```
+Converts string, as a whole, to upper case
+
+####  <a name='funcTrim'></a>func  Trim
+
+```go
+func Trim(str string) string
+```
+Removes leading and trailing whitespace from string.
+
+####  <a name='funcTrimEnd'></a>func  TrimEnd
+
+```go
+func TrimEnd(str string) string
+```
+Removes tailing whitespace from string.
+
+####  <a name='funcTrimEndWith'></a>func  TrimEndWith
+
+```go
+func TrimEndWith(str string, trimChars string) string
+```
+Removes tailing whitespace or specified characters from string.
+
+####  <a name='funcTrimStart'></a>func  TrimStart
+
+```go
+func TrimStart(str string) string
+```
+Removes leading whitespace from string.
+
+####  <a name='funcTrimStartWith'></a>func  TrimStartWith
+
+```go
+func TrimStartWith(str string, trimChars string) string
+```
+Removes leading whitespace or specified characters from string.
+
+####  <a name='funcTrimWith'></a>func  TrimWith
+
+```go
+func TrimWith(str string, trimChars string) string
+```
+Removes leading and trailing whitespace or specified characters from string.
+
+####  <a name='funcUnescape'></a>func  Unescape
+
+```go
+func Unescape(str string) string
+```
+The inverse of Escape func; this method converts the HTML entities &amp;, &lt;,
+&gt;, &quot;, and &#in string to their corresponding characters.
+
+####  <a name='funcUpperFirst'></a>func  UpperFirst
+
+```go
+func UpperFirst(str string) string
+```
+Converts the first character of string to upper case.
 
 ####  <a name='typeAction'></a>type Action
 
@@ -603,7 +843,7 @@ Gets all but the last element of array.
 ####  <a name='funcIntersection'></a>func  Intersection
 
 ```go
-func Intersection(items1 DashSlice, items2 DashSlice) DashSlice
+func Intersection(itemsDashSlice, itemsDashSlice) DashSlice
 ```
 Creates an array of unique values that are included in all given arrays using
 SameValueZero for equality comparisons. The order and references of result
@@ -612,7 +852,7 @@ values are determined by the first array.
 ####  <a name='funcIntersectionBy'></a>func  IntersectionBy
 
 ```go
-func IntersectionBy(items1 DashSlice, items2 DashSlice, iteratee Iteratee) DashSlice
+func IntersectionBy(itemsDashSlice, itemsDashSlice, iteratee Iteratee) DashSlice
 ```
 This method is like Intersection except that it accepts iteratee which is
 invoked for each element of each arrays to generate the criterion by which
@@ -622,7 +862,7 @@ the first array. The iteratee is invoked with one argument: (value).
 ####  <a name='funcIntersectionWith'></a>func  IntersectionWith
 
 ```go
-func IntersectionWith(items1 DashSlice, items2 DashSlice, comparison Comparison) DashSlice
+func IntersectionWith(itemsDashSlice, itemsDashSlice, comparison Comparison) DashSlice
 ```
 This method is like _.intersection except that it accepts comparator which is
 invoked to compare elements of arrays. The order and references of result values
@@ -728,10 +968,10 @@ func Slice(items DashSlice, start int, end int) DashSlice
 ```
 Creates a slice of array from start up to, but not including, end.
 
-####  <a name='funcSortByFloat64'></a>func  SortByFloat64
+####  <a name='funcSortByFloat></a>func  SortByFloat
 
 ```go
-func SortByFloat64(items DashSlice, iteratee IterateeToFloat) DashSlice
+func SortByFloatitems DashSlice, iteratee IterateeToFloat) DashSlice
 ```
 Creates an array of elements, sorted in ascending order by the results of
 running each element in a collection thru each iteratee. This method performs a
@@ -902,13 +1142,6 @@ type InitCamelCase bool
 ```
 
 
-```go
-const (
-	UpperCase InitCamelCase = true
-	LowerCase InitCamelCase = false
-)
-```
-
 ####  <a name='typeIteratee'></a>type Iteratee
 
 ```go
@@ -919,7 +1152,7 @@ type Iteratee func(interface{}) interface{}
 ####  <a name='typeIterateeToFloat'></a>type IterateeToFloat
 
 ```go
-type IterateeToFloat func(interface{}) float64
+type IterateeToFloat func(interface{}) float
 ```
 
 
