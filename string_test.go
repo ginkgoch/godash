@@ -80,3 +80,81 @@ func TestEscapeRegExp(t *testing.T) {
 
 	assert.Equal(t, str, `Escaping symbols like: \.\+\*\?\(\)\|\[\]\{\}\^\$`)
 }
+
+func TestLowerFirst(t *testing.T) {
+	str := ""
+	str = LowerFirst(str)
+	assert.Equal(t, str, "")
+
+	str = LowerFirst("A")
+	assert.Equal(t, str, "a")
+
+	str = LowerFirst("AA")
+	assert.Equal(t, str, "aA")
+}
+
+func TestPad(t *testing.T) {
+	str := "ABC"
+	str = Pad(str, 2)
+	assert.Equal(t, str, "ABC")
+
+	str = Pad("ABC", 3)
+	assert.Equal(t, str, "ABC")
+
+	str = Pad("ABC", 4)
+	assert.Equal(t, str, "ABC ")
+
+	str = Pad("ABC", 5)
+	assert.Equal(t, str, " ABC ")
+
+	str = PadWith("ABC", 5, "-+")
+	assert.Equal(t, str, "-ABC-")
+
+	str = PadWith("ABC", 7, "-+")
+	assert.Equal(t, str, "-+ABC-+")
+
+	str = PadWith("ABC", 8, "-+")
+	assert.Equal(t, str, "-+ABC-+-")
+}
+
+func TestPadLeft(t *testing.T) {
+	str := "ABC"
+	str = PadLeft(str, 2)
+	assert.Equal(t, str, "ABC")
+
+	str = PadLeft("ABC", 3)
+	assert.Equal(t, str, "ABC")
+
+	str = PadLeft("ABC", 4)
+	assert.Equal(t, str, " ABC")
+
+	str = PadLeft("ABC", 5)
+	assert.Equal(t, str, "  ABC")
+
+	str = PadLeftWith("ABC", 5, "-+")
+	assert.Equal(t, str, "-+ABC")
+
+	str = PadLeftWith("ABC", 7, "-+")
+	assert.Equal(t, str, "-+-+ABC")
+}
+
+func TestPadRight(t *testing.T) {
+	str := "ABC"
+	str = PadRight(str, 2)
+	assert.Equal(t, str, "ABC")
+
+	str = PadRight("ABC", 3)
+	assert.Equal(t, str, "ABC")
+
+	str = PadRight("ABC", 4)
+	assert.Equal(t, str, "ABC ")
+
+	str = PadRight("ABC", 5)
+	assert.Equal(t, str, "ABC  ")
+
+	str = PadRightWith("ABC", 5, "-+")
+	assert.Equal(t, str, "ABC-+")
+
+	str = PadRightWith("ABC", 7, "-+")
+	assert.Equal(t, str, "ABC-+-+")
+}
