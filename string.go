@@ -158,5 +158,15 @@ func PadRight(str string, length int) string {
 	return PadRightWith(str, length, " ")
 }
 
+func Repeat(str string, count int) string {
+	result := strings.Builder{}
+
+	for i := 0; i < count; i++ {
+		result.WriteString(str)
+	}
+
+	return result.String()
+}
+
 //TODO: kebabCase(str string) string
 //TODO: lowerCase(str string) string

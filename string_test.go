@@ -158,3 +158,15 @@ func TestPadRight(t *testing.T) {
 	str = PadRightWith("ABC", 7, "-+")
 	assert.Equal(t, str, "ABC-+-+")
 }
+
+func TestRepeat(t *testing.T) {
+	str := "ABC"
+	str = Repeat(str, 0)
+	assert.Equal(t, str, "")
+
+	str = Repeat("ABC", 1)
+	assert.Equal(t, str, "ABC")
+
+	str = Repeat("ABC", 2)
+	assert.Equal(t, str, "ABCABC")
+}
