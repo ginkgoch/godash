@@ -64,3 +64,17 @@ func replaceWithRegexFunc(expression string, src string, repl func(string) strin
 func Capitalize(str string) string {
 	return strings.Title(str)
 }
+
+func EndsWith(str string, target string) bool {
+	return strings.HasSuffix(str, target)
+}
+
+func EndsWithByLength(str string, target string, length int) bool {
+	strLength := len(str)
+	if length > strLength {
+		length = strLength
+	}
+
+	str = str[strLength-length:]
+	return strings.Contains(str, target)
+}

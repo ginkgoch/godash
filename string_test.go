@@ -49,3 +49,21 @@ func TestCapitalize(t *testing.T) {
 
 	assert.Equal(t, str, "Jerry")
 }
+
+func TestEndsWith(t *testing.T) {
+	str := "Hello World"
+	result := EndsWith(str, "d")
+	assert.Equal(t, result, true)
+
+	result = EndsWith(str, "l")
+	assert.Equal(t, result, false)
+
+	result = EndsWithByLength(str, "d", 1)
+	assert.Equal(t, result, true)
+
+	result = EndsWithByLength(str, "l", 1)
+	assert.Equal(t, result, false)
+
+	result = EndsWithByLength(str, "l", 2)
+	assert.Equal(t, result, true)
+}
