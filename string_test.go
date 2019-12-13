@@ -67,3 +67,16 @@ func TestEndsWith(t *testing.T) {
 	result = EndsWithByLength(str, "l", 2)
 	assert.Equal(t, result, true)
 }
+
+func TestEscape(t *testing.T) {
+	str := "<>"
+	str = Escape(str)
+	assert.Equal(t, str, "&lt;&gt;")
+}
+
+func TestEscapeRegExp(t *testing.T) {
+	str := `Escaping symbols like: .+*?()|[]{}^$`
+	str = EscapeRegExp(str)
+
+	assert.Equal(t, str, `Escaping symbols like: \.\+\*\?\(\)\|\[\]\{\}\^\$`)
+}

@@ -1,6 +1,7 @@
 package godash
 
 import (
+	"html"
 	"regexp"
 	"strings"
 )
@@ -77,4 +78,12 @@ func EndsWithByLength(str string, target string, length int) bool {
 
 	str = str[strLength-length:]
 	return strings.Contains(str, target)
+}
+
+func Escape(str string) string {
+	return html.EscapeString(str)
+}
+
+func EscapeRegExp(str string) string {
+	return regexp.QuoteMeta(str)
 }
