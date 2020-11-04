@@ -1,3 +1,8 @@
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/ginkgoch/godash)](https://pkg.go.dev/github.com/ginkgoch/godash/pkg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ginkgoch/godash)](https://goreportcard.com/report/github.com/ginkgoch/godash)
+
+[![forthebadge](https://forthebadge.com/images/badges/gluten-free.svg)](https://forthebadge.com)
+
 # Lodash in Golang Version 
     
 
