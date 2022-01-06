@@ -11,11 +11,11 @@ modularity, performance & extras.
 
 ## Install & Import
 ```bash
-go get -u "github.com/ginkgoch/godash"
+go get -u "github.com/ginkgoch/godash/v1"
 ```
 
 ```go
-import "github.com/ginkgoch/godash"
+import "github.com/ginkgoch/godash/v1"
 ```
 
 ## Example
