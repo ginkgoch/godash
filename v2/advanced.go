@@ -5,5 +5,5 @@ type Number interface {
 }
 
 type DashAny interface {
-	Number | string
+	Number | string | interface{}
 }
