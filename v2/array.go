@@ -6,13 +6,13 @@ import (
 
 // Creates an array of elements split into groups the length of size. If array can't be split evenly,
 // the final chunk will be the remaining elements.
-func Chunk[D any](items []D, size int) [][]D {
-	dashSlices := [][]D{}
+func Chunk[E any](items []E, size int) [][]E {
+	dashSlices := [][]E{}
 
 	for _, item := range items {
 		sliceLength := len(dashSlices)
 		if sliceLength == 0 || len(dashSlices[sliceLength-1]) == size {
-			dashSlices = append(dashSlices, []D{})
+			dashSlices = append(dashSlices, []E{})
 			sliceLength++
 		}
 
@@ -23,8 +23,8 @@ func Chunk[D any](items []D, size int) [][]D {
 }
 
 // Creates an array with all falsy values removed. The values false, 0, "", nil are falsy.
-func Compact[D any](items []D) []D {
-	dashSlice := []D{}
+func Compact[E any](items []E) []E {
+	dashSlice := []E{}
 
 	for _, item := range items {
 		if !reflect.DeepEqual(item, nil) &&
@@ -36,4 +36,15 @@ func Compact[D any](items []D) []D {
 	}
 
 	return dashSlice
+}
+
+// Creates a new array concatenating array with any additional arrays and/or values.
+func Concat[E any](items []E, newItems []E) []E {
+	result := append([]E{}, items...)
+
+	for _, newItem := range newItems {
+		result = append(result, newItem)
+	}
+
+	return result
 }

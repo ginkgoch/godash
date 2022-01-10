@@ -39,3 +39,10 @@ func TestCompact(t *testing.T) {
 
 	assert.DeepEqual(t, compacted, []interface{}{"a", "b", 1})
 }
+
+func TestConcat1(t *testing.T) {
+	items := []string{"a", "b", "c", "d"}
+	result := Concat(items, []string{"e", "f"})
+
+	assert.DeepEqual(t, result, []string{"a", "b", "c", "d", "e", "f"})
+}
