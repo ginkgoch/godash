@@ -48,3 +48,34 @@ func Concat[E any](items []E, newItems []E) []E {
 
 	return result
 }
+
+// Creates an array of array values not included in the other given arrays using SameValueZero for equality comparisons.
+// The order and references of result values are determined by the first array.
+func Difference[E any](items []E, itemsToCompare []E) []E {
+	var result = []E{}
+
+	for _, item := range items {
+		if _, ok := IndexOf(itemsToCompare, item); !ok {
+			result = append(result, item)
+		}
+	}
+
+	return result
+}
+
+// This method is like _.find except that it returns the index of the first element predicate returns truthy
+// for instead of the element itself.
+func IndexOf[E any](items []E, element E) (int, bool) {
+	var index = -1
+	var ok bool
+
+	for i, el := range items {
+		if reflect.DeepEqual(el, element) {
+			index = i
+			ok = true
+			break
+		}
+	}
+
+	return index, ok
+}
