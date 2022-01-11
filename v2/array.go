@@ -63,6 +63,25 @@ func Difference[E any](items []E, itemsToCompare []E) []E {
 	return result
 }
 
+// This method is like _.difference except that it accepts iteratee which is invoked for each element of array
+// and values to generate the criterion by which they're compared.
+// The order and references of result values are determined by the first array.
+// The iteratee is invoked with one argument: (value).
+func DifferenceBy[E any](items []E, itemsToCompare []E, iteratee Iteratee[E, E]) []E {
+	itemsNew := Map(items, iteratee)
+	itemsToCompareNew := Map(itemsToCompare, iteratee)
+
+	var result = []E{}
+
+	for i, item := range itemsNew {
+		if _, ok := IndexOf(itemsToCompareNew, item); !ok {
+			result = append(result, items[i])
+		}
+	}
+
+	return result
+}
+
 // This method is like _.find except that it returns the index of the first element predicate returns truthy
 // for instead of the element itself.
 func IndexOf[E any](items []E, element E) (int, bool) {
@@ -78,4 +97,24 @@ func IndexOf[E any](items []E, element E) (int, bool) {
 	}
 
 	return index, ok
+}
+
+func Map[E, V any](slice []E, iteratee func(E) V) []V {
+	result := []V{}
+	for _, item := range slice {
+		result = append(result, iteratee(item))
+	}
+
+	return result
+}
+
+func Filter[E any](slice []E, predicate Predicate[E]) []E {
+	result := []E{}
+	for _, item := range slice {
+		if predicate(item) {
+			result = append(result, item)
+		}
+	}
+
+	return result
 }

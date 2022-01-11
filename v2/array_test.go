@@ -1,6 +1,7 @@
 package godash
 
 import (
+	"math"
 	"testing"
 
 	"gotest.tools/assert"
@@ -76,4 +77,15 @@ func TestIndexOf(t *testing.T) {
 	findTest("a", 0, true)
 	findTest("d", 3, true)
 	findTest("e", -1, false)
+}
+
+func TestDifferenceBy(t *testing.T) {
+	items1 := []float64{1.2, 2.4, 5.9}
+	items2 := []float64{1.3, 3.4, 5.1}
+
+	result := DifferenceBy(items1, items2, func(el float64) float64 {
+		return math.Floor(el)
+	})
+
+	assert.DeepEqual(t, result, []float64{2.4})
 }
