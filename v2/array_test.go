@@ -46,3 +46,34 @@ func TestConcat1(t *testing.T) {
 
 	assert.DeepEqual(t, result, []string{"a", "b", "c", "d", "e", "f"})
 }
+
+func TestDifference1(t *testing.T) {
+	items1 := []string{"a", "b", "c", "d"}
+	items2 := []string{"a", "c", "e", "f"}
+
+	result := Difference(items1, items2)
+	assert.DeepEqual(t, result, []string{"b", "d"})
+}
+
+func TestDifference2(t *testing.T) {
+	items1 := []string{"z", "b", "q", "h"}
+	items2 := []string{"b", "h", "e", "f"}
+
+	result := Difference(items1, items2)
+	assert.DeepEqual(t, result, []string{"z", "q"})
+}
+
+func TestIndexOf(t *testing.T) {
+	items := []string{"a", "b", "c", "d"}
+
+	findTest := func(el string, expected int, found bool) {
+		result, ok := IndexOf(items, el)
+
+		assert.Equal(t, ok, found)
+		assert.Equal(t, result, expected)
+	}
+
+	findTest("a", 0, true)
+	findTest("d", 3, true)
+	findTest("e", -1, false)
+}
