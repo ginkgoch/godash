@@ -7,3 +7,7 @@ type Number interface {
 type DashAny interface {
 	Number | string | interface{}
 }
+
+type Iteratee[E any, V any] func(E) V
+
+type Predicate[E any] func(E) bool
