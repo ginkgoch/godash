@@ -11,3 +11,5 @@ type DashAny interface {
 type Iteratee[E any, V any] func(E) V
 
 type Predicate[E any] func(E) bool
+
+type Comparison[E any] func(E, E) bool
