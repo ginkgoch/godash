@@ -82,6 +82,22 @@ func DifferenceBy[E any](items []E, itemsToCompare []E, iteratee Iteratee[E, E])
 	return result
 }
 
+// This method is like _.difference except that it accepts comparator which is invoked to compare elements of array to values.
+//The order and references of result values are determined by the first array.
+//The comparator is invoked with two arguments: (arrVal, othVal).
+func DifferenceWith[E any](items []E, itemsToCompare []E,
+	comparison Comparison[E]) []E {
+	var result = []E{}
+
+	for i, item := range items {
+		if _, ok := FindIndexWith(itemsToCompare, item, comparison); !ok {
+			result = append(result, items[i])
+		}
+	}
+
+	return result
+}
+
 // This method is like _.find except that it returns the index of the first element predicate returns truthy
 // for instead of the element itself.
 func IndexOf[E any](items []E, element E) (int, bool) {
@@ -90,6 +106,20 @@ func IndexOf[E any](items []E, element E) (int, bool) {
 
 	for i, el := range items {
 		if reflect.DeepEqual(el, element) {
+			index = i
+			ok = true
+			break
+		}
+	}
+
+	return index, ok
+}
+
+// Same to IndexOf. The difference is that, this method provides a comparison function to compare programmatically.
+func FindIndexWith[E any](items []E, element E, comparison Comparison[E]) (index int, ok bool) {
+	index = -1
+	for i, el := range items {
+		if comparison(element, el) {
 			index = i
 			ok = true
 			break

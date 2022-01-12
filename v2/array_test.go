@@ -89,3 +89,49 @@ func TestDifferenceBy(t *testing.T) {
 
 	assert.DeepEqual(t, result, []float64{2.4})
 }
+
+func TestDifferenceWith(t *testing.T) {
+	items1 := []float64{1.2, 2.4, 5.9}
+	items2 := []float64{1.3, 3.4, 5.1}
+
+	result := DifferenceWith(items1, items2, func(el1 float64, el2 float64) bool {
+		if el1 == 1.2 && el2 == 1.3 {
+			return true
+		} else if el1 == 2.4 && el2 == 3.4 {
+			return true
+		} else {
+			return false
+		}
+	})
+
+	assert.DeepEqual(t, result, []float64{5.9})
+}
+
+func findIndexWithTemp(t *testing.T, find func([]string, string, Comparison[string]) (int, bool)) {
+	comparison := func(el1 string, el2 string) bool {
+		if el1 == "e" && el2 == "c" {
+			return true
+		} else if el1 == el2 {
+			return true
+		} else {
+			return false
+		}
+	}
+
+	items := []string{"a", "b", "c", "d"}
+	findTest := func(el string, expected int, found bool) {
+		result, ok := find(items, el, comparison)
+
+		assert.Equal(t, ok, found)
+		assert.Equal(t, result, expected)
+	}
+
+	findTest("e", 2, true)
+	findTest("a", 0, true)
+	findTest("b", 1, true)
+	findTest("f", -1, false)
+}
+
+func TestFindIndexWith(t *testing.T) {
+	findIndexWithTemp(t, FindIndexWith[string])
+}
