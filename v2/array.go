@@ -98,6 +98,49 @@ func DifferenceWith[E any](items []E, itemsToCompare []E,
 	return result
 }
 
+// Creates a slice of array with n elements dropped from the beginning.
+func Drop[E any](items []E, count int) []E {
+	result := []E{}
+
+	for i := count; i < len(items); i++ {
+		result = append(result, items[i])
+	}
+
+	return result
+}
+
+// Creates a slice of array with n elements dropped from the end.
+func DropRight[E any](items []E, count int) []E {
+	result := []E{}
+	length := len(items) - count
+
+	for i := 0; i < length; i++ {
+		result = append(result, items[i])
+	}
+
+	return result
+}
+
+// Creates a slice of array excluding elements dropped from the beginning.
+// Elements are dropped until predicate returns falsy.
+// The predicate is invoked with two arguments: (value, index).
+func DropWhile[E any](items []E, predicate Predicate[E]) []E {
+	result := []E{}
+
+	started := false
+	for _, item := range items {
+		if !started && !predicate(item) {
+			started = true
+		}
+
+		if started {
+			result = append(result, item)
+		}
+	}
+
+	return result
+}
+
 // This method is like _.find except that it returns the index of the first element predicate returns truthy
 // for instead of the element itself.
 func IndexOf[E any](items []E, element E) (int, bool) {

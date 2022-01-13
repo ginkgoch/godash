@@ -107,6 +107,47 @@ func TestDifferenceWith(t *testing.T) {
 	assert.DeepEqual(t, result, []float64{5.9})
 }
 
+func TestDrop(t *testing.T) {
+	items := []string{"a", "b", "c", "d"}
+
+	result := Drop(items, 0)
+	assert.DeepEqual(t, result, []string{"a", "b", "c", "d"})
+
+	result = Drop(items, 1)
+	assert.DeepEqual(t, result, []string{"b", "c", "d"})
+
+	result = Drop(items, 2)
+	assert.DeepEqual(t, result, []string{"c", "d"})
+
+	result = Drop(items, 4)
+	assert.DeepEqual(t, result, []string{})
+}
+
+func TestDropRight(t *testing.T) {
+	items := []string{"a", "b", "c", "d"}
+
+	result := DropRight(items, 0)
+	assert.DeepEqual(t, result, []string{"a", "b", "c", "d"})
+
+	result = DropRight(items, 1)
+	assert.DeepEqual(t, result, []string{"a", "b", "c"})
+
+	result = DropRight(items, 4)
+	assert.DeepEqual(t, result, []string{})
+
+	result = DropRight(items, 5)
+	assert.DeepEqual(t, result, []string{})
+}
+
+func TestDropWhile(t *testing.T) {
+	items := []string{"a", "b", "c", "d"}
+	result := DropWhile(items, func(el string) bool {
+		return el == "a" || el == "b"
+	})
+
+	assert.DeepEqual(t, result, []string{"c", "d"})
+}
+
 func findIndexWithTemp(t *testing.T, find func([]string, string, Comparison[string]) (int, bool)) {
 	comparison := func(el1 string, el2 string) bool {
 		if el1 == "e" && el2 == "c" {
