@@ -176,3 +176,23 @@ func findIndexWithTemp(t *testing.T, find func([]string, string, Comparison[stri
 func TestFindIndexWith(t *testing.T) {
 	findIndexWithTemp(t, FindIndexWith[string])
 }
+
+func TestFillBy(t *testing.T) {
+	items := []string{"a", "b", "c", "d"}
+
+	FillInRange(items, "z", 0, 4)
+	assert.DeepEqual(t, items, []string{"z", "z", "z", "z"})
+
+	FillInRange(items, "y", 2, 4)
+	assert.DeepEqual(t, items, []string{"z", "z", "y", "y"})
+}
+
+func TestFill(t *testing.T) {
+	items := []string{"a", "b", "c", "d"}
+
+	Fill(items, "z")
+	assert.DeepEqual(t, items, []string{"z", "z", "z", "z"})
+
+	Fill(items, "y")
+	assert.DeepEqual(t, items, []string{"y", "y", "y", "y"})
+}
