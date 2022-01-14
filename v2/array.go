@@ -193,6 +193,23 @@ func FindIndexWith[E any](items []E, element E, comparison Comparison[E]) (index
 	return index, ok
 }
 
+// This method is like Find except that it returns the index of the first element predicate
+// returns truthy for instead of the element itself.
+func FindIndex[E any](items []E, predicate Predicate[E]) (int, bool) {
+	index := -1
+	ok := false
+
+	for i, el := range items {
+		if predicate(el) {
+			index = i
+			ok = true
+			break
+		}
+	}
+
+	return index, ok
+}
+
 func Map[E, V any](slice []E, iteratee func(E) V) []V {
 	result := []V{}
 	for _, item := range slice {

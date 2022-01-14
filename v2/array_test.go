@@ -196,3 +196,24 @@ func TestFill(t *testing.T) {
 	Fill(items, "y")
 	assert.DeepEqual(t, items, []string{"y", "y", "y", "y"})
 }
+
+func findIndexTemp(t *testing.T, find func([]string, Predicate[string]) (int, bool)) {
+	items := []string{"a", "b", "c", "d"}
+	i, ok := find(items, func(el string) bool {
+		return el == "c"
+	})
+
+	assert.Equal(t, i, 2)
+	assert.Equal(t, ok, true)
+
+	j, ok := find(items, func(el string) bool {
+		return el == "z"
+	})
+
+	assert.Equal(t, j, -1)
+	assert.Equal(t, ok, false)
+}
+
+func TestFindIndex(t *testing.T) {
+	findIndexTemp(t, FindIndex[string])
+}
