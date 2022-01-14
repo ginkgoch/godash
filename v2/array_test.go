@@ -1,6 +1,7 @@
 package godash
 
 import (
+	"fmt"
 	"math"
 	"testing"
 
@@ -32,6 +33,15 @@ func TestChunk3(t *testing.T) {
 	assert.Equal(t, len(chunked), 2)
 	assert.DeepEqual(t, chunked[0], []int{1, 2})
 	assert.DeepEqual(t, chunked[1], []int{3, 4})
+}
+
+func ExampleChunk() {
+	items := []string{"a", "b", "c", "d"}
+	chunked := Chunk(items, 3)
+	fmt.Println(chunked)
+
+	// Output:
+	// [["a", "b", "c"], ["d"]]
 }
 
 func TestCompact(t *testing.T) {
