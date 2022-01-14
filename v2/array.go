@@ -193,6 +193,57 @@ func FindIndexWith[E any](items []E, element E, comparison Comparison[E]) (index
 	return index, ok
 }
 
+// This method is like Find except that it returns the index of the first element predicate
+// returns truthy for instead of the element itself.
+func FindIndex[E any](items []E, predicate Predicate[E]) (int, bool) {
+	index := -1
+	ok := false
+
+	for i, el := range items {
+		if predicate(el) {
+			index = i
+			ok = true
+			break
+		}
+	}
+
+	return index, ok
+}
+
+// This method is like IndexOf except that it iterates over elements of array from right to left.
+func LastIndexOf[E any](items []E, element E) (int, bool) {
+	var index = -1
+	var ok bool
+	length := len(items)
+
+	reversed := make([]E, length)
+	copy(reversed, items)
+	Reverse(reversed)
+
+	for i, el := range reversed {
+		if reflect.DeepEqual(el, element) {
+			index = length - i - 1
+			ok = true
+			break
+		}
+	}
+
+	return index, ok
+}
+
+// Reverses array so that the first element becomes the last, the second element becomes the second to last, and so on.
+func Reverse[E any](items []E) []E {
+	length := len(items)
+
+	halfLen := length / 2
+
+	for i := 0; i < halfLen; i++ {
+		items[i], items[length-1-i] = items[length-1-i], items[i]
+	}
+
+	return items
+}
+
 func Map[E, V any](slice []E, iteratee func(E) V) []V {
 	result := []V{}
 	for _, item := range slice {

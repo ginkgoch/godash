@@ -64,11 +64,11 @@ func TestDifference2(t *testing.T) {
 	assert.DeepEqual(t, result, []string{"z", "q"})
 }
 
-func TestIndexOf(t *testing.T) {
+func indexOfTemp(t *testing.T, find func([]string, string) (int, bool)) {
 	items := []string{"a", "b", "c", "d"}
 
 	findTest := func(el string, expected int, found bool) {
-		result, ok := IndexOf(items, el)
+		result, ok := find(items, el)
 
 		assert.Equal(t, ok, found)
 		assert.Equal(t, result, expected)
@@ -77,6 +77,14 @@ func TestIndexOf(t *testing.T) {
 	findTest("a", 0, true)
 	findTest("d", 3, true)
 	findTest("e", -1, false)
+}
+
+func TestIndexOf(t *testing.T) {
+	indexOfTemp(t, IndexOf[string])
+}
+
+func TestLastIndexOf(t *testing.T) {
+	indexOfTemp(t, LastIndexOf[string])
 }
 
 func TestDifferenceBy(t *testing.T) {
@@ -195,4 +203,25 @@ func TestFill(t *testing.T) {
 
 	Fill(items, "y")
 	assert.DeepEqual(t, items, []string{"y", "y", "y", "y"})
+}
+
+func findIndexTemp(t *testing.T, find func([]string, Predicate[string]) (int, bool)) {
+	items := []string{"a", "b", "c", "d"}
+	i, ok := find(items, func(el string) bool {
+		return el == "c"
+	})
+
+	assert.Equal(t, i, 2)
+	assert.Equal(t, ok, true)
+
+	j, ok := find(items, func(el string) bool {
+		return el == "z"
+	})
+
+	assert.Equal(t, j, -1)
+	assert.Equal(t, ok, false)
+}
+
+func TestFindIndex(t *testing.T) {
+	findIndexTemp(t, FindIndex[string])
 }
