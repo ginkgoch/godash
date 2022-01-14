@@ -158,6 +158,27 @@ func IndexOf[E any](items []E, element E) (int, bool) {
 	return index, ok
 }
 
+// Fills elements of array with value from start up to, but not including end.
+func FillInRange[E any](items []E, value E, start int, end int) {
+	if start < 0 {
+		start = 0
+	}
+
+	length := len(items)
+	if end >= length {
+		end = length
+	}
+
+	for i := start; i < end; i++ {
+		items[i] = value
+	}
+}
+
+// Fills elements of array with value.
+func Fill[E any](items []E, fillValue E) {
+	FillInRange(items, fillValue, 0, len(items))
+}
+
 // Same to IndexOf. The difference is that, this method provides a comparison function to compare programmatically.
 func FindIndexWith[E any](items []E, element E, comparison Comparison[E]) (index int, ok bool) {
 	index = -1
