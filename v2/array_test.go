@@ -39,7 +39,6 @@ func ExampleChunk() {
 	items := []string{"a", "b", "c", "d"}
 	chunked := Chunk(items, 3)
 	fmt.Println(chunked)
-
 	// Output:
 	// [["a", "b", "c"], ["d"]]
 }
@@ -51,11 +50,27 @@ func TestCompact(t *testing.T) {
 	assert.DeepEqual(t, compacted, []interface{}{"a", "b", 1})
 }
 
+func ExampleCompact() {
+	items := []interface{}{"a", "b", false, 0, 1, nil, ""}
+	compacted := Compact(items)
+	fmt.Println(compacted...)
+	// Output:
+	// ["a", "b", 1]
+}
+
 func TestConcat1(t *testing.T) {
 	items := []string{"a", "b", "c", "d"}
 	result := Concat(items, []string{"e", "f"})
 
 	assert.DeepEqual(t, result, []string{"a", "b", "c", "d", "e", "f"})
+}
+
+func ExampleConcat() {
+	items := []string{"a", "b", "c", "d"}
+	result := Concat(items, []string{"e", "f"})
+	fmt.Println(result)
+	// Output:
+	// ["a", "b", "c", "d", "e", "f"]
 }
 
 func TestDifference1(t *testing.T) {
@@ -72,6 +87,16 @@ func TestDifference2(t *testing.T) {
 
 	result := Difference(items1, items2)
 	assert.DeepEqual(t, result, []string{"z", "q"})
+}
+
+func ExampleDifference() {
+	items1 := []string{"a", "b", "c", "d"}
+	items2 := []string{"a", "c", "e", "f"}
+
+	result := Difference(items1, items2)
+	fmt.Println(result)
+	// Output:
+	// ["b", "d"]
 }
 
 func indexOfTemp(t *testing.T, find func([]string, string) (int, bool)) {
@@ -93,8 +118,32 @@ func TestIndexOf(t *testing.T) {
 	indexOfTemp(t, IndexOf[string])
 }
 
+func ExampleIndexOf() {
+	items := []string{"a", "b", "c", "d"}
+	result1, ok := IndexOf(items, "1")
+	fmt.Println(ok, result1)
+
+	result2, ok := IndexOf(items, "c")
+	fmt.Println(ok, result2)
+	// Output:
+	// false -1
+	// true 2
+}
+
 func TestLastIndexOf(t *testing.T) {
 	indexOfTemp(t, LastIndexOf[string])
+}
+
+func ExampleLastIndexOf() {
+	items := []string{"a", "b", "c", "b", "d"}
+	result1, ok := LastIndexOf(items, "1")
+	fmt.Println(ok, result1)
+
+	result2, ok := LastIndexOf(items, "b")
+	fmt.Println(ok, result2)
+	// Output:
+	// false -1
+	// true 3
 }
 
 func TestDifferenceBy(t *testing.T) {
@@ -106,6 +155,18 @@ func TestDifferenceBy(t *testing.T) {
 	})
 
 	assert.DeepEqual(t, result, []float64{2.4})
+}
+
+func ExampleDifferenceBy() {
+	items1 := []float64{1.2, 2.4, 5.9}
+	items2 := []float64{1.3, 3.4, 5.1}
+
+	result := DifferenceBy(items1, items2, func(el float64) float64 {
+		return math.Floor(el)
+	})
+	fmt.Println(result)
+	// Output:
+	// [2.4]
 }
 
 func TestDifferenceWith(t *testing.T) {
@@ -123,6 +184,24 @@ func TestDifferenceWith(t *testing.T) {
 	})
 
 	assert.DeepEqual(t, result, []float64{5.9})
+}
+
+func ExampleDifferenceWith() {
+	items1 := []float64{1.2, 2.4, 5.9}
+	items2 := []float64{1.3, 3.4, 5.1}
+
+	result := DifferenceWith(items1, items2, func(el1 float64, el2 float64) bool {
+		if el1 == 1.2 && el2 == 1.3 {
+			return true
+		} else if el1 == 2.4 && el2 == 3.4 {
+			return true
+		} else {
+			return false
+		}
+	})
+	fmt.Println(result)
+	// Output:
+	// [5.9]
 }
 
 func TestDrop(t *testing.T) {
