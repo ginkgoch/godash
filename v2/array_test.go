@@ -89,6 +89,16 @@ func TestDifference2(t *testing.T) {
 	assert.DeepEqual(t, result, []string{"z", "q"})
 }
 
+func ExampleDifference() {
+	items1 := []string{"a", "b", "c", "d"}
+	items2 := []string{"a", "c", "e", "f"}
+
+	result := Difference(items1, items2)
+	fmt.Println(result)
+	// Output:
+	// ["b", "d"]
+}
+
 func indexOfTemp(t *testing.T, find func([]string, string) (int, bool)) {
 	items := []string{"a", "b", "c", "d"}
 
@@ -108,8 +118,32 @@ func TestIndexOf(t *testing.T) {
 	indexOfTemp(t, IndexOf[string])
 }
 
+func ExampleIndexOf() {
+	items := []string{"a", "b", "c", "d"}
+	result1, ok := IndexOf(items, "1")
+	fmt.Println(ok, result1)
+
+	result2, ok := IndexOf(items, "c")
+	fmt.Println(ok, result2)
+	// Output:
+	// false -1
+	// true 2
+}
+
 func TestLastIndexOf(t *testing.T) {
 	indexOfTemp(t, LastIndexOf[string])
+}
+
+func ExampleLastIndexOf() {
+	items := []string{"a", "b", "c", "b", "d"}
+	result1, ok := LastIndexOf(items, "1")
+	fmt.Println(ok, result1)
+
+	result2, ok := LastIndexOf(items, "b")
+	fmt.Println(ok, result2)
+	// Output:
+	// false -1
+	// true 3
 }
 
 func TestDifferenceBy(t *testing.T) {
