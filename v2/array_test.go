@@ -39,7 +39,6 @@ func ExampleChunk() {
 	items := []string{"a", "b", "c", "d"}
 	chunked := Chunk(items, 3)
 	fmt.Println(chunked)
-
 	// Output:
 	// [["a", "b", "c"], ["d"]]
 }
@@ -49,6 +48,14 @@ func TestCompact(t *testing.T) {
 	compacted := Compact(items)
 
 	assert.DeepEqual(t, compacted, []interface{}{"a", "b", 1})
+}
+
+func ExampleCompact() {
+	items := []interface{}{"a", "b", false, 0, 1, nil, ""}
+	compacted := Compact(items)
+	fmt.Println(compacted...)
+	// Output:
+	// ["a", "b", 1]
 }
 
 func TestConcat1(t *testing.T) {
