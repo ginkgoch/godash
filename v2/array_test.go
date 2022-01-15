@@ -65,6 +65,14 @@ func TestConcat1(t *testing.T) {
 	assert.DeepEqual(t, result, []string{"a", "b", "c", "d", "e", "f"})
 }
 
+func ExampleConcat() {
+	items := []string{"a", "b", "c", "d"}
+	result := Concat(items, []string{"e", "f"})
+	fmt.Println(result)
+	// Output:
+	// ["a", "b", "c", "d", "e", "f"]
+}
+
 func TestDifference1(t *testing.T) {
 	items1 := []string{"a", "b", "c", "d"}
 	items2 := []string{"a", "c", "e", "f"}
