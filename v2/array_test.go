@@ -157,6 +157,18 @@ func TestDifferenceBy(t *testing.T) {
 	assert.DeepEqual(t, result, []float64{2.4})
 }
 
+func ExampleDifferenceBy() {
+	items1 := []float64{1.2, 2.4, 5.9}
+	items2 := []float64{1.3, 3.4, 5.1}
+
+	result := DifferenceBy(items1, items2, func(el float64) float64 {
+		return math.Floor(el)
+	})
+	fmt.Println(result)
+	// Output:
+	// [2.4]
+}
+
 func TestDifferenceWith(t *testing.T) {
 	items1 := []float64{1.2, 2.4, 5.9}
 	items2 := []float64{1.3, 3.4, 5.1}
@@ -172,6 +184,24 @@ func TestDifferenceWith(t *testing.T) {
 	})
 
 	assert.DeepEqual(t, result, []float64{5.9})
+}
+
+func ExampleDifferenceWith() {
+	items1 := []float64{1.2, 2.4, 5.9}
+	items2 := []float64{1.3, 3.4, 5.1}
+
+	result := DifferenceWith(items1, items2, func(el1 float64, el2 float64) bool {
+		if el1 == 1.2 && el2 == 1.3 {
+			return true
+		} else if el1 == 2.4 && el2 == 3.4 {
+			return true
+		} else {
+			return false
+		}
+	})
+	fmt.Println(result)
+	// Output:
+	// [5.9]
 }
 
 func TestDrop(t *testing.T) {
