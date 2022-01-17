@@ -220,6 +220,14 @@ func TestDrop(t *testing.T) {
 	assert.DeepEqual(t, result, []string{})
 }
 
+func ExampleDrop() {
+	items := []string{"a", "b", "c", "d"}
+	result := Drop(items, 1)
+	fmt.Println(result)
+	// Output:
+	// ["b", "c", "d"]
+}
+
 func TestDropRight(t *testing.T) {
 	items := []string{"a", "b", "c", "d"}
 
