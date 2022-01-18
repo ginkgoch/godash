@@ -367,3 +367,13 @@ func findIndexTemp(t *testing.T, find func([]string, Predicate[string]) (int, bo
 func TestFindIndex(t *testing.T) {
 	findIndexTemp(t, FindIndex[string])
 }
+
+func ExampleFindIndex() {
+	items := []string{"a", "b", "c", "d"}
+	result, ok := FindIndex(items, func(el string) bool {
+		return el == "c"
+	})
+	fmt.Println(result, ok)
+	// Output:
+	// 2, true
+}
