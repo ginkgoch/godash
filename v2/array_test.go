@@ -244,6 +244,14 @@ func TestDropRight(t *testing.T) {
 	assert.DeepEqual(t, result, []string{})
 }
 
+func ExampleDropRight() {
+	items := []string{"a", "b", "c", "d"}
+	result := DropRight(items, 1)
+	fmt.Println(result)
+	// Output:
+	// ["a", "b", "c"]
+}
+
 func TestDropWhile(t *testing.T) {
 	items := []string{"a", "b", "c", "d"}
 	result := DropWhile(items, func(el string) bool {
@@ -251,6 +259,16 @@ func TestDropWhile(t *testing.T) {
 	})
 
 	assert.DeepEqual(t, result, []string{"c", "d"})
+}
+
+func ExampleDropWhile() {
+	items := []string{"a", "b", "c", "d"}
+	result := DropWhile(items, func(el string) bool {
+		return el == "a" || el == "b"
+	})
+	fmt.Println(result)
+	// Output:
+	// ["c", "d"]
 }
 
 func findIndexWithTemp(t *testing.T, find func([]string, string, Comparison[string]) (int, bool)) {
@@ -280,6 +298,17 @@ func findIndexWithTemp(t *testing.T, find func([]string, string, Comparison[stri
 
 func TestFindIndexWith(t *testing.T) {
 	findIndexWithTemp(t, FindIndexWith[string])
+}
+
+func ExampleFindIndexWith() {
+	items := []float64{2.3, 3.4, 4.5, 5.6}
+	comparison := func(a float64, b float64) bool {
+		return math.Floor(a) == math.Floor(b)
+	}
+	result, ok := FindIndexWith(items, 4.1, comparison)
+	fmt.Println(result, ok)
+	// Output:
+	// 2 true
 }
 
 func TestFillBy(t *testing.T) {
