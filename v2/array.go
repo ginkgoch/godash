@@ -231,6 +231,27 @@ func LastIndexOf[E any](items []E, element E) (int, bool) {
 	return index, ok
 }
 
+// This method is like FindIndex except that it iterates over elements of collection from right to left.
+func FindLastIndexWith[E any](items []E, element E, comparison Comparison[E]) (int, bool) {
+	var index = -1
+	var ok bool
+	length := len(items)
+
+	reversed := make([]E, length)
+	copy(reversed, items)
+	Reverse(reversed)
+
+	for i, el := range items {
+		if comparison(element, el) {
+			index = length - 1 - i
+			ok = true
+			break
+		}
+	}
+
+	return index, ok
+}
+
 // Reverses array so that the first element becomes the last, the second element becomes the second to last, and so on.
 func Reverse[E any](items []E) []E {
 	length := len(items)
