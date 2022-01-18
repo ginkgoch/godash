@@ -377,3 +377,17 @@ func ExampleFindIndex() {
 	// Output:
 	// 2, true
 }
+
+func TestFindLastIndexWith(t *testing.T) {
+	findIndexWithTemp(t, FindLastIndexWith[string])
+}
+
+func ExampleFindLastIndexWith() {
+	items := []string{"a", "b", "b", "d"}
+	result, ok := FindIndex(items, func(el string) bool {
+		return el == "b"
+	})
+	fmt.Println(result, ok)
+	// Output:
+	// 2, true
+}
