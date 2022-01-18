@@ -321,6 +321,14 @@ func TestFillBy(t *testing.T) {
 	assert.DeepEqual(t, items, []string{"z", "z", "y", "y"})
 }
 
+func ExampleFillInRange() {
+	items := make([]string, 4)
+	FillInRange(items, "z", 0, len(items))
+	fmt.Println(items)
+	// Output:
+	// ["z", "z", "z", "z"]
+}
+
 func TestFill(t *testing.T) {
 	items := []string{"a", "b", "c", "d"}
 
