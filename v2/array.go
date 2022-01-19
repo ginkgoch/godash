@@ -241,8 +241,28 @@ func FindLastIndexWith[E any](items []E, element E, comparison Comparison[E]) (i
 	copy(reversed, items)
 	Reverse(reversed)
 
-	for i, el := range items {
+	for i, el := range reversed {
 		if comparison(element, el) {
+			index = length - 1 - i
+			ok = true
+			break
+		}
+	}
+
+	return index, ok
+}
+
+// This method is like Find except that it returns the index of the first element
+// predicate returns truthy for instead of the element itself.
+func FindLastIndex[E any](items []E, predicate Predicate[E]) (index int, ok bool) {
+	length := len(items)
+
+	reversed := make([]E, length)
+	copy(reversed, items)
+	Reverse(reversed)
+
+	for i, el := range reversed {
+		if predicate(el) {
 			index = length - 1 - i
 			ok = true
 			break

@@ -384,7 +384,21 @@ func TestFindLastIndexWith(t *testing.T) {
 
 func ExampleFindLastIndexWith() {
 	items := []string{"a", "b", "b", "d"}
-	result, ok := FindIndex(items, func(el string) bool {
+	result, ok := FindLastIndexWith(items, "b", func(a string, b string) bool {
+		return a == b
+	})
+	fmt.Println(result, ok)
+	// Output:
+	// 2, true
+}
+
+func TestFindLastIndex(t *testing.T) {
+	findIndexTemp(t, FindLastIndex[string])
+}
+
+func ExampleFindLastIndex() {
+	items := []string{"a", "b", "b", "d"}
+	result, ok := FindLastIndex(items, func(el string) bool {
 		return el == "b"
 	})
 	fmt.Println(result, ok)
