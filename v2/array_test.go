@@ -391,3 +391,13 @@ func ExampleFindLastIndexWith() {
 	// Output:
 	// 2, true
 }
+
+func ExampleFindLastIndex() {
+	items := []string{"a", "b", "b", "d"}
+	result, ok := FindLastIndex(items, func(el string) bool {
+		return el == "b"
+	})
+	fmt.Println(result, ok)
+	// Output:
+	// 2, true
+}

@@ -252,6 +252,23 @@ func FindLastIndexWith[E any](items []E, element E, comparison Comparison[E]) (i
 	return index, ok
 }
 
+// This method is like Find except that it returns the index of the first element
+// predicate returns truthy for instead of the element itself.
+func FindLastIndex[E any](items []E, predicate Predicate[E]) (int, bool) {
+	index := -1
+	ok := false
+
+	for i, el := range items {
+		if predicate(el) {
+			index = i
+			ok = true
+			break
+		}
+	}
+
+	return index, ok
+}
+
 // Reverses array so that the first element becomes the last, the second element becomes the second to last, and so on.
 func Reverse[E any](items []E) []E {
 	length := len(items)
