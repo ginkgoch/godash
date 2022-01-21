@@ -401,3 +401,17 @@ func ExampleFindLastIndex() {
 	// Output:
 	// 2, true
 }
+
+func TestFirst1(t *testing.T) {
+	items := []int{1, 2, 4}
+	i := First(items)
+
+	assert.Equal(t, *i, 1)
+}
+
+func TestFirst2(t *testing.T) {
+	items := []int{}
+	i := First(items)
+
+	assert.Equal(t, i == nil, true)
+}

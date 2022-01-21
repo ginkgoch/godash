@@ -282,6 +282,20 @@ func Reverse[E any](items []E) []E {
 	return items
 }
 
+// Gets the first element of slice.
+func Head[E any](items []E) *E {
+	if len(items) == 0 {
+		return nil
+	} else {
+		return &items[0]
+	}
+}
+
+// Gets the first element of array.
+func First[E any](items []E) *E {
+	return Head(items)
+}
+
 func Map[E, V any](slice []E, iteratee func(E) V) []V {
 	result := []V{}
 	for _, item := range slice {
