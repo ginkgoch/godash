@@ -342,6 +342,18 @@ func FlattenDeep[E any](items []E) []E {
 	return result
 }
 
+// Recursively flatten array up to depth times.
+func FlattenDepth[E any](items []E, depth int) []E {
+	result := []E{}
+
+	for _, item := range items {
+		els := flattenRecursive(item, 0, depth)
+		result = append(result, els...)
+	}
+
+	return result
+}
+
 func Map[E, V any](slice []E, iteratee func(E) V) []V {
 	result := []V{}
 	for _, item := range slice {
