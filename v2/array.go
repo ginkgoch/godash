@@ -354,6 +354,22 @@ func FlattenDepth[E any](items []E, depth int) []E {
 	return result
 }
 
+// This method returns an object composed from key-value pairs.
+func FromPairs(pairs [][]any) map[any]any {
+	result := make(map[any]any)
+	for _, pair := range pairs {
+		if len(pair) == 0 {
+			continue
+		} else if len(pair) == 1 {
+			result[pair[0]] = nil
+		} else {
+			result[pair[0]] = pair[1]
+		}
+	}
+
+	return result
+}
+
 func Map[E, V any](slice []E, iteratee func(E) V) []V {
 	result := []V{}
 	for _, item := range slice {
