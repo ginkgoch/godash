@@ -40,7 +40,7 @@ func ExampleChunk() {
 	chunked := Chunk(items, 3)
 	fmt.Println(chunked)
 	// Output:
-	// [["a", "b", "c"], ["d"]]
+	// [[a b c] [d]]
 }
 
 func TestCompact(t *testing.T) {
@@ -55,7 +55,7 @@ func ExampleCompact() {
 	compacted := Compact(items)
 	fmt.Println(compacted...)
 	// Output:
-	// ["a", "b", 1]
+	// a b 1
 }
 
 func TestConcat1(t *testing.T) {
@@ -70,7 +70,7 @@ func ExampleConcat() {
 	result := Concat(items, []string{"e", "f"})
 	fmt.Println(result)
 	// Output:
-	// ["a", "b", "c", "d", "e", "f"]
+	// [a b c d e f]
 }
 
 func TestDifference1(t *testing.T) {
@@ -96,7 +96,7 @@ func ExampleDifference() {
 	result := Difference(items1, items2)
 	fmt.Println(result)
 	// Output:
-	// ["b", "d"]
+	// [b d]
 }
 
 func indexOfTemp(t *testing.T, find func([]string, string) (int, bool)) {
@@ -225,7 +225,7 @@ func ExampleDrop() {
 	result := Drop(items, 1)
 	fmt.Println(result)
 	// Output:
-	// ["b", "c", "d"]
+	// [b c d]
 }
 
 func TestDropRight(t *testing.T) {
@@ -249,7 +249,7 @@ func ExampleDropRight() {
 	result := DropRight(items, 1)
 	fmt.Println(result)
 	// Output:
-	// ["a", "b", "c"]
+	// [a b c]
 }
 
 func TestDropWhile(t *testing.T) {
@@ -268,7 +268,7 @@ func ExampleDropWhile() {
 	})
 	fmt.Println(result)
 	// Output:
-	// ["c", "d"]
+	// [c d]
 }
 
 func findIndexWithTemp(t *testing.T, find func([]string, string, Comparison[string]) (int, bool)) {
@@ -326,7 +326,7 @@ func ExampleFillInRange() {
 	FillInRange(items, "z", 0, len(items))
 	fmt.Println(items)
 	// Output:
-	// ["z", "z", "z", "z"]
+	// [z z z z]
 }
 
 func TestFill(t *testing.T) {
@@ -344,7 +344,7 @@ func ExampleFill() {
 	Fill(items, "z")
 	fmt.Println(items)
 	// Output:
-	// ["z", "z", "z", "z"]
+	// [z z z z]
 }
 
 func findIndexTemp(t *testing.T, find func([]string, Predicate[string]) (int, bool)) {
@@ -375,7 +375,7 @@ func ExampleFindIndex() {
 	})
 	fmt.Println(result, ok)
 	// Output:
-	// 2, true
+	// 2 true
 }
 
 func TestFindLastIndexWith(t *testing.T) {
@@ -389,7 +389,7 @@ func ExampleFindLastIndexWith() {
 	})
 	fmt.Println(result, ok)
 	// Output:
-	// 2, true
+	// 1 true
 }
 
 func ExampleFindLastIndex() {
@@ -399,7 +399,7 @@ func ExampleFindLastIndex() {
 	})
 	fmt.Println(result, ok)
 	// Output:
-	// 2, true
+	// 1 true
 }
 
 func TestFirst1(t *testing.T) {
