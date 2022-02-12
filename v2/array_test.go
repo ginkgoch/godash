@@ -40,7 +40,7 @@ func ExampleChunk() {
 	chunked := Chunk(items, 3)
 	fmt.Println(chunked)
 	// Output:
-	// [["a", "b", "c"], ["d"]]
+	// [[a b c], [d]]
 }
 
 func TestCompact(t *testing.T) {

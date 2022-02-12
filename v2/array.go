@@ -241,7 +241,7 @@ func FindLastIndexWith[E any](items []E, element E, comparison Comparison[E]) (i
 	copy(reversed, items)
 	Reverse(reversed)
 
-	for i, el := range items {
+	for i, el := range reversed {
 		if comparison(element, el) {
 			index = length - 1 - i
 			ok = true
