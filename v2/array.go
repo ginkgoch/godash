@@ -355,7 +355,7 @@ func FlattenDepth[E any](items []E, depth int) []E {
 }
 
 // This method returns an object composed from key-value pairs.
-func FromPairs(pairs [][]any) map[any]any {
+func FromPairsAny(pairs [][]any) map[any]any {
 	result := make(map[any]any)
 	for _, pair := range pairs {
 		if len(pair) == 0 {
@@ -365,6 +365,15 @@ func FromPairs(pairs [][]any) map[any]any {
 		} else {
 			result[pair[0]] = pair[1]
 		}
+	}
+
+	return result
+}
+
+func FromPairs[K DashComparable, V any](pairs []KeyValuePair[K, V]) map[K]V {
+	result := make(map[K]V)
+	for _, pair := range pairs {
+		result[pair.key] = pair.value
 	}
 
 	return result

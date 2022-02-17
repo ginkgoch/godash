@@ -415,3 +415,33 @@ func TestFirst2(t *testing.T) {
 
 	assert.Equal(t, i == nil, true)
 }
+
+func TestFromPairsAny(t *testing.T) {
+	pairs := [][]any{
+		{1, 2},
+		{"key1", "value1"},
+		{"key2"},
+		{},
+	}
+
+	result := FromPairsAny(pairs)
+	assert.Equal(t, len(result), 3)
+	assert.Equal(t, result[1], 2)
+	assert.Equal(t, result["key1"], "value1")
+	assert.Equal(t, result["key2"], nil)
+}
+
+func TestFromPairs(t *testing.T) {
+	a := KeyValuePair[string, any]{"key0", 2}
+	b := KeyValuePair[string, any]{"key1", "value1"}
+	c := KeyValuePair[string, any]{"key2", nil}
+	pairs := []KeyValuePair[string, any]{
+		a, b, c,
+	}
+
+	result := FromPairs(pairs)
+	assert.Equal(t, len(result), 3)
+	assert.Equal(t, result["key0"], 2)
+	assert.Equal(t, result["key1"], "value1")
+	assert.Equal(t, result["key2"], nil)
+}
