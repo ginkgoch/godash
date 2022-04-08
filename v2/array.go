@@ -398,3 +398,14 @@ func Filter[E any](slice []E, predicate Predicate[E]) []E {
 
 	return result
 }
+
+func Initial[E any](slice []E) []E {
+	length := len(slice)
+	result := []E{}
+
+	if length > 1 {
+		result = append(result, slice[0:length-1]...)
+	}
+
+	return result
+}

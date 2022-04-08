@@ -445,3 +445,11 @@ func TestFromPairs(t *testing.T) {
 	assert.Equal(t, result["key1"], "value1")
 	assert.Equal(t, result["key2"], nil)
 }
+
+func TestInitial(t *testing.T) {
+	items := []int{1, 2, 3, 4, 5}
+	result := Initial(items)
+
+	assert.Equal(t, 4, len(result))
+	assert.DeepEqual(t, []int{1, 2, 3, 4}, result)
+}
