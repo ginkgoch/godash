@@ -350,7 +350,7 @@ func Initial[E any](slice []E) []E {
 	return result
 }
 
-func Intersection[E DashComparable](items1 []E, items2 []E) (intersectedItems []E) {
+func Intersection[E any](items1 []E, items2 []E) (intersectedItems []E) {
 	intersectedItems = []E{}
 
 	for _, item := range items1 {
@@ -362,7 +362,20 @@ func Intersection[E DashComparable](items1 []E, items2 []E) (intersectedItems []
 	return
 }
 
-//TODO: IntersectionBy
+func IntersectionBy[E, T any](items1 []E, items2 []E, iteratee Iteratee[E, T]) (intersectedItems []E) {
+	intersectedItems = []E{}
+	newItems1 := Map(items1, iteratee)
+	newItems2 := Map(items2, iteratee)
+
+	for i, item := range newItems1 {
+		if _, ok := IndexOf(newItems2, item); ok {
+			intersectedItems = append(intersectedItems, items1[i])
+		}
+	}
+
+	return
+}
+
 //TODO: IntersectionWith
 //TODO: Join
 //TODO: Last

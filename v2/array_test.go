@@ -484,3 +484,19 @@ func TestIntersection(t *testing.T) {
 
 	assert.DeepEqual(t, result, []int{2, 3})
 }
+
+type Person struct {
+	Name string
+}
+
+func TestIntersectionBy(t *testing.T) {
+	items1 := []Person{{Name: "A"}, {Name: "B"}}
+	items2 := []Person{{Name: "B"}, {Name: "C"}}
+
+	results := IntersectionBy(items1, items2, func(item Person) string {
+		return item.Name
+	})
+
+	assert.Equal(t, len(results), 1)
+	assert.Equal(t, results[0].Name, "B")
+}
