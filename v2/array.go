@@ -42,9 +42,7 @@ func Compact[E any](items []E) []E {
 func Concat[E any](items []E, newItems []E) []E {
 	result := append([]E{}, items...)
 
-	for _, newItem := range newItems {
-		result = append(result, newItem)
-	}
+	result = append(result, newItems...)
 
 	return result
 }
