@@ -351,3 +351,41 @@ func Initial[E any](slice []E) []E {
 
 	return result
 }
+
+//TODO: TestIntersection
+//TODO: IntersectionBy
+//TODO: IntersectionWith
+//TODO: Join
+//TODO: Last
+//TODO: Nth
+//TODO: Pull
+//TODO: PullAll
+//TODO: PullAllWith
+//TODO: PullAt
+//TODO: Remove
+//TODO: Slice
+//TODO: Tail
+//TODO: Take
+//TODO: TakeWhile
+//TODO: TakeRight
+//TODO: TakeRightWhile
+//TODO: Union
+//TODO: UnionBy
+//TODO: UnionWith
+//TODO: Uniq
+//TODO: UniqBy
+//TODO: UniqWith
+//TODO: Without
+//TODO: Zip
+//TODO: ZipWith
+// <-- later below ->
+//TODO: sortedIndex
+//TODO: sortedIndexBy
+//TODO: sortedIndexOf
+//TODO: sortedLastIndex
+//TODO: sortedLastIndexBy
+//TODO: sortedLastIndexOf
+//TODO: sortedUniq
+//TODO: sortedUniqBy
+//TODO: xorBy
+//TODO: xorWith
