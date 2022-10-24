@@ -476,3 +476,11 @@ func TestFilter(t *testing.T) {
 
 	assert.DeepEqual(t, results, []int{2, 4, 6})
 }
+
+func TestIntersection(t *testing.T) {
+	items1 := []int{1, 2, 3, 4}
+	items2 := []int{3, 2, 5, 9}
+	result := Intersection(items1, items2)
+
+	assert.DeepEqual(t, result, []int{2, 3})
+}

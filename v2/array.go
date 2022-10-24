@@ -352,7 +352,18 @@ func Initial[E any](slice []E) []E {
 	return result
 }
 
-//TODO: TestIntersection
+func Intersection[E DashComparable](items1 []E, items2 []E) (intersectedItems []E) {
+	intersectedItems = []E{}
+
+	for _, item := range items1 {
+		if _, ok := IndexOf(items2, item); ok {
+			intersectedItems = append(intersectedItems, item)
+		}
+	}
+
+	return
+}
+
 //TODO: IntersectionBy
 //TODO: IntersectionWith
 //TODO: Join
