@@ -3,6 +3,7 @@ package godash
 import (
 	"fmt"
 	"math"
+	"strconv"
 	"testing"
 
 	"gotest.tools/assert"
@@ -452,4 +453,26 @@ func TestInitial(t *testing.T) {
 
 	assert.Equal(t, 4, len(result))
 	assert.DeepEqual(t, []int{1, 2, 3, 4}, result)
+}
+
+func TestMap(t *testing.T) {
+	items := []string{"1", "2", "3"}
+	results := Map(items, func(s string) int {
+		if r, err := strconv.Atoi(s); err != nil {
+			panic(err)
+		} else {
+			return r
+		}
+	})
+
+	assert.DeepEqual(t, results, []int{1, 2, 3})
+}
+
+func TestFilter(t *testing.T) {
+	items := []int{1, 2, 3, 4, 5, 6}
+	results := Filter(items, func(i int) bool {
+		return i%2 == 0
+	})
+
+	assert.DeepEqual(t, results, []int{2, 4, 6})
 }

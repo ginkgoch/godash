@@ -296,64 +296,6 @@ func First[E any](items []E) *E {
 	return Head(items)
 }
 
-func flattenRecursive[E any](item E, currentDepth int, depth int) []E {
-	currentDepth++
-	result := []E{}
-	if reflect.TypeOf(item).Kind() == reflect.Slice {
-		sv := reflect.ValueOf(item)
-		for i := 0; i < sv.Len(); i++ {
-			el := sv.Index(i).Interface().(E)
-
-			if depth == -1 || currentDepth < depth {
-				els := flattenRecursive(el, currentDepth, depth)
-				result = append(result, els...)
-			} else {
-				result = append(result, el)
-			}
-		}
-	} else {
-		result = append(result, item)
-	}
-
-	return result
-}
-
-// Flattens array a single level deep.
-func Flatten[E any](items []E) []E {
-	result := []E{}
-
-	for _, item := range items {
-		els := flattenRecursive(item, 0, 1)
-		result = append(result, els...)
-	}
-
-	return result
-}
-
-// Recursively flattens array.
-func FlattenDeep[E any](items []E) []E {
-	result := []E{}
-
-	for _, item := range items {
-		els := flattenRecursive(item, 0, -1)
-		result = append(result, els...)
-	}
-
-	return result
-}
-
-// Recursively flatten array up to depth times.
-func FlattenDepth[E any](items []E, depth int) []E {
-	result := []E{}
-
-	for _, item := range items {
-		els := flattenRecursive(item, 0, depth)
-		result = append(result, els...)
-	}
-
-	return result
-}
-
 // This method returns an object composed from key-value pairs.
 func FromPairsAny(pairs [][]any) map[any]any {
 	result := make(map[any]any)
