@@ -4,6 +4,9 @@ import (
 	"html"
 	"regexp"
 	"strings"
+
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 type InitCamelCase bool
@@ -61,7 +64,8 @@ func replaceWithRegexFunc(expression string, src string, repl func(string) strin
 
 // Converts the first character of string to upper case and the remaining to lower case.
 func Capitalize(str string) string {
-	return strings.Title(str)
+	// return strings.Title(str)
+	return cases.Title(language.Und, cases.NoLower).String(str)
 }
 
 // Checks if string ends with the given target string.
