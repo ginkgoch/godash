@@ -376,7 +376,18 @@ func IntersectionBy[E, T any](items1 []E, items2 []E, iteratee Iteratee[E, T]) (
 	return
 }
 
-//TODO: IntersectionWith
+func IntersectionWith[E any](items1 []E, items2 []E, comparison Comparison[E]) (intersectedItems []E) {
+	intersectedItems = []E{}
+
+	for _, item := range items1 {
+		if _, ok := FindIndexWith(items2, item, comparison); ok {
+			intersectedItems = append(intersectedItems, item)
+		}
+	}
+
+	return
+}
+
 //TODO: Join
 //TODO: Last
 //TODO: Nth

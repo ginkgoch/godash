@@ -500,3 +500,15 @@ func TestIntersectionBy(t *testing.T) {
 	assert.Equal(t, len(results), 1)
 	assert.Equal(t, results[0].Name, "B")
 }
+
+func TestIntersectionWith(t *testing.T) {
+	items1 := []int{1, 2, 3}
+	items2 := []int{3, 4, 5}
+
+	results := IntersectionWith(items1, items2, func(i1 int, i2 int) bool {
+		return i1 == i2
+	})
+
+	assert.Equal(t, len(results), 1)
+	assert.Equal(t, results[0], 3)
+}
