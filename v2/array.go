@@ -312,6 +312,7 @@ func FromPairsAny(pairs [][]any) map[any]any {
 	return result
 }
 
+// This method returns an object composed from key-value pairs.
 func FromPairs[K DashComparable, V any](pairs []KeyValuePair[K, V]) map[K]V {
 	result := make(map[K]V)
 	for _, pair := range pairs {
@@ -341,6 +342,7 @@ func Filter[E any](slice []E, predicate Predicate[E]) []E {
 	return result
 }
 
+// Gets all but the last element of array.
 func Initial[E any](slice []E) []E {
 	length := len(slice)
 	result := []E{}
@@ -352,6 +354,8 @@ func Initial[E any](slice []E) []E {
 	return result
 }
 
+// Creates an array of unique values that are included in all given arrays using SameValueZero for equality comparisons.
+// The order and references of result values are determined by the first array.
 func Intersection[E any](items1 []E, items2 []E) (intersectedItems []E) {
 	intersectedItems = []E{}
 
@@ -364,6 +368,9 @@ func Intersection[E any](items1 []E, items2 []E) (intersectedItems []E) {
 	return
 }
 
+// This method is like Intersection except that it accepts iteratee which is invoked for each element of each arrays
+// to generate the criterion by which they're compared. The order and references of result values are determined by the
+// first array. The iteratee is invoked with one argument: (value).
 func IntersectionBy[E, T any](items1 []E, items2 []E, iteratee Iteratee[E, T]) (intersectedItems []E) {
 	intersectedItems = []E{}
 	newItems1 := Map(items1, iteratee)
@@ -378,6 +385,9 @@ func IntersectionBy[E, T any](items1 []E, items2 []E, iteratee Iteratee[E, T]) (
 	return
 }
 
+// This method is like _.intersection except that it accepts comparator which is invoked to compare elements of arrays.
+// The order and references of result values are determined by the first array.
+// The comparator is invoked with two arguments: (arrVal, othVal).
 func IntersectionWith[E any](items1 []E, items2 []E, comparison Comparison[E]) (intersectedItems []E) {
 	intersectedItems = []E{}
 
@@ -390,6 +400,7 @@ func IntersectionWith[E any](items1 []E, items2 []E, comparison Comparison[E]) (
 	return
 }
 
+// Converts all elements in array into a string separated by separator.
 func Join[E any](items []E, separator string) string {
 	var stringItems []string
 
@@ -400,6 +411,7 @@ func Join[E any](items []E, separator string) string {
 	return strings.Join(stringItems, separator)
 }
 
+// Gets the last element of array.
 func Last[E any](items []E) (exists bool, lastItem E) {
 	length := len(items)
 	if length > 0 {
@@ -410,6 +422,7 @@ func Last[E any](items []E) (exists bool, lastItem E) {
 	return
 }
 
+// Gets the element at index n of array. If n is negative, the nth element from the end is returned.
 func Nth[E any](items []E, n int) (exists bool, item E) {
 	length := len(items)
 
@@ -427,8 +440,33 @@ func Nth[E any](items []E, n int) (exists bool, item E) {
 }
 
 //TODO: Pull
+func Pull[E DashComparable](items []E, values ...E) []E {
+	comparison := func(i1 E, i2 E) bool {
+		return i1 == i2
+	}
+
+	result := PullAllWith(items, values, comparison)
+	return result
+}
+
 //TODO: PullAll
+func PullAll[E DashComparable](items []E, values []E) []E {
+	return Pull(items, values...)
+}
+
 //TODO: PullAllWith
+func PullAllWith[E any](items []E, values []E, comparison Comparison[E]) []E {
+	result := []E{}
+
+	for _, item := range items {
+		if _, ok := FindIndexWith(values, item, comparison); !ok {
+			result = append(result, item)
+		}
+	}
+
+	return result
+}
+
 //TODO: PullAt
 //TODO: Remove
 //TODO: Slice
@@ -446,6 +484,7 @@ func Nth[E any](items []E, n int) (exists bool, item E) {
 //TODO: Without
 //TODO: Zip
 //TODO: ZipWith
+
 // <-- later below ->
 //TODO: sortedIndex
 //TODO: sortedIndexBy
