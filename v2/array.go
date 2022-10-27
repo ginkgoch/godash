@@ -400,7 +400,16 @@ func Join[E any](items []E, separator string) string {
 	return strings.Join(stringItems, separator)
 }
 
-//TODO: Last
+func Last[E any](items []E) (exists bool, lastItem E) {
+	length := len(items)
+	if length > 0 {
+		exists = true
+		lastItem = items[length-1]
+	}
+
+	return
+}
+
 //TODO: Nth
 //TODO: Pull
 //TODO: PullAll

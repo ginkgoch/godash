@@ -526,3 +526,14 @@ func TestJoin(t *testing.T) {
 
 	assert.Equal(t, result, "4, 5, 6")
 }
+
+func TestLast(t *testing.T) {
+	items := []string{"1", "2", "3"}
+	exists, lastItem := Last(items)
+	assert.Equal(t, true, exists)
+	assert.Equal(t, "3", lastItem)
+
+	items = []string{}
+	exists, _ = Last(items)
+	assert.Equal(t, false, exists)
+}
