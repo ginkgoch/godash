@@ -512,3 +512,17 @@ func TestIntersectionWith(t *testing.T) {
 	assert.Equal(t, len(results), 1)
 	assert.Equal(t, results[0], 3)
 }
+
+func TestJoin(t *testing.T) {
+	items1 := []string{"1", "2", "3"}
+
+	result := Join(items1, ", ")
+
+	assert.Equal(t, result, "1, 2, 3")
+
+	items2 := []int{4, 5, 6}
+
+	result = Join(items2, ", ")
+
+	assert.Equal(t, result, "4, 5, 6")
+}

@@ -1,7 +1,9 @@
 package godash
 
 import (
+	"fmt"
 	"reflect"
+	"strings"
 )
 
 // Creates an array of elements split into groups the length of size. If array can't be split evenly,
@@ -388,7 +390,16 @@ func IntersectionWith[E any](items1 []E, items2 []E, comparison Comparison[E]) (
 	return
 }
 
-//TODO: Join
+func Join[E any](items []E, separator string) string {
+	var stringItems []string
+
+	for _, item := range items {
+		stringItems = append(stringItems, fmt.Sprintf("%v", item))
+	}
+
+	return strings.Join(stringItems, separator)
+}
+
 //TODO: Last
 //TODO: Nth
 //TODO: Pull
