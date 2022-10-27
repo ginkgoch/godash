@@ -537,3 +537,25 @@ func TestLast(t *testing.T) {
 	exists, _ = Last(items)
 	assert.Equal(t, false, exists)
 }
+
+func TestNth(t *testing.T) {
+	items := []int{1, 2, 3, 4, 5, 6}
+
+	exists, i1 := Nth(items, 2)
+	assert.Equal(t, exists, true)
+	assert.Equal(t, i1, 3)
+
+	exists, i2 := Nth(items, -1)
+	assert.Equal(t, exists, true)
+	assert.Equal(t, i2, 6)
+
+	exists, i3 := Nth(items, -6)
+	assert.Equal(t, exists, true)
+	assert.Equal(t, i3, 1)
+
+	exists, _ = Nth(items, 6)
+	assert.Equal(t, exists, false)
+
+	exists, _ = Nth(items, -7)
+	assert.Equal(t, exists, false)
+}

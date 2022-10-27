@@ -410,7 +410,22 @@ func Last[E any](items []E) (exists bool, lastItem E) {
 	return
 }
 
-//TODO: Nth
+func Nth[E any](items []E, n int) (exists bool, item E) {
+	length := len(items)
+
+	if n >= length || n < -length {
+		return
+	} else if n >= 0 {
+		exists = true
+		item = items[n]
+		return
+	} else {
+		exists = true
+		item = items[n+length]
+		return
+	}
+}
+
 //TODO: Pull
 //TODO: PullAll
 //TODO: PullAllWith
