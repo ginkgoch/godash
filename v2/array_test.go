@@ -598,3 +598,13 @@ func TestPullAt(t *testing.T) {
 	assert.DeepEqual(t, items, []int{2, 4})
 	assert.DeepEqual(t, results, []int{1, 3})
 }
+
+func TestRemove(t *testing.T) {
+	items := []int{1, 2, 3, 4}
+	results := Remove(&items, func(i int) bool {
+		return i%2 == 0
+	})
+
+	assert.DeepEqual(t, results, []int{2, 4})
+	assert.DeepEqual(t, items, []int{1, 3})
+}

@@ -470,8 +470,7 @@ func PullAllWith[E any](items *[]E, values []E, comparison Comparison[E]) []E {
 }
 
 //Removes elements from array corresponding to indexes and returns an array of removed elements.
-func PullAt[E any](items *[]E, indices ...int) []E {
-	pulled := []E{}
+func PullAt[E any](items *[]E, indices ...int) (pulled []E) {
 	result := []E{}
 
 	for i, item := range *items {
@@ -486,7 +485,23 @@ func PullAt[E any](items *[]E, indices ...int) []E {
 	return pulled
 }
 
-//TODO: Remove
+// Removes all elements from array that predicate returns truthy for and returns an array of the removed elements.
+// The predicate is invoked with two arguments: (value, index).
+func Remove[E any](items *[]E, predicate Predicate[E]) (removed []E) {
+	newItems := []E{}
+
+	for _, item := range *items {
+		if predicate(item) {
+			removed = append(removed, item)
+		} else {
+			newItems = append(newItems, item)
+		}
+	}
+
+	*items = newItems
+	return removed
+}
+
 //TODO: Slice
 //TODO: Tail
 //TODO: Take
