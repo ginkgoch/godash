@@ -608,3 +608,16 @@ func TestRemove(t *testing.T) {
 	assert.DeepEqual(t, results, []int{2, 4})
 	assert.DeepEqual(t, items, []int{1, 3})
 }
+
+func TestSlice(t *testing.T) {
+	items := []int{1, 2, 3, 4}
+
+	results := Slice(items, 1, 2)
+	assert.DeepEqual(t, results, []int{2})
+
+	results = Slice(items, 0, 5)
+	assert.DeepEqual(t, results, []int{1, 2, 3, 4})
+
+	results = Slice(items, -1, 2)
+	assert.DeepEqual(t, results, []int{1, 2})
+}

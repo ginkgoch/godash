@@ -502,7 +502,20 @@ func Remove[E any](items *[]E, predicate Predicate[E]) (removed []E) {
 	return removed
 }
 
-//TODO: Slice
+// Creates a slice of array from start up to, but not including, end.
+func Slice[E any](items []E, start int, end int) []E {
+	if start < 0 {
+		start = 0
+	}
+
+	length := len(items)
+	if end > length {
+		end = length
+	}
+
+	return items[start:end]
+}
+
 //TODO: Tail
 //TODO: Take
 //TODO: TakeWhile
