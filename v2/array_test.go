@@ -562,23 +562,25 @@ func TestNth(t *testing.T) {
 
 func TestPull(t *testing.T) {
 	items := []int{1, 2, 3, 4}
-	results := Pull(items, 1, 2)
+	results := Pull(&items, 1, 2)
 
 	assert.Equal(t, len(results), 2)
 	assert.DeepEqual(t, results, []int{3, 4})
+	assert.DeepEqual(t, items, []int{3, 4})
 }
 
 func TestPullAll(t *testing.T) {
 	items := []int{1, 2, 3, 4}
 	itemsToPull := []int{3, 4}
-	results := PullAll(items, itemsToPull)
+	results := PullAll(&items, itemsToPull)
 
 	assert.Equal(t, len(results), 2)
 	assert.DeepEqual(t, results, []int{1, 2})
+	assert.DeepEqual(t, items, []int{1, 2})
 }
 
 func TestPullWith(t *testing.T) {
-	items := []int{1, 2, 3, 4}
+	items := &[]int{1, 2, 3, 4}
 	itemsToPull := []int{3, 4}
 	results := PullAllWith(items, itemsToPull, func(i1 int, i2 int) bool {
 		return i1 == i2
@@ -586,4 +588,13 @@ func TestPullWith(t *testing.T) {
 
 	assert.Equal(t, len(results), 2)
 	assert.DeepEqual(t, results, []int{1, 2})
+	assert.DeepEqual(t, *items, []int{1, 2})
+}
+
+func TestPullAt(t *testing.T) {
+	items := []int{1, 2, 3, 4}
+	results := PullAt(&items, 0, 2)
+
+	assert.DeepEqual(t, items, []int{2, 4})
+	assert.DeepEqual(t, results, []int{1, 3})
 }

@@ -439,8 +439,8 @@ func Nth[E any](items []E, n int) (exists bool, item E) {
 	}
 }
 
-//TODO: Pull
-func Pull[E DashComparable](items []E, values ...E) []E {
+// Removes all given values from array using SameValueZero for equality comparisons.
+func Pull[E DashComparable](items *[]E, values ...E) []E {
 	comparison := func(i1 E, i2 E) bool {
 		return i1 == i2
 	}
@@ -449,25 +449,43 @@ func Pull[E DashComparable](items []E, values ...E) []E {
 	return result
 }
 
-//TODO: PullAll
-func PullAll[E DashComparable](items []E, values []E) []E {
+// This method is like Pull except that it accepts an array of values to remove.
+func PullAll[E DashComparable](items *[]E, values []E) []E {
 	return Pull(items, values...)
 }
 
-//TODO: PullAllWith
-func PullAllWith[E any](items []E, values []E, comparison Comparison[E]) []E {
+// This method is like PullAll except that it accepts comparator which is invoked to compare elements of array to values.
+// The comparator is invoked with two arguments: (arrVal, othVal).
+func PullAllWith[E any](items *[]E, values []E, comparison Comparison[E]) []E {
 	result := []E{}
 
-	for _, item := range items {
+	for _, item := range *items {
 		if _, ok := FindIndexWith(values, item, comparison); !ok {
 			result = append(result, item)
 		}
 	}
 
+	*items = result
 	return result
 }
 
-//TODO: PullAt
+//Removes elements from array corresponding to indexes and returns an array of removed elements.
+func PullAt[E any](items *[]E, indices ...int) []E {
+	pulled := []E{}
+	result := []E{}
+
+	for i, item := range *items {
+		if _, ok := IndexOf(indices, i); ok {
+			pulled = append(pulled, item)
+		} else {
+			result = append(result, item)
+		}
+	}
+
+	*items = result
+	return pulled
+}
+
 //TODO: Remove
 //TODO: Slice
 //TODO: Tail
