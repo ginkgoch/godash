@@ -621,3 +621,14 @@ func TestSlice(t *testing.T) {
 	results = Slice(items, -1, 2)
 	assert.DeepEqual(t, results, []int{1, 2})
 }
+
+func TestTail(t *testing.T) {
+	items := []int{1, 2, 3}
+
+	results := Tail(items)
+	assert.DeepEqual(t, results, []int{2, 3})
+
+	items = []int{}
+	results = Tail(items)
+	assert.DeepEqual(t, results, []int{})
+}

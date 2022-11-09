@@ -516,7 +516,16 @@ func Slice[E any](items []E, start int, end int) []E {
 	return items[start:end]
 }
 
-//TODO: Tail
+func Tail[E any](items []E) (result []E) {
+	if len(items) > 0 {
+		result = items[1:]
+	} else {
+		result = []E{}
+	}
+
+	return
+}
+
 //TODO: Take
 //TODO: TakeWhile
 //TODO: TakeRight
