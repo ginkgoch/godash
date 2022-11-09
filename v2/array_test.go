@@ -648,3 +648,13 @@ func TestTake(t *testing.T) {
 	results = Take(items, 6)
 	assert.DeepEqual(t, results, []int{1, 2, 3, 4})
 }
+
+func TestTakeWhile(t *testing.T) {
+	items := []int{1, 2, 3, 4}
+
+	results := TakeWhile(items, func(i int) bool {
+		return i <= 3
+	})
+
+	assert.DeepEqual(t, results, []int{1, 2, 3})
+}

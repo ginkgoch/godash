@@ -516,6 +516,7 @@ func Slice[E any](items []E, start int, end int) []E {
 	return items[start:end]
 }
 
+// Gets all but the first element of array.
 func Tail[E any](items []E) (result []E) {
 	if len(items) > 0 {
 		result = items[1:]
@@ -526,16 +527,33 @@ func Tail[E any](items []E) (result []E) {
 	return
 }
 
+// Creates a slice of array with n elements taken from the beginning.
 func Take[E any](items []E, n int) (results []E) {
 	length := len(items)
 	if n > length {
 		n = length
 	}
 
-	return items[0:n]
+	results = items[0:n]
+	return
 }
 
-//TODO: TakeWhile
+// Creates a slice of array with elements taken from the beginning. Elements are taken until predicate returns falsy.
+// The predicate is invoked with one argument: (value).
+func TakeWhile[E any](items []E, predicate Predicate[E]) []E {
+	var to int
+
+	for i, item := range items {
+		if !predicate(item) {
+			break
+		} else {
+			to = i + 1
+		}
+	}
+
+	return Take(items, to)
+}
+
 //TODO: TakeRight
 //TODO: TakeRightWhile
 //TODO: Union
