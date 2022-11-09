@@ -554,8 +554,32 @@ func TakeWhile[E any](items []E, predicate Predicate[E]) []E {
 	return Take(items, to)
 }
 
-//TODO: TakeRight
-//TODO: TakeRightWhile
+// Creates a slice of array with n elements taken from the end.
+func TakeRight[E any](items []E, n int) []E {
+	length := len(items)
+	if n >= length {
+		n = length
+	}
+
+	from := length - n
+	return items[from:]
+}
+
+// Creates a slice of array with elements taken from the end. Elements are taken until predicate returns falsy.
+// The predicate is invoked with one argument: (value).
+func TakeRightWhile[E any](items []E, predicate Predicate[E]) []E {
+	from := len(items)
+
+	for i := from - 1; i >= 0; i-- {
+		if !predicate(items[i]) {
+			from = i + 1
+			break
+		}
+	}
+
+	return items[from:]
+}
+
 //TODO: Union
 //TODO: UnionBy
 //TODO: UnionWith
