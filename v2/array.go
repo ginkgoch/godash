@@ -526,7 +526,15 @@ func Tail[E any](items []E) (result []E) {
 	return
 }
 
-//TODO: Take
+func Take[E any](items []E, n int) (results []E) {
+	length := len(items)
+	if n > length {
+		n = length
+	}
+
+	return items[0:n]
+}
+
 //TODO: TakeWhile
 //TODO: TakeRight
 //TODO: TakeRightWhile

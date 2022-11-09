@@ -632,3 +632,19 @@ func TestTail(t *testing.T) {
 	results = Tail(items)
 	assert.DeepEqual(t, results, []int{})
 }
+
+func TestTake(t *testing.T) {
+	items := []int{1, 2, 3, 4}
+
+	results := Take(items, 1)
+	assert.DeepEqual(t, results, []int{1})
+
+	results = Take(items, 3)
+	assert.DeepEqual(t, results, []int{1, 2, 3})
+
+	results = Take(items, 4)
+	assert.DeepEqual(t, results, []int{1, 2, 3, 4})
+
+	results = Take(items, 6)
+	assert.DeepEqual(t, results, []int{1, 2, 3, 4})
+}
