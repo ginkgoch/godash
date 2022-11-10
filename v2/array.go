@@ -710,8 +710,47 @@ func Xor[E DashComparable](items ...[]E) []E {
 	}
 }
 
-//TODO: Zip
-//TODO: ZipWith
+// Creates an array of grouped elements, the first of which contains the first elements of the given arrays,
+// the second of which contains the second elements of the given arrays, and so on.
+func Zip[E any](slices ...[]E) [][]E {
+	maxLength := 0
+	for _, slice := range slices {
+		if maxLength < len(slice) {
+			maxLength = len(slice)
+		}
+	}
+
+	result := make([][]E, 0)
+	for i := 0; i < maxLength; i++ {
+		item := []E{}
+		for _, slice := range slices {
+			if i < len(slice) {
+				item = append(item, slice[i])
+			} else {
+				var v E
+				item = append(item, v)
+			}
+		}
+
+		result = append(result, item)
+	}
+
+	return result
+}
+
+// This method is like Zip except that it accepts iteratee to specify how grouped values should be combined.
+// The iteratee is invoked with the elements of each group: (...group).
+func ZipWith[E any, V any](iteratee Iteratee[[]E, V], slices ...[]E) []V {
+	zipped := Zip(slices...)
+
+	result := []V{}
+	for _, item := range zipped {
+		itemResult := iteratee(item)
+		result = append(result, itemResult)
+	}
+
+	return result
+}
 
 // <-- later below ->
 //TODO: sortedIndex

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"strconv"
+	"strings"
 	"testing"
 
 	"gotest.tools/assert"
@@ -743,4 +744,18 @@ func TestWithout(t *testing.T) {
 func TestXor(t *testing.T) {
 	results := Xor([]int{2, 1}, []int{2, 3})
 	assert.DeepEqual(t, results, []int{1, 3})
+}
+
+func TestZip(t *testing.T) {
+	results := Zip([]string{"Romeo", "Juliet"}, []string{"male", "female"})
+
+	assert.DeepEqual(t, results, [][]string{{"Romeo", "male"}, {"Juliet", "female"}})
+}
+
+func TestZipWith(t *testing.T) {
+	results := ZipWith(func(items []string) string {
+		return strings.Join(items, ", ")
+	}, []string{"Romeo", "Juliet"}, []string{"male", "female"})
+
+	assert.DeepEqual(t, results, []string{"Romeo, male", "Juliet, female"})
 }
