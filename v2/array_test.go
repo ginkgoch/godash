@@ -739,3 +739,8 @@ func TestWithout(t *testing.T) {
 
 	assert.DeepEqual(t, results, []int{1, 4, 5})
 }
+
+func TestXor(t *testing.T) {
+	results := Xor([]int{2, 1}, []int{2, 3})
+	assert.DeepEqual(t, results, []int{1, 3})
+}

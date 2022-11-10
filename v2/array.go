@@ -666,6 +666,22 @@ func UniqWith[E any](items []E, comparison Comparison[E]) []E {
 	return result
 }
 
+func xor2[E DashComparable](i1 []E, i2 []E) []E {
+	ni1 := Uniq(i1)
+	ni2 := Uniq(i2)
+	result := []E{}
+
+	for _, item := range ni1 {
+		if _, found := IndexOf(ni2, item); found {
+			ni2 = Without(ni2, item)
+		} else {
+			result = append(result, item)
+		}
+	}
+
+	return append(result, ni2...)
+}
+
 // Creates an array excluding all given values using SameValueZero for equality comparisons.
 func Without[E DashComparable](items []E, values ...E) []E {
 	newItems := make([]E, len(items))
@@ -673,6 +689,25 @@ func Without[E DashComparable](items []E, values ...E) []E {
 	Pull(&newItems, values...)
 
 	return newItems
+}
+
+// Creates an array of unique values that is the symmetric difference of the given arrays.
+// The order of result values is determined by the order they occur in the arrays.
+func Xor[E DashComparable](items ...[]E) []E {
+	length := len(items)
+	if length == 0 {
+		return []E{}
+	} else if length == 1 {
+		result := append([]E{}, items[0]...)
+		return result
+	} else {
+		result := append([]E{}, items[0]...)
+		for i := 1; i < length; i++ {
+			result = xor2(result, items[i])
+		}
+
+		return result
+	}
 }
 
 //TODO: Zip
