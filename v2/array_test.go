@@ -729,3 +729,13 @@ func TestUniqWith(t *testing.T) {
 
 	assert.DeepEqual(t, results, []float64{1.1, 3.3, 5.4})
 }
+
+func TestWithout(t *testing.T) {
+	items := []int{1, 2, 3, 4, 5}
+
+	results := Without(items, 2, 3)
+
+	t.Log(results)
+
+	assert.DeepEqual(t, results, []int{1, 4, 5})
+}

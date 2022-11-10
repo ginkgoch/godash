@@ -666,7 +666,15 @@ func UniqWith[E any](items []E, comparison Comparison[E]) []E {
 	return result
 }
 
-//TODO: Without
+// Creates an array excluding all given values using SameValueZero for equality comparisons.
+func Without[E DashComparable](items []E, values ...E) []E {
+	newItems := make([]E, len(items))
+	copy(newItems, items)
+	Pull(&newItems, values...)
+
+	return newItems
+}
+
 //TODO: Zip
 //TODO: ZipWith
 
