@@ -8,9 +8,11 @@ type DashAny interface {
 	Number | string | interface{}
 }
 
-type DashComparable interface {
-	Number | string
-}
+// type DashComparable interface {
+// 	Number | string
+// }
+
+type DashComparable comparable
 
 type KeyValuePair[K DashComparable, V any] struct {
 	key   K

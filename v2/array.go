@@ -49,6 +49,17 @@ func Concat[E any](items []E, newItems []E) []E {
 	return result
 }
 
+// Creates a new array concatenating array with any additional DashSlices.
+func ConcatSlices[E any](slices ...[]E) []E {
+	result := []E{}
+
+	for _, slice := range slices {
+		result = Concat(result, slice)
+	}
+
+	return result
+}
+
 // Creates an array of array values not included in the other given arrays using SameValueZero for equality comparisons.
 // The order and references of result values are determined by the first array.
 func Difference[E any](items []E, itemsToCompare []E) []E {
@@ -580,12 +591,81 @@ func TakeRightWhile[E any](items []E, predicate Predicate[E]) []E {
 	return items[from:]
 }
 
-//TODO: Union
-//TODO: UnionBy
-//TODO: UnionWith
-//TODO: Uniq
-//TODO: UniqBy
-//TODO: UniqWith
+// Creates an array of unique values, in order, from all given arrays using SameValueZero for equality comparisons.
+func Union[E DashComparable](slices ...[]E) []E {
+	result := ConcatSlices(slices...)
+	result = Uniq(result)
+	return result
+}
+
+// This method is like Uniq except that it accepts iteratee which is invoked for each element in array
+// to generate the criterion by which uniqueness is computed. The order of result values is determined
+// by the order they occur in the array. The iteratee is invoked with one argument: (value).
+func UnionBy[I any, O DashComparable](iteratee Iteratee[I, O], slices ...[]I) []I {
+	result := ConcatSlices(slices...)
+	result = UniqBy(result, iteratee)
+	return result
+}
+
+// This method is like Uniq except that it accepts comparator which is invoked to compare elements of array.
+// The order of result values is determined by the order they occur in the array.
+// The comparator is invoked with two arguments: (arrVal, othVal).
+func UnionWith[E any](comparison Comparison[E], slices ...[]E) []E {
+	result := ConcatSlices(slices...)
+	result = UniqWith(result, comparison)
+	return result
+}
+
+// Creates a duplicate-free version of an array, using SameValueZero for equality comparisons,
+// in which only the first occurrence of each element is kept.
+// The order of result values is determined by the order they occur in the array.
+func Uniq[E DashComparable](items []E) []E {
+	uniqMarks := make(map[E]bool)
+	result := []E{}
+
+	for _, item := range items {
+		if !uniqMarks[item] {
+			uniqMarks[item] = true
+			result = append(result, item)
+		}
+	}
+
+	return result
+}
+
+// This method is like Union except that it accepts iteratee which is invoked for each element of each arrays
+// to generate the criterion by which uniqueness is computed. Result values are chosen from the first array
+// in which the value occurs. The iteratee is invoked with one argument: (value).
+func UniqBy[I any, O DashComparable](items []I, iteratee Iteratee[I, O]) []I {
+	uniqMarks := make(map[O]I)
+	result := []I{}
+
+	for _, item := range items {
+		newItem := iteratee(item)
+		if _, found := uniqMarks[newItem]; !found {
+			uniqMarks[newItem] = item
+			result = append(result, item)
+		}
+	}
+
+	return result
+}
+
+// This method is like Uniq except that it accepts comparator which is invoked to compare elements of array.
+// The order of result values is determined by the order they occur in the array.
+// The comparator is invoked with two arguments: (arrVal, othVal).
+func UniqWith[E any](items []E, comparison Comparison[E]) []E {
+	result := []E{}
+
+	for _, item := range items {
+		if _, found := FindIndexWith(result, item, comparison); !found {
+			result = append(result, item)
+		}
+	}
+
+	return result
+}
+
 //TODO: Without
 //TODO: Zip
 //TODO: ZipWith

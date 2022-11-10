@@ -74,6 +74,12 @@ func ExampleConcat() {
 	// [a b c d e f]
 }
 
+func TestConcatSlices(t *testing.T) {
+	results := ConcatSlices([]int{1, 2}, []int{3, 4})
+
+	assert.DeepEqual(t, results, []int{1, 2, 3, 4})
+}
+
 func TestDifference1(t *testing.T) {
 	items1 := []string{"a", "b", "c", "d"}
 	items2 := []string{"a", "c", "e", "f"}
@@ -667,6 +673,28 @@ func TestTakeRight(t *testing.T) {
 	assert.DeepEqual(t, results, []int{3, 4})
 }
 
+func TestUnion(t *testing.T) {
+	results := Union([]int{1, 2, 3}, []int{3, 4, 5}, []int{4, 5})
+
+	assert.DeepEqual(t, results, []int{1, 2, 3, 4, 5})
+}
+
+func TestUnionBy(t *testing.T) {
+	results := UnionBy(func(i int) int {
+		return i % 3
+	}, []int{1, 2, 3}, []int{3, 4, 5}, []int{4, 5})
+
+	assert.DeepEqual(t, results, []int{1, 2, 3})
+}
+
+func TestUnionWith(t *testing.T) {
+	results := UnionWith(func(i1 int, i2 int) bool {
+		return i1%2 == i2%2
+	}, []int{1, 2, 3}, []int{2, 3, 4})
+
+	assert.DeepEqual(t, results, []int{1, 2})
+}
+
 func TestTakeRightWhile(t *testing.T) {
 	items := []int{1, 2, 3, 4, 5}
 
@@ -675,4 +703,29 @@ func TestTakeRightWhile(t *testing.T) {
 	})
 
 	assert.DeepEqual(t, results, []int{3, 4, 5})
+}
+
+func TestUniq(t *testing.T) {
+	items := []int{1, 2, 3, 3, 4, 4, 3, 5}
+	results := Uniq(items)
+
+	assert.DeepEqual(t, results, []int{1, 2, 3, 4, 5})
+}
+
+func TestUniqBy(t *testing.T) {
+	items := []string{"hello", "hero", "big", "bag"}
+	results := UniqBy(items, func(s string) string {
+		return s[0:1]
+	})
+
+	assert.DeepEqual(t, results, []string{"hello", "big"})
+}
+
+func TestUniqWith(t *testing.T) {
+	items := []float64{1.1, 1.2, 3.3, 3.2, 5.4}
+	results := UniqWith(items, func(d1 float64, d2 float64) bool {
+		return math.Floor(d1) == math.Floor(d2)
+	})
+
+	assert.DeepEqual(t, results, []float64{1.1, 3.3, 5.4})
 }
