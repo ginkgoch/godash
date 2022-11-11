@@ -324,7 +324,7 @@ func FromPairsAny(pairs [][]any) map[any]any {
 }
 
 // This method returns an object composed from key-value pairs.
-func FromPairs[K DashComparable, V any](pairs []KeyValuePair[K, V]) map[K]V {
+func FromPairs[K comparable, V any](pairs []KeyValuePair[K, V]) map[K]V {
 	result := make(map[K]V)
 	for _, pair := range pairs {
 		result[pair.key] = pair.value
@@ -451,7 +451,7 @@ func Nth[E any](items []E, n int) (exists bool, item E) {
 }
 
 // Removes all given values from array using SameValueZero for equality comparisons.
-func Pull[E DashComparable](items *[]E, values ...E) []E {
+func Pull[E comparable](items *[]E, values ...E) []E {
 	comparison := func(i1 E, i2 E) bool {
 		return i1 == i2
 	}
@@ -461,7 +461,7 @@ func Pull[E DashComparable](items *[]E, values ...E) []E {
 }
 
 // This method is like Pull except that it accepts an array of values to remove.
-func PullAll[E DashComparable](items *[]E, values []E) []E {
+func PullAll[E comparable](items *[]E, values []E) []E {
 	return Pull(items, values...)
 }
 
@@ -592,7 +592,7 @@ func TakeRightWhile[E any](items []E, predicate Predicate[E]) []E {
 }
 
 // Creates an array of unique values, in order, from all given arrays using SameValueZero for equality comparisons.
-func Union[E DashComparable](slices ...[]E) []E {
+func Union[E comparable](slices ...[]E) []E {
 	result := ConcatSlices(slices...)
 	result = Uniq(result)
 	return result
@@ -601,7 +601,7 @@ func Union[E DashComparable](slices ...[]E) []E {
 // This method is like Uniq except that it accepts iteratee which is invoked for each element in array
 // to generate the criterion by which uniqueness is computed. The order of result values is determined
 // by the order they occur in the array. The iteratee is invoked with one argument: (value).
-func UnionBy[I any, O DashComparable](iteratee Iteratee[I, O], slices ...[]I) []I {
+func UnionBy[I any, O comparable](iteratee Iteratee[I, O], slices ...[]I) []I {
 	result := ConcatSlices(slices...)
 	result = UniqBy(result, iteratee)
 	return result
@@ -619,7 +619,7 @@ func UnionWith[E any](comparison Comparison[E], slices ...[]E) []E {
 // Creates a duplicate-free version of an array, using SameValueZero for equality comparisons,
 // in which only the first occurrence of each element is kept.
 // The order of result values is determined by the order they occur in the array.
-func Uniq[E DashComparable](items []E) []E {
+func Uniq[E comparable](items []E) []E {
 	uniqMarks := make(map[E]bool)
 	result := []E{}
 
@@ -636,7 +636,7 @@ func Uniq[E DashComparable](items []E) []E {
 // This method is like Union except that it accepts iteratee which is invoked for each element of each arrays
 // to generate the criterion by which uniqueness is computed. Result values are chosen from the first array
 // in which the value occurs. The iteratee is invoked with one argument: (value).
-func UniqBy[I any, O DashComparable](items []I, iteratee Iteratee[I, O]) []I {
+func UniqBy[I any, O comparable](items []I, iteratee Iteratee[I, O]) []I {
 	uniqMarks := make(map[O]I)
 	result := []I{}
 
@@ -666,7 +666,7 @@ func UniqWith[E any](items []E, comparison Comparison[E]) []E {
 	return result
 }
 
-func xor2[E DashComparable](i1 []E, i2 []E) []E {
+func xor2[E comparable](i1 []E, i2 []E) []E {
 	ni1 := Uniq(i1)
 	ni2 := Uniq(i2)
 	result := []E{}
@@ -683,7 +683,7 @@ func xor2[E DashComparable](i1 []E, i2 []E) []E {
 }
 
 // Creates an array excluding all given values using SameValueZero for equality comparisons.
-func Without[E DashComparable](items []E, values ...E) []E {
+func Without[E comparable](items []E, values ...E) []E {
 	newItems := make([]E, len(items))
 	copy(newItems, items)
 	Pull(&newItems, values...)
@@ -693,7 +693,7 @@ func Without[E DashComparable](items []E, values ...E) []E {
 
 // Creates an array of unique values that is the symmetric difference of the given arrays.
 // The order of result values is determined by the order they occur in the arrays.
-func Xor[E DashComparable](items ...[]E) []E {
+func Xor[E comparable](items ...[]E) []E {
 	length := len(items)
 	if length == 0 {
 		return []E{}
