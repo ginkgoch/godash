@@ -4,7 +4,7 @@
 [![forthebadge](https://forthebadge.com/images/badges/gluten-free.svg)](https://forthebadge.com)
 
 # Lodash in Golang Version V2
-This is lodash in golang version v2. A modern Golang utility library delivering modularity, performance & extras. Compare to [v1](./README_V1.md), all APIs are refactored with generic types support.
+This is lodash in golang version v2. A modern Golang utility library delivering modularity, performance & extras. Compare to [v1](./README_V1.md), all APIs are refactored with generic types support. [API Reference](https://pkg.go.dev/github.com/ginkgoch/godash/v2).
 
 
 ## Install & Import
